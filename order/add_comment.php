@@ -1,6 +1,21 @@
 <?php
 include "../base/db.php";
-//Current timestamp
+/**
+ * PROJECT: ZETA 1.0.0
+ * AUTHOR: ROSHAN ZAID AKA DAUNTE
+ * FILE FOR: COMMENT SAVE PROCESS
+ * 
+ * VARIABLES
+ * $SQL: SQL QUERIES
+ * $QUERY: QUERY IMPLEMENTATION
+ * $ROW: FETCHED RECORDS  
+ * $OUTPUT: FINAL QUERY WITH THE FETCHED ROW
+ * $OID: RECEIVED FROM ADMIN.PHP WITH ROW ID
+ * $COMMENTADDED: THE ADDED COMMENT ALREADY
+ * $NEWCOMMENT: THE NEW COMMENT USER ADDED IF THERE IS NO COMMENT
+ * CURRENTDATE: COMMENT ADDED DATE
+ */
+//Current Timestamp
 function curdate() {
 	date_default_timezone_set('Asia/Dubai'); 
 	return date('Y-m-d');
