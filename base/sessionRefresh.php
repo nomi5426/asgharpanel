@@ -1,6 +1,5 @@
 <?php
 session_start();
-
-if (isset($_SESSION['userlogin']))
-$_SESSION['userlogin'] = $_SESSION['userlogin']; 
+if (isset($_SESSION['factory']))
+$_SESSION['factory'] = $_SESSION['factory']; 
 ?>

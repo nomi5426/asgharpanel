@@ -11,7 +11,7 @@
 	//SESSION MANAGEMENT
 	if (!session_id()) session_start();
 	//USERS WITH ACCESS
-	if( (!isset($_SESSION['superadminlogin'])) && (!isset($_SESSION['login'])) && (!isset($_SESSION['salesLogin'])) )
+	if( (!isset($_SESSION['superadminlogin'])) && (!isset($_SESSION['_adminLogin'])) && (!isset($_SESSION['_salesLogin'])) )
 	{
 		date_default_timezone_set('Asia/Dubai'); 
 		header("Location:index.php");

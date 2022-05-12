@@ -2,7 +2,7 @@
 session_start();
 include "../base/db.php";
 include '../base/deliveryNoteDownload.php';
-if(!isset($_SESSION['login'])){header('Location:../index.php');}
+if(!isset($_SESSION['_adminLogin'])){header('Location:../index.php');}
 
 function loadSalesPerson(){
     global $conn;

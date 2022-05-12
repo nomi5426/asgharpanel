@@ -2,7 +2,7 @@
 session_start();
 include "../base/db.php";
 include '../base/deliveryNoteDownload.php';
-if( (!isset($_SESSION['login'])) && (!isset($_SESSION['salesLogin'])) )
+if( (!isset($_SESSION['_superAdminLogin'])) && (!isset($_SESSION['_adminLogin'])) && (!isset($_SESSION['_salesLogin'])) && (!isset($_SESSION['_factoryLogin'])) )
 { 
   date_default_timezone_set('Asia/Dubai');
   header("Location:index.php");

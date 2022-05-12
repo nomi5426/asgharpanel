@@ -1,18 +1,22 @@
 <?php
 	include "../base/db.php";
-	if (!empty( $_SESSION['userlogin'] ) ) {
-		header('Location: ../base/user.php');
+	if (!empty( $_SESSION['_superAdminLogin'] ) ) {
+		header('Location: ../base/superadmin.php');
 		exit;
 	}
-	else if (!empty($_SESSION['login'])){
+	if (!empty( $_SESSION['_adminLogin'] ) ) {
 		header('Location: ../base/admin.php');
 		exit;
-	}else if (!empty($_SESSION['stafflogin'])){
-		header('Location: ../base/staff.php');
+	}
+	else if (!empty($_SESSION['_salesLogin'])){
+		header('Location: ../base/sales.php');
+		exit;
+	}else if (!empty($_SESSION['_factoryLogin'])){
+		header('Location: ../base/factory.php');
 		exit;
 	}
-	else if (!empty($_SESSION['salesLogin'])){
-		header('Location: ../base/sales.php');
+	else if (!empty($_SESSION['_staffLogin'])){
+		header('Location: ../base/staff.php');
 		exit;
 	}
 
@@ -29,27 +33,28 @@
 		$admin="admin";
 		$user="user";
 
+		$super_admin_sql="SELECT * FROM user where username='$username' AND pass='$pass' AND userrole='superadmin'";
+		$super_admin_Query=mysqli_query($conn,$super_admin_sql);
+
 		$admin_sql="SELECT * FROM user where username='$username' AND pass='$pass' AND userrole='admin'";
 		$adminQuery=mysqli_query($conn,$admin_sql);
 
-		$user_sql="SELECT * FROM user where username='$username' AND pass='$pass' AND userrole='user'";
-		$userQuery=mysqli_query($conn,$user_sql);
+		$factory_sql="SELECT * FROM user where username='$username' AND pass='$pass' AND userrole='factory'";
+		$factoryQuery=mysqli_query($conn,$factory_sql);
 		
-		$staff_sql="SELECT * FROM user where username='$username' AND pass='$pass' AND userrole='factory'";
-		$staffQuery=mysqli_query($conn,$staff_sql);
-
 		$sales_sql="SELECT * FROM user where username='$username' AND pass='$pass' AND userrole='sales'";
 		$salesQuery=mysqli_query($conn,$sales_sql);
+
+		$staff_sql="SELECT * FROM user where username='$username' AND pass='$pass' AND userrole='staff'";
+		$staffQuery=mysqli_query($conn,$staff_sql);
 		
 		if(mysqli_num_rows($adminQuery)==1)
 		{
-			if(!empty($_POST["remember"]))
-			{
+			if(!empty($_POST["remember"])){
 				setcookie ("username", $_POST["username"], time() + (10 * 365 * 24 * 60 * 60));
 				setcookie ("pass", $_POST["pass"], time() + (10 * 365 * 24 * 60 * 60));
 			}
-			else
-			{
+			else{
 				if(isset($_COOKIE["username"]))
 				{
 					setcookie ("username", "");
@@ -60,15 +65,14 @@
 				}
 			}
 			if (!session_id()) session_start();
-			$_SESSION['login'] = $username;
+			$_SESSION['_superAdminLogin'] = $username;
 			$_SESSION['userName'] = $username;
-
 			//LOG
 			date_default_timezone_set('Asia/Dubai');
 			app_log("'".date('d-m-Y H:i:s')."' : Admin User '".$username."' Logged In Successfully");
 
 			$successMsg = 'User logged in successfully';
-			header('Location: ../base/admin.php');
+			header('Location: ../base/superadmin.php');
 			die();
 		}
 

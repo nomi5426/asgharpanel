@@ -296,8 +296,9 @@ function loadMasterCat(){
                             img.src = img_upload_dir+value; 
                             $('#preview').prepend(img);
                         });
+                    }
                     //IF THE COLUMN CONTAINTS ONE IMAGE WITHOUT COMMA
-                    }else{
+                    else{
                         var img = document.createElement("IMG");
                         img.height = 90;
                         img.weight = 90;

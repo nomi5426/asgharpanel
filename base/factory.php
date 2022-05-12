@@ -2,11 +2,20 @@
 session_start();
 include "../base/db.php";
 include '../base/deliveryNoteDownload.php';
-if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
+if(!isset($_SESSION['_factoryLogin'])){header('Location:../index.php');}
+//LOG
+function app_log($message){
+	date_default_timezone_set('Asia/Dubai');
+	$logfile = 'log/log_'.date('d-M-Y').'.log';
+	file_put_contents($logfile, $message . "\n", FILE_APPEND);
+} 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-<?php include "../header/header_css.php"; ?>
+	<head>
+		<?php include "../header/header_css.php"; ?>
+	</head>
 	<body class="main-body">
 		<!-- Page -->
 		<div class="page">
@@ -19,14 +28,13 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					<div class="breadcrumb-header justify-content-between">
 						<div class="my-auto">
 							<div class="d-flex">
-								<h4 class="content-title mb-0 my-auto">Order</h4><span class="text-muted mt-1 tx-13 ml-2 mb-0">/ Approve Order</span>
+								<h4 class="content-title mb-0 my-auto">Order</h4><span class="text-muted mt-1 tx-13 ml-2 mb-0">/ Manage Order</span>
 							</div>
 						</div>
 					</div>
 					<!-- breadcrumb -->
 					<!-- row opened -->
 					<div class="row row-sm">
-						<!--div-->
 						<div class="col-xl-12">
 							<div class="card mg-b-20">
 								<div class="card-header pb-0">
@@ -39,7 +47,6 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 									<div class="panel panel-primary tabs-style-2">
 										<div class=" tab-menu-heading">
 											<div class="tabs-menu" id="tabId">
-												<!-- Tabs -->
 												<ul class="nav panel-tabs main-nav-line nav-justified">
 													<li class="nav-item"><a href="#neworder" class="nav-link active" data-toggle="tab">New Order</a></li>
 													<li class="nav-item"><a href="#inproduction" class="nav-link" data-toggle="tab">In Production</a></li>
@@ -71,6 +78,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
@@ -93,6 +101,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
@@ -115,6 +124,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
@@ -137,6 +147,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
@@ -181,6 +192,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
@@ -203,6 +215,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
@@ -226,6 +239,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
 																	<th class="border-bottom-0">Status</th>
+																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
@@ -238,27 +252,43 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 							</div>
 						</div>
 					</div>
-
-					<!--Image Modal-->
-					<div class="modal effect-scale show" id="imagemodalone">
-						<div class="modal-dialog modal-dialog-centered" role="document">
-							<div id="content-data"></div>
-						</div>
-					</div>
-
-					<!--New Order Modal-->
-					<div class="modal effect-scale show" id="newOrderModal">
-						<div class="modal-dialog-new-order" role="document">
-							<div id="add-order-content-data"></div>
-						</div>
-					</div>
 				</div>
 				<!-- Container closed -->
+				<!-- New Order Modal -->
+				<div class="modal effect-scale show" id="newOrderModal">
+					<div class="modal-dialog-new-order" role="document">
+						<div id="add-order-content-data"></div>
+					</div>
+				</div>
+				<div class="modal effect-scale show" id="zohoModal">
+					<div class="modal-dialog-edit-order" role="document">
+						<div id="add-zoho-order-content-data"></div>
+					</div>
+				</div>
+				<!--Image Modal-->
+				<div class="modal effect-scale show" id="imagemodalone">
+					<div class="modal-dialog-new-order modal-dialog-centered" role="document">
+						<div id="content-data"></div>
+					</div>
+				</div>
+
+				<!--New Comment Modal-->
+				<div class="modal effect-scale show" id="newCommentModal">
+					<div class="modal-dialog" role="document">
+						<div id="add-comment-content-data"></div>
+					</div>
+				</div>
+
+				<!--Edit Order Modal-->
+				<div class="modal effect-scale show" id="editOrderModal">
+					<div class="modal-dialog-edit-order" role="document">
+						<div id="edit-order-content-data"></div>
+					</div>
+				</div>
 			</div>
 			<!-- main-content closed -->
 			<?php include "../footer/footer.php"; ?>
 		</div>
-		<!-- End Page -->
 
 		<!-- Back-to-top -->
 		<a href="#top" id="back-to-top"><i class="las la-angle-double-up"></i></a>
@@ -300,15 +330,29 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
 							if ( last !== group ) {
 								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
 								);
 								last = group;
 							}
 						} );
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [
+						{ "sWidth": "5%" }, 
+						{ "sWidth": "5%" },
+						{ "sWidth": "2%" }, 
+						{ "sWidth": "3%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "25%" },
+						{ "sWidth": "15%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "20%" },
+						{ "sWidth": "5%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "15%" },
+						{"sWidth":"15%"}
+					]
 				} );
 
 				var tabletwo = $('#exampletwo').DataTable( {
@@ -346,15 +390,15 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
 							if ( last !== group ) {
 								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
 								);
 								last = group;
 							}
 						} );
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "25%" },{ "sWidth": "15%" },{ "sWidth": "3%" },{ "sWidth": "20%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{"sWidth":"15%"}]
 				} );
 
 				var tablethree = $('#examplethree').DataTable( {
@@ -392,15 +436,15 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
 							if ( last !== group ) {
 								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
 								);
 								last = group;
 							}
 						} );
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "25%" },{ "sWidth": "15%" },{ "sWidth": "3%" },{ "sWidth": "20%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{"sWidth":"15%"}]
 				} );
 
 				var tablefour = $('#examplefour').DataTable( {
@@ -438,15 +482,15 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
 							if ( last !== group ) {
 								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
 								);
 								last = group;
 							}
 						} );
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "25%" },{ "sWidth": "15%" },{ "sWidth": "3%" },{ "sWidth": "20%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{"sWidth":"15%"}]
 				} );
 
 				var tablefive = $('#examplefive').DataTable( {
@@ -492,7 +536,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "25%" },{ "sWidth": "10%" },{ "sWidth": "3%" },{ "sWidth": "20%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
 				var tablesix = $('#examplesix').DataTable( {
@@ -530,15 +574,15 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
 							if ( last !== group ) {
 								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
 								);
 								last = group;
 							}
 						} );
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "25%" },{ "sWidth": "15%" },{ "sWidth": "3%" },{ "sWidth": "20%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{"sWidth":"15%"}]
 				} );
 
 				var tableseven = $('#exampleseven').DataTable( {
@@ -576,15 +620,15 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
 							if ( last !== group ) {
 								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
 								);
 								last = group;
 							}
 						} );
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "25%" },{ "sWidth": "15%" },{ "sWidth": "3%" },{ "sWidth": "20%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{"sWidth":"15%"}]
 				} );
 
 				var tableeight = $('#exampleeight').DataTable( {
@@ -592,11 +636,11 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					"serverSide": 	true,
 					"paging"	:	true,
 					"searching"	:	true,
-					"iDisplayLength"	:	100,
 					"sDom": 'Brtip',
 					"buttons": [
 						
 					],
+					"iDisplayLength"	:	100,
 					"ajax": {
 						url  :"../order/fetch.php",
 						type : "POST",
@@ -622,15 +666,30 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
 							if ( last !== group ) {
 								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+									'<tr class="group"><td class="delback"colspan="14">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
 								);
 								last = group;
 							}
 						} );
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12,13 ] } ],
+					"aoColumns": [
+						{ "sWidth": "5%" }, 
+						{ "sWidth": "5%" },
+						{ "sWidth": "2%" }, 
+						{ "sWidth": "3%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "25%" },
+						{ "sWidth": "10%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "20%" },
+						{ "sWidth": "5%" },
+						{ "sWidth": "3%" },
+						{"sWidth":"15%"},
+						{ "sWidth": "8%" },
+						{"sWidth":"15%"}
+					]
 				} );
 
 				$('#orderSearchText').keyup(function(){
@@ -662,37 +721,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 				}).fail(function(){
 					$('#content-data').html('<p>Error</p>');
 				});
-			});
-
-			//Add New Order Modal
-			$(document).on('click','#newOrderAdd',function(event){
-				event.preventDefault();
-				$('#add-order-content-data').html('');
-				$.ajax({
-					type:'POST',
-					url:'../order/modal/addNewOrder.php'
-				}).done(function(data){
-					$('#add-order-content-data').html('');
-					$('#add-order-content-data').html(data);
-				}).fail(function(){
-					$('#add-order-content-data').html('<p>Error</p>');
-				});
-			});
-
-			//Add Comment Modal
-			$(document).on('click','#newCommentAdd',function(event){
-				event.preventDefault();
-				$('#add-comment-content-data').html('');
-				$.ajax({
-					type:'POST',
-					url:'../order/modal/addNewComment.php'
-				}).done(function(data){
-					$('#add-comment-content-data').html('');
-					$('#add-comment-content-data').html(data);
-				}).fail(function(){
-					$('#add-comment-content-data').html('<p>Error</p>');
-				});
-			});
+        	});
 
 			//Change Status
 			$(document).on('click','#statusChangeNext',function(event){
@@ -739,15 +768,6 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					return false;
 				}
 			});
-
-			//GET TAB TEXT
-			// $(document).ready(function(){
-				// $('#tabId').tabs({
-				// 	select: function(e, ui){
-				// 		alert($(ui.tab).text());
-				// 	}
-				// });
-			// });
 		</script>
 
 		<!-- Back-to-top -->
@@ -756,8 +776,20 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 		<!-- JQuery min js -->
 		<script src="../assets/plugins/jquery/jquery.min.js"></script>
 
+		<!--Internal  Datepicker js -->
+		<script src="../assets/plugins/jquery-ui/ui/widgets/datepicker.js"></script>
+
+		<!--Internal  jquery-simple-datetimepicker js -->
+		<script src="../assets/plugins/amazeui-datetimepicker/js/amazeui.datetimepicker.min.js"></script>
+
+		<!-- Ionicons js -->
+		<script src="../assets/plugins/jquery-simple-datetimepicker/jquery.simple-dtpicker.js"></script>
+
 		<!-- Bootstrap Bundle js -->
 		<script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+		<!--Internal  Parsley.min js -->
+		<script src="../assets/plugins/parsleyjs/parsley.min.js"></script>
 
 		<!-- Internal Data tables -->
 		<script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
@@ -780,9 +812,6 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 		<!--Internal  Datatable js -->
 		<script src="../assets/js/table-data.js"></script>
 
-		<!-- eva-icons js -->
-		<script src="../assets/js/eva-icons.min.js"></script>
-
 		<!-- Horizontalmenu js-->
 		<script src="../assets/plugins/horizontal-menu/horizontal-menu-2/horizontal-menu.js"></script>
 
@@ -792,16 +821,24 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 		<!-- Internal Select2 js-->
 		<script src="../assets/plugins/select2/js/select2.min.js"></script>
 
-		<!--Internal Sumoselect js-->
-		<script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
+		<!-- eva-icons js -->
+		<script src="../assets/js/eva-icons.min.js"></script>
+
+       <!-- Internal Sumoselect js -->
+	   <script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
+            
+		<!-- Internal form-elements js -->
+		<script src="../assets/js/form-elements.js"></script>
 
 		<script src="../assets/plugins/rating/jquery.rating-stars.js"></script>
-		<script src="../assets/plugins/rating/jquery.barrating.js"></script>
 
 		<!-- custom js -->
 		<script src="../assets/js/custom.js"></script>
 
 		<!-- Internal Modal js-->
 		<script src="../assets/js/modal.js"></script>
+
+		<!-- Internal Form-validation js -->
+		<script src="../assets/js/form-validation.js"></script>
 	</body>
 </html>

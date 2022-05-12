@@ -1,6 +1,6 @@
 <?php
 session_start();
-if((!isset($_SESSION['login'])) && (!isset($_SESSION['salesLogin'])) )
+if((!isset($_SESSION['_superAdminLogin'])) && (!isset($_SESSION['_adminLogin'])) && (!isset($_SESSION['_salesLogin']))&& (!isset($_SESSION['_factoryLogin'])))
 {
 	header("Location:../index.php");
 }

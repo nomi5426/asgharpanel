@@ -36,7 +36,10 @@ $col =array(
 
 //Search
 if(!empty($status)){
-  if($userrole=="admin"){
+  if($userrole=="superadmin"){
+    $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'";
+  }
+  else if($userrole=="admin"){
     $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'";
   }
   else if($userrole=="sales"){

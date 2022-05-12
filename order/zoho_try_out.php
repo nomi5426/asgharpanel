@@ -80,9 +80,6 @@
             $json = json_encode($single_decoded_result['invoice']);
             echo $json;
         }
-        // foreach($single_decoded_result['invoice'] as $single_result) {
-        //     $newArr[] = $single_result['invoice_number']; 
-        // }
     }
 ?>
 

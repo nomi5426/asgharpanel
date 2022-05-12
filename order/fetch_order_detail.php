@@ -7,7 +7,7 @@ $pdf_upload_dir = '../pdfUploads/';
 	//SESSION MANAGEMENT
 	if (!session_id()) session_start();
 	//USERS WITH ACCESS
-	if( (!isset($_SESSION['superadminlogin'])) && (!isset($_SESSION['login'])) )
+	if( (!isset($_SESSION['_superAdminLogin'])) && (!isset($_SESSION['_adminLogin'])) && (!isset($_SESSION['_salesLogin'])) && (!isset($_SESSION['_factoryLogin'])) )
 	{
 		date_default_timezone_set('Asia/Dubai'); 
 		header("Location:index.php");

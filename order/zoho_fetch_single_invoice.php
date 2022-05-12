@@ -49,27 +49,8 @@
         global $result;
         $result = curl_exec($ch);
         curl_close($ch);
-
-        // global $newArr;
-        // $newArr = array();
         global $decoded_result;
         $decoded_result = array();
         $decoded_result = json_decode($result, true);
-        // echo json_encode($decoded_result);
-        
-        // $newArr[] = json_encode($decoded_result);
-        // foreach($decoded_result['invoices'] as $result) {
-        //     $newArr[] = $result['invoices']; 
-        //     echo $newArr, '<br>';
-        // }
-
-        // $arr=array();
-        // $invid = 2163791000003948027;
-        // foreach($decoded_result['invoices'] as $result) {
-        //     $newArr[] = $result['invoice_number'];
-        //     foreach(((array)$decoded_result)[$result] as $result['invoice_number']) {
-                
-        //     }
-        // }
     }
 ?>
