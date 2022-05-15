@@ -3,7 +3,7 @@
 $host = "localhost";
 $username = "root";
 $password = "";
-$dbname = "creati55_crud";
+$dbname = "asgharpanel";
 
 $conn = mysqli_connect($host, $username, $password, $dbname);
 if (!$conn) {

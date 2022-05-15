@@ -19,6 +19,10 @@
 		header('Location: ../base/staff.php');
 		exit;
 	}
+	else if (!empty($_SESSION['_deliveryLogin'])){
+		header('Location: ../base/delivery.php');
+		exit;
+	}
 
 	function app_log($message){
 		date_default_timezone_set('Asia/Dubai');
@@ -47,6 +51,9 @@
 
 		$staff_sql="SELECT * FROM user where username='$username' AND pass='$pass' AND userrole='staff'";
 		$staffQuery=mysqli_query($conn,$staff_sql);
+
+		$delivery_sql="SELECT * FROM user where username='$username' AND pass='$pass' AND userrole='delivery'";
+		$deliveryQuery=mysqli_query($conn,$delivery_sql);
 		
 		if(mysqli_num_rows($adminQuery)==1)
 		{

@@ -32,6 +32,11 @@ else if(isset($_SESSION['_staffLogin'])){
     date_default_timezone_set('Asia/Dubai');
     app_log("'".date('d-m-Y H:i:s')."' : Staff User '".$_SESSION['_staffLogin']."' is logged out. ");
 }
+else if(isset($_SESSION['_deliveryLogin'])){
+    //LOG
+    date_default_timezone_set('Asia/Dubai');
+    app_log("'".date('d-m-Y H:i:s')."' : Delivery User '".$_SESSION['_deliveryLogin']."' is logged out. ");
+}
 // else
 // {
 //     date_default_timezone_set('Asia/Dubai');
