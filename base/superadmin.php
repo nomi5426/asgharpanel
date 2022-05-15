@@ -912,5 +912,42 @@ function loadSalesPerson(){
 
 		<!-- Internal Form-validation js -->
 		<script src="../assets/js/form-validation.js"></script>
+
+		<script type="text/javascript">
+
+function getQueryParams(qs) {
+	qs = qs.split('+').join(' ');
+	var params = 	{},
+			tokens,
+			re = /[?&]?([^=]+)=([^&]*)/g;
+					
+	while (tokens = re.exec(qs)) {
+		params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+	}
+					
+	return params;
+}
+					
+window.onload = function (e) {
+						
+	var query = getQueryParams(document.location.search);
+						
+	if (query.search  != null) {
+		var table = $('#exampleeight').dataTable({ "retrieve": true }).api();
+		table.search(query.search).draw();
+	}
+};
+
+$( document ).ready( function() {
+var query = getQueryParams( document.location.search );
+if ( query ) {
+  if ( query.department ) {
+    $( "#exampleeight" ).val( query.department );
+  }
+}
+});
+
+		</script>
+		
 	</body>
 </html>
