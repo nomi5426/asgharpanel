@@ -7,7 +7,7 @@
 	include('../library/phpqrcode/qrlib.php'); 
 	$codesDir = "../qrcodes/";	
 	$codeFile = $_POST['_newInvoiceId'].'.png';
-	$formData = 'http://localhost/panel-local/base/delivery.php?search='.$_POST['_newInvoiceId'];
+	$formData = 'https://creative.tfs.ae/base/delivery.php?search='.$_POST['_newInvoiceId'];
 	// generating QR code
 	QRcode::png($formData, $codesDir.$codeFile); 
 	// display generated QR code
