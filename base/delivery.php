@@ -1,32 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@nomi5426 
-nomi5426
-/
-asgharpanel
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-asgharpanel/base/delivery.php /
-@nomi5426
-nomi5426 update only delivery tab fix
-Latest commit 71b503d now
- History
- 1 contributor
-278 lines (245 sloc)  9.3 KB
-   
 <?php
 //if (!session_id()) session_start();
 session_start();
@@ -305,15 +276,3 @@ if ( query ) {
 
 	</body>
 </html>
-© 2022 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
