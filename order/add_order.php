@@ -1,8 +1,24 @@
 <?php
 	include "../base/db.php";
+
+	include('../libs/phpqrcode/qrlib.php'); 
+
+	if(isset($_POST) && !empty($_POST)) {
+	include('../library/phpqrcode/qrlib.php'); 
+	$codesDir = "../qrcodes/";	
+	$codeFile = $_POST['_newInvoiceId'].'.png';
+	$formData = 'http://localhost/panel-local/base/delivery.php?search='.$_POST['_newInvoiceId'];
+	// generating QR code
+	QRcode::png($formData, $codesDir.$codeFile); 
+	// display generated QR code
+	// echo '<img class="img-thumbnail" src="'.$codesDir.$codeFile.'" />';
+	} else {
+		header('location:./');
+	}
+
 	$image_upload_dir = '../uploads/';
 	$pdf_upload_dir = '../pdfUploads/';
-	
+
 	//DEFAULT RESPONSES
 	$response['status'] = 0;
 	$response['message'] = 'NOT DONE!';
@@ -127,7 +143,8 @@
 				cat_id,
 				productlink,
 				dateAvailability,
-				createdBy)
+				createdBy,
+				qrcode)
 			VALUES 
 			('".$insertDate."',
 			'".$from."',
@@ -145,7 +162,8 @@
 			'".$cat_id."',
 			'".$deliveryDate."',
 			'".$dateAvailability."',
-			'".$userid."')");
+			'".$userid."',
+			'".$codeFile."')");
 		}
 		if ($insert) 
 		{
