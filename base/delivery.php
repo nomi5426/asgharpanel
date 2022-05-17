@@ -44,7 +44,6 @@ if(!isset($_SESSION['_deliveryLogin'])){header('Location:../index.php');}
 												<!-- Tabs -->
 												<ul class="nav panel-tabs main-nav-line nav-justified">
 													<li class="nav-item"><a href="#outfordelivery" class="nav-link active" data-toggle="tab">Out for Delivery</a></li>
-													<li class="nav-item"><a href="#delivered" class="nav-link" data-toggle="tab">Delivered</a></li>
 												</ul>
 											</div>
 										</div>
@@ -53,28 +52,6 @@ if(!isset($_SESSION['_deliveryLogin'])){header('Location:../index.php');}
 												<div class="tab-pane active" id="outfordelivery">
 													<div class="table-responsive">
 														<table id="exampleone" class="testclass table key-buttons text-md-nowrap">
-															<thead>
-																<tr>
-																	<th class="border-bottom-0">IID</th>
-																	<th class="border-bottom-0">DEL/Date</th>
-																	<th class="border-bottom-0">D/G</th>
-																	<th class="border-bottom-0">City</th>
-																	<th class="border-bottom-0">D/L</th>
-																	<th class="border-bottom-0">Item</th>
-																	<th class="border-bottom-0">Color</th>
-																	<th class="border-bottom-0">QTY</th>
-																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
-																	<th class="border-bottom-0">Image</th>
-																	<th class="border-bottom-0">Comment</th>
-																</tr>
-															</thead>
-														</table>
-													</div>
-												</div>
-												<div class="tab-pane" id="delivered">
-													<div class="table-responsive">
-														<table id="exampletwo" class="testclass table key-buttons text-md-nowrap">
 															<thead>
 																<tr>
 																	<th class="border-bottom-0">IID</th>
@@ -172,52 +149,6 @@ if(!isset($_SESSION['_deliveryLogin'])){header('Location:../index.php');}
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": true, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
-				} );
-
-				var tablefour = $('#exampletwo').DataTable( {
-					"processing": 	true,
-					"serverSide": 	true,
-					"paging"	:	true,
-					"searching"	:	true,
-					// "sDom": 'Brtip',
-					// "buttons": [
-						
-					// ],
-					"iDisplayLength"	:	100,
-					"ajax": {
-						url  :"../order/fetch.php",
-						type : "POST",
-						data : {
-							status : 'Delivered',
-							nextStatus : ''
-						}
-					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
-						}
-					},
-					"drawCallback": function ( settings ) {
-						var api = this.api();
-						var rows = api.rows( {page:'current'} ).nodes();
-						var last=null; 
-						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
-							if ( last !== group ) {
-								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
-								);
-								last = group;
-							}
-						} );
-					},
-					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": true, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
 				$('#orderSearchText').keyup(function(){
