@@ -49,6 +49,9 @@ function loadSalesPerson(){
 							<div class="pr-1 mb-3 mb-xl-0">
 								<button id="orderEdit" class="modal-effect btn btn-teal mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#editOrderModal" type="button"><i class="typcn typcn-document-edit"></i>Edit Order</button>
 							</div>
+							<div class="pr-1 mb-3 mb-xl-0">
+								<button id="addStaff" class="modal-effect btn btn-teal mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#orderStaffModal" type="button"><i class="typcn typcn-document-edit"></i>Staff Made</button>
+							</div>
 						</div>
 					</div>
 					<!-- breadcrumb -->
@@ -273,37 +276,50 @@ function loadSalesPerson(){
 					</div>
 				</div>
 				<!-- Container closed -->
-				<!-- New Order Modal -->
+				<!-- MODALS OPEN -->
+				<!-- NEW ORDER -->
 				<div class="modal effect-scale show" id="newOrderModal">
 					<div class="modal-dialog-new-order" role="document">
 						<div id="add-order-content-data"></div>
 					</div>
 				</div>
+				<!--ZOHO MODAL-->
 				<div class="modal effect-scale show" id="zohoModal">
 					<div class="modal-dialog-edit-order" role="document">
 						<div id="add-zoho-order-content-data"></div>
 					</div>
 				</div>
-				<!--Image Modal-->
+				<!--IMAGE MODAL-->
 				<div class="modal effect-scale show" id="imagemodalone">
 					<div class="modal-dialog-new-order modal-dialog-centered" role="document">
 						<div id="content-data"></div>
 					</div>
 				</div>
-
-				<!--New Comment Modal-->
+				<!--COMMENT MODAL-->
 				<div class="modal effect-scale show" id="newCommentModal">
 					<div class="modal-dialog" role="document">
 						<div id="add-comment-content-data"></div>
 					</div>
 				</div>
-
-				<!--Edit Order Modal-->
+				<!--EDIT ORDER MODAL-->
 				<div class="modal effect-scale show" id="editOrderModal">
 					<div class="modal-dialog-edit-order" role="document">
 						<div id="edit-order-content-data"></div>
 					</div>
 				</div>
+				<!-- MATERIAL LPO MODAL -->
+				<div class="modal effect-scale show" id="materialLpoModal">
+					<div class="modal-dialog" role="document">
+						<div id="material-content-data"></div>
+					</div>
+				</div>
+				<!--ORDERS MADE STAFF MODAL -->
+				<div class="modal effect-scale show" id="orderStaffModal">
+					<div class="modal-dialog" role="document">
+						<div id="add-order-staff-content-data"></div>
+					</div>
+				</div>
+				<!--MODAL CLOSED-->
 			</div>
 			<!-- main-content closed -->
 			<?php include "../footer/footer.php"; ?>
@@ -342,6 +358,9 @@ function loadSalesPerson(){
 						{
 							$('td', row).css('background-color', 'white');
 						}
+						// if(data[14] !=	 null){
+						// 	$('td', row).css('background-color', 'blue');
+						// }
 					},
 					"drawCallback": function ( settings ) {
 						var api = this.api();
@@ -770,7 +789,7 @@ function loadSalesPerson(){
 				});
 			});
 
-			//Add Comment Modal
+			//ADD COMMENT
 			$(document).on('click','#newCommentAdd',function(event){
 				event.preventDefault();
 				$('#add-comment-content-data').html('');
@@ -785,7 +804,22 @@ function loadSalesPerson(){
 				});
 			});
 
-			//Change Status
+			//ORDER MADE STAFF
+			$(document).on('click','#addStaff',function(event){
+				event.preventDefault();
+				$('#add-order-staff-content-data').html('');
+				$.ajax({
+					type:'POST',
+					url:'../order/modal/addOrderStaff.php'
+				}).done(function(data){
+					$('#add-order-staff-content-data').html('');
+					$('#add-order-staff-content-data').html(data);
+				}).fail(function(){
+					$('#add-order-staff-content-data').html('<p>Error</p>');
+				});
+			});
+
+			//CHANGE STATUS
 			$(document).on('click','#statusChangeNext',function(event){
 				if(confirm("Are you sure changing status?")){
 					event.preventDefault();
@@ -794,17 +828,26 @@ function loadSalesPerson(){
 						url     : '../order/statusChange.php',
 						method  : 'POST',
 						data    : {statusid : statusid},
-						success : function(data)
+						success : function(response)
 						{
-							alert(data);
-							$('#exampleone').DataTable().ajax.reload();
-							$('#exampletwo').DataTable().ajax.reload();
-							$('#examplethree').DataTable().ajax.reload();
-							$('#examplefour').DataTable().ajax.reload();
-							$('#examplefive').DataTable().ajax.reload();
-							$('#examplesix').DataTable().ajax.reload();
-							$('#exampleseven').DataTable().ajax.reload();
-							$('#exampleeight').DataTable().ajax.reload();
+							if(response.index == 2){
+								// alert('Mark Material Available');
+								_markMaterialAvailable();
+							}else if (response.index == 1){
+								// alert('Order Status has been Changed')
+								_statusChanged();
+								$('#exampleone').DataTable().ajax.reload();
+								$('#exampletwo').DataTable().ajax.reload();
+								$('#examplethree').DataTable().ajax.reload();
+								$('#examplefour').DataTable().ajax.reload();
+								$('#examplefive').DataTable().ajax.reload();
+								$('#examplesix').DataTable().ajax.reload();
+								$('#exampleseven').DataTable().ajax.reload();
+								$('#exampleeight').DataTable().ajax.reload();
+							}else if (response.index == 3){
+								// alert('Add Staff made The Product');
+								_staffEntry();
+							}
 						}
 					});
 				}
@@ -813,17 +856,28 @@ function loadSalesPerson(){
 				}
 			});
 
-			$(document).on('click','#materialConfirm',function(event){
-				if(confirm("Are you sure Confirming Material Availability?")){
+			//CHANGE STATUS
+			$(document).on('click','#statusChangePrev',function(event){
+				if(confirm("Are you sure changing status?")){
 					event.preventDefault();
-					var materialid = $(this).attr('data-id');
+					var statusPrev = $(this).attr('data-id');
 					$.ajax({
 						url     : '../order/statusChange.php',
 						method  : 'POST',
-						data    : {materialid : materialid},
-						success : function(data)
+						data    : {statusPrev : statusPrev},
+						success : function(response)
 						{
-							$('#exampleone').DataTable().ajax.reload();
+							if (response.index == 1){
+								_statusChanged();
+								$('#exampleone').DataTable().ajax.reload();
+								$('#exampletwo').DataTable().ajax.reload();
+								$('#examplethree').DataTable().ajax.reload();
+								$('#examplefour').DataTable().ajax.reload();
+								$('#examplefive').DataTable().ajax.reload();
+								$('#examplesix').DataTable().ajax.reload();
+								$('#exampleseven').DataTable().ajax.reload();
+								$('#exampleeight').DataTable().ajax.reload();
+							}
 						}
 					});
 				}
@@ -832,14 +886,73 @@ function loadSalesPerson(){
 				}
 			});
 
-			//GET TAB TEXT
-			// $(document).ready(function(){
-				// $('#tabId').tabs({
-				// 	select: function(e, ui){
-				// 		alert($(ui.tab).text());
-				// 	}
-				// });
+			//WARNING ALERT
+			function _markMaterialAvailable(){
+				swal({
+					title: "Mark Material",
+					text: "Please confirm material availability before changing status",
+					type: "warning",
+					confirmButtonClass: "btn btn-danger"
+				});
+			}
+
+			//SUCCESS ALERT
+			function _statusChanged(){
+				swal({
+					title: 'Status Changed',
+					text: 'Order Status is Changed Succesfully',
+					type: 'success',
+					confirmButtonColor: '#57a94f'
+				});
+			}
+
+			//WARNING ALERT
+			function _staffEntry(){
+				swal({
+					title: "Add Staff",
+					text: "Please add staff before marking next",
+					type: "warning",
+					confirmButtonClass: "btn btn-danger"
+				});
+			}
+			
+
+			// //OLD MATERIAL
+			// $(document).on('click','#materialConfirm',function(event){
+			// 	if(confirm("Are you sure Confirming Material Availability?")){
+			// 		event.preventDefault();
+			// 		var materialid = $(this).attr('data-id');
+			// 		$.ajax({
+			// 			url     : '../order/statusChange.php',
+			// 			method  : 'POST',
+			// 			data    : {materialid : materialid},
+			// 			success : function(data){
+			// 				$('#exampleone').DataTable().ajax.reload();
+			// 			}
+			// 		});
+			// 	}
+			// 	else{
+			// 		return false;
+			// 	}
 			// });
+
+			//MATERIAL
+			$(document).on('click','#_materialLpo',function(event){
+				event.preventDefault();
+				var id=$(this).data('id');
+				$('#material-content-data').html('');
+				$.ajax({
+					type:'POST',
+					url:'../order/materialLpoModal.php',
+					data:'id='+id,
+					dataType:'html'
+				}).done(function(data){
+					$('#material-content-data').html('');
+					$('#material-content-data').html(data);
+				}).fail(function(){
+					$('#material-content-data').html('<p>Error</p>');
+				});
+        	});
 		</script>
 
 		<!-- Back-to-top -->
@@ -906,6 +1019,10 @@ function loadSalesPerson(){
 
 		<!-- custom js -->
 		<script src="../assets/js/custom.js"></script>
+
+		<!-- Sweet-alert js  -->
+		<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
+		<script src="../assets/js/sweet-alert.js"></script>
 
 		<!-- Internal Modal js-->
 		<script src="../assets/js/modal.js"></script>

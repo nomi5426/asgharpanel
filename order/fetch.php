@@ -77,7 +77,7 @@
             $dateAvailability='N/A';
         }
 
-        //IMAGE RETRIEVing
+        //IMAGE RETRIEVE
         if($row[7]!==''){ 
             if(strpos($upload_dir.$row[7],',') !== false){
                 $arr = explode(',', $row[7]);
@@ -93,19 +93,17 @@
         }
 
         //COMMENT
-        $comment = $row[16];
+        $comment = $row[17];
         if($comment == null){
             $comment = "N/A";
         }
 
         //FETCH ITEM
         $oneRow = "$row[6]<br><strong> Size - $row[8]</strong>";
-        $deliveryNotePrintqr = "<a href=../base/deliveryNoteDownload.php?file_id=$row[0]>$row[4]</a><br><a href='../qrcodes/$row[22]' target='_blank'><img src='../qrcodes/$row[22]' /></a> ";
-        $qrcodeinvoicefordelivery = "$row[4]";
-        $deliveryNotePrint = "<a href=../base/deliveryNoteDownload.php?file_id=$row[0]>$row[4] ";
+        $deliveryNotePrint = "<a href=../base/deliveryNoteDownload.php?file_id=$row[0]>$row[4]";
 
         //MATERIAL AVAILABILITY
-        $material = $row[15];
+        $material = $row[16];
         $materialAvailable = 'Yes';
 
         //ADMIN
@@ -124,21 +122,23 @@
             $subdata[]=$comment;
             if($status == "New Order"){
                 if ($material !== $materialAvailable){
-                $subdata[]='<div class="inner"><button id="materialConfirm" title="Material Confirm" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></div>
-                            <div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
+                // $subdata[]='<div class="inner"><button id="materialConfirm" title="Confirm Material" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button>
+                //             <button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
+                    $subdata[]='<div class="inner"><button id="_materialLpo" type="button" title="Confirm Material" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#materialLpoModal" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></button>            
+                            <button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
                 }
                 else{
-                $subdata[]='<button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button>';
-                            
+                    $subdata[]='<button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button>';            
                 }
             }
             else if($status == ''){
                 $subdata[]=$row[11];
                 $subdata[]= '<a type="button" title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-xs"><i class="typcn typcn-document-text"></i></a>';
             }else{
-                $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
+                $subdata[]='<div class="inner"><button id="statusChangePrev" title="Previous" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-left"></i></button></div>
+                            <button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
             }
-            $subdata[]=$row[16];
+            $subdata[]=$row[20];
         }
 
         else if($userrole == "admin"){
@@ -156,12 +156,11 @@
             $subdata[]=$comment;
             if($status == "New Order"){
                 if ($material !== $materialAvailable){
-                $subdata[]='<div class="inner"><button id="materialConfirm" title="Material Confirm" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></div>
-                            <div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
+                    $subdata[]='<div class="inner"><button id="materialConfirm" title="Material Confirm" class="btn btn-primary btn-icon" data-id="'.$row[0].'" disabled><i class="typcn typcn-tick"></i></button></div>
+                                <div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
                 }
                 else{
-                $subdata[]='<button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button>';
-                            
+                    $subdata[]='<button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button>';          
                 }
             }
             else if($status == ''){
@@ -170,7 +169,7 @@
             }else{
                 $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
             }
-            $subdata[]=$row[16];
+            $subdata[]=$row[20];
         }
 
         //SALES
@@ -187,15 +186,26 @@
             $subdata[]=$row[13];
             $subdata[]='<img src="'.$upload_dir.$image.'" class="modal-effect" data-effect="effect-scale" id="tableImage" height="30" width="20" data-toggle="modal" data-target="#imagemodalone" data-id="'.$row[0].'"/>';
             $subdata[]=$comment;
-            if($status == ""){
-                $subdata[]='<span class="label text-success d-flex"><div class="dot-label bg-success mr-1"></div>'.$row[11].'</span>';
+            if($status == "New Order"){
+                if ($material !== $materialAvailable){
+                    $subdata[]='<div class="inner"><button id="materialConfirm" title="Material Confirm" class="btn btn-primary btn-icon" data-id="'.$row[0].'" disabled><i class="typcn typcn-tick"></i></button></div>';
+                }
+                else{
+                    $subdata[]='';
+                }
             }
+            else if($status == ''){
+                $subdata[]=$row[11];
+                $subdata[]= '<a type="button" title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-xs"><i class="typcn typcn-document-text"></i></a>';
+            }else{
+                $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
+            }
+            $subdata[]=$row[20];
         }
 
         //FACTORY
         else if($userrole == "factory"){
-            // $subdata[]=$deliveryNotePrint;
-            $subdata[]=$deliveryNotePrintqr;
+            $subdata[]=$deliveryNotePrint;
             $subdata[]=$row[15];
             $subdata[]=$dateAvailability;
             $subdata[]=$row[3];
@@ -209,7 +219,7 @@
             $subdata[]=$comment;
             if($status == "New Order"){
                 if ($material !== $materialAvailable){
-                $subdata[]='<div class="inner"><button id="materialConfirm" title="Material Confirm" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></div>
+                $subdata[]='<div class="inner"><button id="_materialLpo" type="button" title="Confirm Material" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#materialLpoModal" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></button>
                             <div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
                 }
                 else{
@@ -223,7 +233,7 @@
             }else{
                 $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
             }
-            $subdata[]=$row[16];
+            $subdata[]=$row[20];
         }
 
         else if($userrole == "staff"){
@@ -255,39 +265,7 @@
             }else{
                 $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
             }
-            $subdata[]=$row[16];
-        }
-        
-        else if($userrole == "delivery"){
-            $subdata[]=$qrcodeinvoicefordelivery;
-            $subdata[]=$row[15];
-            $subdata[]=$dateAvailability;
-            $subdata[]=$row[3];
-            $subdata[]=$interval;
-            $subdata[]=$oneRow;
-            $subdata[]=$row[9];
-            $subdata[]=$row[10];
-            $subdata[]=$row[12];
-            $subdata[]=$row[13];
-            $subdata[]='<img src="'.$upload_dir.$image.'" class="modal-effect" data-effect="effect-scale" id="tableImage" height="30" width="20" data-toggle="modal" data-target="#imagemodalone" data-id="'.$row[0].'"/>';
-            $subdata[]=$comment;
-            if($status == "New Order"){
-                if ($material !== $materialAvailable){
-                $subdata[]='<div class="inner"><button id="materialConfirm" title="Material Confirm" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></div>
-                            <div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
-                }
-                else{
-                $subdata[]='<button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button>';
-                            
-                }
-            }
-            else if($status == ''){
-                $subdata[]=$row[11];
-                $subdata[]= '<a type="button" title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-xs"><i class="typcn typcn-document-text"></i></a>';
-            }else{
-                $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
-            }
-            $subdata[]=$row[16];
+            $subdata[]=$row[20];
         }
         $data[]=$subdata;
     }

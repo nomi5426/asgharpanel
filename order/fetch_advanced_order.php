@@ -19,7 +19,6 @@ $branchId = $_POST['branchId'];
 $salesconsultant = $_POST['salesconsultant'];
 $deliverylocation = $_POST['deliverylocation'];
 
-
 ## Date search value
 $searchByFromdate = $_POST['searchByFromdate'];
 $searchByTodate = $_POST['searchByTodate'];
@@ -52,31 +51,26 @@ if($salesconsultant != ''){
 if($deliverylocation != ''){
   $filterQuery .= " AND (city='".$deliverylocation."')";
 }
-
 if($searchByFromdate != '' && $searchByTodate != ''){
-    // $sql .= " and (  '".$row[15]."' between '".$searchByFromdate."' and '".$searchByTodate."' ) ";
-    $filterQuery .= " and (productlink between '".$searchByFromdate."' and '".$searchByTodate."' ) ";
+  // $sql .= " and (  '".$row[15]."' between '".$searchByFromdate."' and '".$searchByTodate."' ) ";
+  $filterQuery .= " and (productlink between '".$searchByFromdate."' and '".$searchByTodate."' ) ";
 }
 
 $sql = "SELECT * from product WHERE 1=1 ".$filterQuery;
 $query=mysqli_query($conn,$sql);
 
-
 if(!empty($request['search']['value'])){
     $sql.=" AND (invoiceId Like '".$request['search']['value']."%') ";
 }
-
-
-// Total number of records with filtering
 $query=mysqli_query($conn,$sql);
 $totalData=mysqli_num_rows($query);
 $totalFilter=$totalData;
 
-// Fetch records
 $sql.=" ORDER BY ".$col[$request['order'][0]['column']]." ".$request['order'][0]['dir']."  LIMIT ".$request['start']."  ,".$request['length']."  ";
-$query=mysqli_query($conn,$sql);
-$data=array();
 
+$query=mysqli_query($conn,$sql);
+
+$data=array();
 while($row=mysqli_fetch_array($query)){
     $subdata=array();
     //Days Given and Days Left
@@ -110,9 +104,9 @@ while($row=mysqli_fetch_array($query)){
       $image = $noImage;
     }
 
-    $comment = $row[16];
+    $comment = $row[17];
     if($comment == null){
-      $comment = "No Comment";
+      $comment = "N/A";
     }
 
     //GET Item Name and Size on One Column
@@ -120,11 +114,11 @@ while($row=mysqli_fetch_array($query)){
     $deliveryNotePrint = "<a href=../deliveryNoteDownload.php?file_id=$row[0]>$row[4]";
 
     //Material Availability
-    $material = $row[16];
+    $material = $row[15];
     $materialAvailable = 'Yes';
 
     $subdata[]=$deliveryNotePrint;
-    $subdata[]=$row[15];
+    $subdata[]=$row[14];
     $subdata[]=$dateAvailability;
     $subdata[]=$row[3];
     $subdata[]=$interval;

@@ -63,22 +63,20 @@ function loadCat(){
     }
     return $CatOutput;
 }
-
 ?>
-
 <div class="modal-content modal-content-demo">
     <div class="modal-header">
         <h5 class="modal-title">New Order</h5>
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
     </div>
     <div class="modal-body">
-        <form id="formNewOrder" method="post" autocomplete="off" enctype="multipart/form-data" >
+        <form id="formNewOrder" method="post" autocomplete="off" enctype="multipart/form-data">
             <div class="row row-sm">
                 <div class="col-lg-8">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="input-group mb-3">
-                                <input class="form-control" id="_newInvoiceId" name="_newInvoiceId" placeholder="Invoice ID" type="text" >
+                                <input class="form-control" id="_newInvoiceId" name="_newInvoiceId" placeholder="Invoice ID" type="text">
                                 <span class="text-danger"></span>
                             </div>
                         </div>
@@ -204,7 +202,6 @@ function loadCat(){
                 </div>
             </div>
         </form>
-
     </div>
 </div>
 
@@ -221,7 +218,6 @@ function loadCat(){
 <!-- Sweet-alert js  -->
 <script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
 <script src="../assets/js/sweet-alert.js"></script>
-
 
 <script type="text/javascript">
     //ORDERS CAN'T BE ADDED FOR NEXT SEVEN DAYS FROM TODAY EXCLUDING FRIDAY
@@ -260,7 +256,6 @@ function loadCat(){
                     type: 'POST',
                     url: '../order/add_order.php',
                     data: new FormData(this),
-                    // data: {formData:$("#invoice").val()},
                     dataType: 'json',
                     contentType: false,
                     cache: false,
@@ -270,13 +265,11 @@ function loadCat(){
                     success: function(response){
                         $('.statusMsg').html('');
                         if(response.status === 1){
-                            //FORM TO RESET AFTER SUBMISSION
-                            $('#formNewOrder')[0].reset();
-                            //REPONSE MESSAGE
-                            $('.statusMsg').html('<p class="alert alert-success">'+response.message+'</p>');
+                            $("#formNewOrder")[0].reset();
+                            $('#exampleone').DataTable().ajax.reload();
                             //TEST METHOD TO RESET DROPDOWN
                             postOrderSave();
-                            $('#exampleone').DataTable().ajax.reload();
+							$('#exampleone').DataTable().ajax.reload();
                         }else{
                             $('.statusMsg').html(alert(response.message));
                         }
@@ -287,16 +280,6 @@ function loadCat(){
             }
         });
     });
-
-//     $(document).ready(function() {
-//     $("#codeForm").submit(function(){
-//         $.ajax({
-//             url: '../order/add_order.php',
-//             type:'POST',
-//             data: {formData:$("#invoice").val()},
-//          });
-//     });
-// });
 
     //ERROR HANDLING
     function errorHandling(){

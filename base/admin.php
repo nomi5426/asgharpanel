@@ -775,7 +775,7 @@ function loadSalesPerson(){
 				});
 			});
 
-			//Change Status
+			//CHANGE STATUS
 			$(document).on('click','#statusChangeNext',function(event){
 				if(confirm("Are you sure changing status?")){
 					event.preventDefault();
@@ -784,17 +784,26 @@ function loadSalesPerson(){
 						url     : '../order/statusChange.php',
 						method  : 'POST',
 						data    : {statusid : statusid},
-						success : function(data)
+						success : function(response)
 						{
-							alert(data);
-							$('#exampleone').DataTable().ajax.reload();
-							$('#exampletwo').DataTable().ajax.reload();
-							$('#examplethree').DataTable().ajax.reload();
-							$('#examplefour').DataTable().ajax.reload();
-							$('#examplefive').DataTable().ajax.reload();
-							$('#examplesix').DataTable().ajax.reload();
-							$('#exampleseven').DataTable().ajax.reload();
-							$('#exampleeight').DataTable().ajax.reload();
+							if(response.index == 2){
+								// alert('Mark Material Available');
+								_markMaterialAvailable();
+							}else if (response.index == 1){
+								// alert('Order Status has been Changed')
+								_statusChanged();
+								$('#exampleone').DataTable().ajax.reload();
+								$('#exampletwo').DataTable().ajax.reload();
+								$('#examplethree').DataTable().ajax.reload();
+								$('#examplefour').DataTable().ajax.reload();
+								$('#examplefive').DataTable().ajax.reload();
+								$('#examplesix').DataTable().ajax.reload();
+								$('#exampleseven').DataTable().ajax.reload();
+								$('#exampleeight').DataTable().ajax.reload();
+							}else if (response.index == 3){
+								// alert('Add Staff made The Product');
+								_staffEntry();
+							}
 						}
 					});
 				}
@@ -802,6 +811,33 @@ function loadSalesPerson(){
 					return false;
 				}
 			});
+			//WARNING ALERT
+			function _markMaterialAvailable(){
+				swal({
+					title: "Mark Material",
+					text: "Please confirm material availability before changing status",
+					type: "warning",
+					confirmButtonClass: "btn btn-danger"
+				});
+			}
+			//SUCCESS ALERT
+			function _statusChanged(){
+				swal({
+					title: 'Status Changed',
+					text: 'Order Status is Changed Succesfully',
+					type: 'success',
+					confirmButtonColor: '#57a94f'
+				});
+			}
+			//WARNING ALERT
+			function _staffEntry(){
+				swal({
+					title: "Add Staff",
+					text: "Please add staff before marking next",
+					type: "warning",
+					confirmButtonClass: "btn btn-danger"
+				});
+			}
 
 			$(document).on('click','#materialConfirm',function(event){
 				if(confirm("Are you sure Confirming Material Availability?")){
@@ -896,6 +932,10 @@ function loadSalesPerson(){
 
 		<!-- custom js -->
 		<script src="../assets/js/custom.js"></script>
+
+		<!-- Sweet-alert js  -->
+		<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
+		<script src="../assets/js/sweet-alert.js"></script>
 
 		<!-- Internal Modal js-->
 		<script src="../assets/js/modal.js"></script>

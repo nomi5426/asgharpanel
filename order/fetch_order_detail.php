@@ -14,8 +14,7 @@ $pdf_upload_dir = '../pdfUploads/';
 		app_log("'".date('d-m-Y H:i:s')."' : Session is not set, Login Attempt Admin User");
 	}
 	else{
-		if(time()-$_SESSION['expire'] > 365*24*60*60)
-		{
+		if(time()-$_SESSION['expire'] > 365*24*60*60){
 			date_default_timezone_set('Asia/Dubai');
 			app_log("'".date('d-m-Y H:i:s')."' : Session is expired, User '".$_SESSION['userName']."' is logged out.");
 			session_destroy();
@@ -42,7 +41,9 @@ $pdf_upload_dir = '../pdfUploads/';
 	//SELECT INVOICE ID FOR STATUS
 	if(isset($_POST['selectedstat'])){
 		$_output='';
-		$sql = "SELECT * FROM product WHERE pstatus='".$_POST['selectedstat']."' ORDER BY invoiceId";
+		$filterNonMaterial='No';
+		$sql = "SELECT * FROM product WHERE pstatus='".$_POST['selectedstat']."'";
+		$sql .=	"AND material ='No' ORDER BY invoiceId";
 		$query=mysqli_query($conn,$sql);
 		$_output .='<option value="" disabled selected>Select Invoice ID</option>';
 		while($row = mysqli_fetch_array($query)){

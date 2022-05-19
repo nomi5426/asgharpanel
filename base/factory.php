@@ -254,37 +254,20 @@ function app_log($message){
 					</div>
 				</div>
 				<!-- Container closed -->
-				<!-- New Order Modal -->
-				<div class="modal effect-scale show" id="newOrderModal">
-					<div class="modal-dialog-new-order" role="document">
-						<div id="add-order-content-data"></div>
-					</div>
-				</div>
-				<div class="modal effect-scale show" id="zohoModal">
-					<div class="modal-dialog-edit-order" role="document">
-						<div id="add-zoho-order-content-data"></div>
-					</div>
-				</div>
-				<!--Image Modal-->
+				<!--MODAL OPEN-->				
+				<!--IMAGE MODAL-->
 				<div class="modal effect-scale show" id="imagemodalone">
 					<div class="modal-dialog-new-order modal-dialog-centered" role="document">
 						<div id="content-data"></div>
 					</div>
 				</div>
-
-				<!--New Comment Modal-->
-				<div class="modal effect-scale show" id="newCommentModal">
+				<!-- MATERIAL LPO MODAL -->
+				<div class="modal effect-scale show" id="materialLpoModal">
 					<div class="modal-dialog" role="document">
-						<div id="add-comment-content-data"></div>
+						<div id="material-content-data"></div>
 					</div>
 				</div>
-
-				<!--Edit Order Modal-->
-				<div class="modal effect-scale show" id="editOrderModal">
-					<div class="modal-dialog-edit-order" role="document">
-						<div id="edit-order-content-data"></div>
-					</div>
-				</div>
+				<!--MODAL CLOSED-->
 			</div>
 			<!-- main-content closed -->
 			<?php include "../footer/footer.php"; ?>
@@ -732,16 +715,26 @@ function app_log($message){
 						url     : '../order/statusChange.php',
 						method  : 'POST',
 						data    : {statusid : statusid},
-						success : function(data)
+						success : function(response)
 						{
-							$('#exampleone').DataTable().ajax.reload();
-							$('#exampletwo').DataTable().ajax.reload();
-							$('#examplethree').DataTable().ajax.reload();
-							$('#examplefour').DataTable().ajax.reload();
-							$('#examplefive').DataTable().ajax.reload();
-							$('#examplesix').DataTable().ajax.reload();
-							$('#exampleseven').DataTable().ajax.reload();
-							$('#exampleeight').DataTable().ajax.reload();
+							if(response.index == 2){
+								// alert('Mark Material Available');
+								_markMaterialAvailable();
+							}else if (response.index == 1){
+								// alert('Order Status has been Changed')
+								_statusChanged();
+								$('#exampleone').DataTable().ajax.reload();
+								$('#exampletwo').DataTable().ajax.reload();
+								$('#examplethree').DataTable().ajax.reload();
+								$('#examplefour').DataTable().ajax.reload();
+								$('#examplefive').DataTable().ajax.reload();
+								$('#examplesix').DataTable().ajax.reload();
+								$('#exampleseven').DataTable().ajax.reload();
+								$('#exampleeight').DataTable().ajax.reload();
+							}else if (response.index == 3){
+								// alert('Add Staff made The Product');
+								_staffEntry();
+							}
 						}
 					});
 				}
@@ -749,25 +742,50 @@ function app_log($message){
 					return false;
 				}
 			});
-
-			$(document).on('click','#materialConfirm',function(event){
-				if(confirm("Are you sure Confirming Material Availability?")){
-					event.preventDefault();
-					var materialid = $(this).attr('data-id');
-					$.ajax({
-						url     : '../order/statusChange.php',
-						method  : 'POST',
-						data    : {materialid : materialid},
-						success : function(data)
-						{
-							$('#exampleone').DataTable().ajax.reload();
-						}
-					});
-				}
-				else{
-					return false;
-				}
-			});
+			//WARNING ALERT
+			function _markMaterialAvailable(){
+				swal({
+					title: "Mark Material",
+					text: "Please confirm material availability before changing status",
+					type: "warning",
+					confirmButtonClass: "btn btn-danger"
+				});
+			}
+			//SUCCESS ALERT
+			function _statusChanged(){
+				swal({
+					title: 'Status Changed',
+					text: 'Order Status is Changed Succesfully',
+					type: 'success',
+					confirmButtonColor: '#57a94f'
+				});
+			}
+			//WARNING ALERT
+			function _staffEntry(){
+				swal({
+					title: "Add Staff",
+					text: "Please add staff before marking next",
+					type: "warning",
+					confirmButtonClass: "btn btn-danger"
+				});
+			}
+			//MATERIAL
+			$(document).on('click','#_materialLpo',function(event){
+				event.preventDefault();
+				var id=$(this).data('id');
+				$('#material-content-data').html('');
+				$.ajax({
+					type:'POST',
+					url:'../order/materialLpoModal.php',
+					data:'id='+id,
+					dataType:'html'
+				}).done(function(data){
+					$('#material-content-data').html('');
+					$('#material-content-data').html(data);
+				}).fail(function(){
+					$('#material-content-data').html('<p>Error</p>');
+				});
+        	});
 		</script>
 
 		<!-- Back-to-top -->
@@ -834,6 +852,10 @@ function app_log($message){
 
 		<!-- custom js -->
 		<script src="../assets/js/custom.js"></script>
+
+		<!-- Sweet-alert js  -->
+		<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
+		<script src="../assets/js/sweet-alert.js"></script>
 
 		<!-- Internal Modal js-->
 		<script src="../assets/js/modal.js"></script>

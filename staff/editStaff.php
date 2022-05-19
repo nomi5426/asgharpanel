@@ -3,32 +3,32 @@ include "../base/db.php";
 
 if(isset($_REQUEST['id'])){
     $id=intval($_REQUEST['id']);
-    $sql="select * from category WHERE id=$id";
+    $sql="select * from staff WHERE id=$id";
     $run_sql=mysqli_query($conn,$sql);
     while($row=mysqli_fetch_array($run_sql)){
         $id=$row['id'];
-        $cat_name=$row['category_name'];
-        $master_category=$row['master_cat'];
+        $staff_name=$row['staff_name'];
+        $staff_category=$row['staff_department'];
     }
     ?>
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Edit Category</h5>
+            <h5 class="modal-title">Edit Staff</h5>
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         </div>              
         <div class="modal-body">
-            <form method="POST" id="formEditCat" autocomplete="off" enctype="multipart/form-data">
+            <form method="POST" id="formEditStaff" autocomplete="off" enctype="multipart/form-data">
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
-                        <label for="category_name">Category Name</label>
+                        <label for="staff_name">Staff Name</label>
                         <input type="hidden" name="id" id="id" value="<?php echo $id;?>"/>
-                        <input type="text" name="category_name" id="category_name"class="form-control" value="<?php echo $cat_name;?>">
+                        <input type="text" name="staff_name" id="staff_name"class="form-control" value="<?php echo $staff_name;?>">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
-                        <label for="master_cat">Master Category</label>
-                        <input type="text" name="master_cat" class="form-control" value="<?php echo $master_category;?>" disabled>
+                        <label for="staff_category">Staff Category</label>
+                        <input type="text" name="staff_category" class="form-control" value="<?php echo $staff_category;?>" disabled>
                     </div>
                 </div>
                 <button class="btn btn-primary" type="submit" name="_btnEditCategory" id="_btnEditCategory">Edit</button>
@@ -54,24 +54,24 @@ if(isset($_REQUEST['id'])){
 
 <script type="text/javascript">
     $(document).ready(function(){
-        $('#formEditCat').on('submit', function(e){
+        $('#formEditStaff').on('submit', function(e){
             e.preventDefault();
             var id = $('#id').val();
-            var cat_name = $('#category_name').val();
+            var staff_name = $('#staff_name').val();
             $.ajax({
                 type: "POST",
-                url: 'edit_category.php',
-                data: {cid:id, cat_name:cat_name},
+                url: 'edit_staff.php',
+                data: {id:id, staff_name:staff_name},
                 success: function(response){
                     if(response.status === 1){
-                        postCategoryUpdate();
+                        postStaffUpdate();
                         $('#exampleone').DataTable().ajax.reload();
                     }
                     else if(response.status === 2){
-                        categoryExists();
+                        staffExists();
                     }
                     else if(response.status === 3){
-                        categoryAssociated();
+                        staffAssociated();
                     }
                     else{
                         console.log("Nothing");
@@ -79,15 +79,15 @@ if(isset($_REQUEST['id'])){
                 }
             });
         });
-        function postCategoryUpdate(){
+        function postStaffUpdate(){
             swal({
                 title: 'Success!',
-                text: 'Category is Updated Succesfully',
+                text: 'Staff is Updated Succesfully',
                 type: 'success',
                 confirmButtonColor: '#57a94f'
             });
         }
-        function categoryExists(){
+        function staffExists(){
             swal({
                 title:"No Changes",
                 text: "Type Something to Rename",
@@ -95,10 +95,10 @@ if(isset($_REQUEST['id'])){
                 confirmButtonClass: "btn btn-danger"
             });
         }
-        function categoryAssociated(){
+        function staffAssociated(){
             swal({
                 title: "Warning",
-                text: "Category Associated with an Order Can't be Renamed",
+                text: "Staff Associated with an Order Can't be Renamed",
                 type: "warning",
                 confirmButtonClass: "btn btn-danger"
             });

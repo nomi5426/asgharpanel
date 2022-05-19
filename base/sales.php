@@ -71,6 +71,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Material</th>
 																</tr>
 															</thead>
 														</table>
@@ -226,6 +227,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
 																	<th class="border-bottom-0">Status</th>
+																	<th class="border-bottom-0">Action</th>																	
 																</tr>
 															</thead>
 														</table>
@@ -300,14 +302,14 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
 							if ( last !== group ) {
 								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
 								);
 								last = group;
 							}
 						} );
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
@@ -594,9 +596,6 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					"searching"	:	true,
 					"iDisplayLength"	:	100,
 					"sDom": 'Brtip',
-					"buttons": [
-						
-					],
 					"ajax": {
 						url  :"../order/fetch.php",
 						type : "POST",
@@ -622,14 +621,14 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
 							if ( last !== group ) {
 								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+									'<tr class="group"><td class="delback"colspan="14">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
 								);
 								last = group;
 							}
 						} );
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12] } ],
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12,13] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 

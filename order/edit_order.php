@@ -177,49 +177,11 @@
                     $response['status'] = 5;
             }
             $result = mysqli_query($conn, $statement);
-            // //IF NEW IMAGE IS ADDED
-            // if(!empty($_imageName))
-            // {
-            //     $statement = "UPDATE product SET 
-            //     invoiceId = '$_editInvoiceId',
-            //     productlink = '$_editDeliveryDate',
-            //     pname = '$_editItemName',
-            //     color = '$_editItemColor',
-            //     size = '$_editItemSize',
-            //     branchId = '$_editItemFrom',
-            //     city = '$_editDeliveryLocation',
-            //     pstatus = '$_editStatus',
-            //     quantity = '$_editQuantity',
-            //     salesperson = '$_editSalesConsultant',
-            //     cat_id = '$_editCat_Id',
-            //     ordernote = '$_editOrderNote',
-            //     pimage = '$_imageName',
-            //     deliveryNote = '$_dnName'
-            //     WHERE id = '$_eid'";
-            // }
-            // //IF NO IMAGE IS ADDED
-            // else{
-            //     $statement = "UPDATE product SET 
-            //     invoiceId = '$_editInvoiceId',
-            //     productlink = '$_editDeliveryDate',
-            //     pname = '$_editItemName',
-            //     color = '$_editItemColor',
-            //     size = '$_editItemSize',
-            //     branchId = '$_editItemFrom',
-            //     city = '$_editDeliveryLocation',
-            //     pstatus = '$_editStatus',
-            //     quantity = '$_editQuantity',
-            //     salesperson = '$_editSalesConsultant',
-            //     cat_id = '$_editCat_Id',
-            //     ordernote = '$_editOrderNote'
-            //     WHERE id = '$_eid'";
-            // }
-            // $result = mysqli_query($conn, $statement);
-        }
-        if($result){
-            $response['status'] = 1;
-            $response['message'] = 'UPDATED';
-            $response['success'] = 'true';
+            if($result){
+                $response['status'] = 1;
+                $response['message'] = 'UPDATED';
+                $response['success'] = 'true';
+            }
         }
     }
     echo json_encode($response);

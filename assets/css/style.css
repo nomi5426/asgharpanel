@@ -475,6 +475,60 @@ input[type=file]::-webkit-file-upload-button {
   border-radius: 10px;
 }
 
+/*Zaid - Button*/
+#newCommentAdd{
+  background-color: #313E50;
+  width: 166px;
+}
+#newOrderAdd{
+  background-color: #3A435E;
+  width: 166px;
+}
+#newZohoOrderAdd{
+  background-color: #455561;
+  width: 166px;
+}
+#orderEdit{
+  background-color: #5C6672;
+  width: 166px;
+}
+#addStaff{
+  background-color: #6C6F7F;
+  width: 166px;
+}
+#newCommentAdd:hover,#newOrderAdd:hover,#newZohoOrderAdd:hover,#orderEdit:hover,#addStaff:hover{
+  background-color: #0f4a9b;
+}
+.odd>td:last-child>.inner{
+  display: flex;
+}
+.even>td:last-child>.inner{
+  display: flex;
+}
+.odd>td:last-child>.inner>button{
+  margin: 0px 2px;
+  padding: 0;
+  width: 35px;
+  height: 35px;
+}
+.even>td:last-child>.inner>button{
+  margin: 0px 2px;
+  padding: 0;
+  width: 35px;
+  height: 35px;
+}
+.odd>td:last-child>button{
+  margin: 0px 2px;
+  padding: 0;
+  width: 35px;
+  height: 35px;
+}
+.even>td:last-child>button{
+  margin: 0px 2px;
+  padding: 0;
+  width: 35px;
+  height: 35px;
+}
 /*Zaid - Icon Button - START*/
 .tbl-btn-icon {
   width: 90px;
@@ -18976,17 +19030,18 @@ object, embed, video {
   padding: 0;
   display: block; }
   .horizontalMenu > .horizontalMenu-list {
-    text-align: left;
+    text-align: center;
     margin: 0 auto 0 auto;
     width: 100%;
-    display: block;
+    display: inline-block;
     padding: 0; }
     .horizontalMenu > .horizontalMenu-list > li {
       text-align: center;
       display: block;
       padding: 0;
       margin: 0;
-      float: left; }
+      display: inline-block; 
+      }
       .horizontalMenu > .horizontalMenu-list > li > a {
         display: block;
         margin: 0px 2px;

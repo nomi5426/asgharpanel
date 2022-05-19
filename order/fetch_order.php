@@ -76,7 +76,7 @@
             $noImage = 'No Image.jpg';
             $image = $noImage;
         }
-        $comment = $row[16];
+        $comment = $row[17];
         if($comment == null){
             $comment = "N/A";
         }
