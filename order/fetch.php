@@ -77,7 +77,7 @@
             $dateAvailability='N/A';
         }
 
-        //IMAGE RETRIEVE
+        //IMAGE RETRIEVing
         if($row[7]!==''){ 
             if(strpos($upload_dir.$row[7],',') !== false){
                 $arr = explode(',', $row[7]);
