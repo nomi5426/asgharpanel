@@ -125,6 +125,32 @@ function loadSalesPerson(){
 							</div><!-- input-group -->
 						</div>
 					</div>
+					<div class="row justify-content-center">
+					<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										Date From
+									</div>
+								</div><!-- input-group-prepend -->
+									<input class="form-control fc-datepicker" name="search_fromdate" id="search_fromdate" placeholder="Delivery Date" type="text">
+							</div><!-- input-group -->
+						</div>
+						<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										Date to 
+									</div>
+								</div>
+									<input class="form-control fc-datepicker" name="search_todate" id="search_todate" placeholder="Delivery Date" type="text">
+							</div>
+						</div>
+
+					</div>
+					<td>
+          <input type='button' id="btn_search" value="Search">
+       </td>
 					<!-- row opened -->
 					<div class="row row-sm">
 						<div class="col-xl-12">
@@ -176,6 +202,7 @@ function loadSalesPerson(){
 		<a href="#top" id="back-to-top"><i class="las la-angle-double-up"></i></a>
 
 		<script type="text/javascript">
+
 			// var status = $("#orderStatus option:selected").text();
 			// var from = $("#branchFrom option:selected").text();
 			// var salesConsultant = $("#salesconsultant option:selected").text();
@@ -197,16 +224,19 @@ function loadSalesPerson(){
 							var from = $('#branchFrom').val();
 							var salesConsultant = $('#salesconsultant').val();
 							var deliveryCity = $('#deliverylocation').val();
+							var from_date = $('#search_fromdate').val();
+							var to_date = $('#search_todate').val();
 
 							data.orderStatus = status;
 							data.branchId = from;
 							data.salesconsultant = salesConsultant;
 							data.deliverylocation = deliveryCity;
+							data.searchByFromdate = from_date;
+							data.searchByTodate = to_date;
 
 							// console.log(from);
 							// console.log(salesConsultant);
 							// console.log(deliveryCity);
-
 						}
 					},
 					"rowCallback": function( row, data, index ) {
@@ -234,25 +264,40 @@ function loadSalesPerson(){
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "30%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "7%" },{ "sWidth": "3%" },{ "sWidth": "20%" },{"sWidth":"12%"}]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "30%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "7%" },{ "sWidth": "3%" },{ "sWidth": "20%" },{"sWidth":"12%"}]				 
 				} );
 
-				$('#orderSearchText').keyup(function(){
-					tableone.search($(this).val()).column(0).draw() ;
-				});
 
-				$('#orderStatus').change(function(){
-					tableone.draw();
-				});
-				$('#branchFrom').change(function(){
-					tableone.draw();
-				});
-				$('#salesconsultant').change(function(){
-					tableone.draw();
-				});
-				$('#deliverylocation').change(function(){
-					tableone.draw();
-				});
+				// $('#orderSearchText').keyup(function(){
+				// 	tableone.search($(this).val()).column(0).draw() ;
+				// });
+
+				// $('#orderStatus').change(function(){
+				// 	tableone.draw();
+				// });
+				// $('#branchFrom').change(function(){
+				// 	tableone.draw();
+				// });
+				// $('#salesconsultant').change(function(){
+				// 	tableone.draw();
+				// });
+				// $('#deliverylocation').change(function(){
+				// 	tableone.draw();
+				// });
+
+				// $('#search_fromdate').change(function(){
+				// 	tableone.draw();
+				// });
+
+				// $('#search_todate').change(function(){
+				// 	tableone.draw();
+				// });
+
+				  // Search button
+				  $('#btn_search').click(function(){
+				     tableone.draw();
+				  });
+
 
 				// $("#orderStatus").on('change', function() {
 				// 	var drpStats = $(this).val();
@@ -305,6 +350,7 @@ function loadSalesPerson(){
 					$('#content-data').html('<p>Error</p>');
 				});
         	});
+
 		</script>
 
 		<!-- Back-to-top -->
@@ -364,5 +410,51 @@ function loadSalesPerson(){
 
 		<!-- custom js -->
 		<script src="../assets/js/custom.js"></script>
+		<script src="../assets/plugins/jquery-ui/ui/widgets/datepicker.js"></script>
+
+	<script type="text/javascript">
+	  // $( function() { $( "#search_fromdate" ).datepicker({ dateFormat: 'dd/mm/yy' }); } );
+
+
+			   // Datapicker 
+			   $( ".fc-datepicker" ).datepicker({
+			      "dateFormat": "yy-mm-dd",
+			      changeYear: true
+			   });
+
+
+	  // $( function() { $( "#search_todate" ).datepicker({ dateFormat: 'dd/mm/yy' }); } );
+
+ 	</script>
+
+<!--   <script type="text/javascript">
+  	
+  	$(document).ready(function(){
+        $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var min = $('#minimumdate').datepicker("getDate");
+            var max = $('#maximumdate').datepicker("getDate");
+            var startDate = new Date(data[1]);
+            if (min == null && max == null) { return true; }
+            if (min == null && startDate <= max) { return true;}
+            if(max == null && startDate >= min) {return true;}
+            if (startDate <= max && startDate >= min) { return true; }
+            return false;
+        }
+        );
+
+       
+            $("#minimumdate").datepicker({ onSelect: function () { tableone.draw(); }, changeMonth: true, changeYear: true });
+            $("#maximumdate").datepicker({ onSelect: function () { tableone.draw(); }, changeMonth: true, changeYear: true });
+            var table = $('#exampleone').DataTable();
+
+            // Event listener to the two range filtering inputs to redraw on input
+            $('#minimumdate, #maximumdate').change(function () {
+                tableone.draw();
+            });
+        });
+
+  </script> -->
+
 	</body>
 </html>

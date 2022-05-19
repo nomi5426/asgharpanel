@@ -19,6 +19,11 @@ $branchId = $_POST['branchId'];
 $salesconsultant = $_POST['salesconsultant'];
 $deliverylocation = $_POST['deliverylocation'];
 
+
+## Date search value
+$searchByFromdate = $_POST['searchByFromdate'];
+$searchByTodate = $_POST['searchByTodate'];
+
 $col =array(
     0   =>  'invoiceId',
     1   =>  'productlink',
@@ -47,6 +52,12 @@ if($salesconsultant != ''){
 if($deliverylocation != ''){
   $filterQuery .= " AND (city='".$deliverylocation."')";
 }
+
+if($searchByFromdate != '' && $searchByTodate != ''){
+    // $sql .= " and (  '".$row[15]."' between '".$searchByFromdate."' and '".$searchByTodate."' ) ";
+    $filterQuery .= " and (productlink between '".$searchByFromdate."' and '".$searchByTodate."' ) ";
+}
+
 $sql = "SELECT * from product WHERE 1=1 ".$filterQuery;
 $query=mysqli_query($conn,$sql);
 
@@ -54,19 +65,22 @@ $query=mysqli_query($conn,$sql);
 if(!empty($request['search']['value'])){
     $sql.=" AND (invoiceId Like '".$request['search']['value']."%') ";
 }
+
+
+// Total number of records with filtering
 $query=mysqli_query($conn,$sql);
 $totalData=mysqli_num_rows($query);
 $totalFilter=$totalData;
 
+// Fetch records
 $sql.=" ORDER BY ".$col[$request['order'][0]['column']]." ".$request['order'][0]['dir']."  LIMIT ".$request['start']."  ,".$request['length']."  ";
-
 $query=mysqli_query($conn,$sql);
-
 $data=array();
+
 while($row=mysqli_fetch_array($query)){
     $subdata=array();
     //Days Given and Days Left
-    $productlinkToSec = strtotime($row[1]);
+    $productlinkToSec = strtotime($row[15]);
     $insertDateToSec = strtotime(Date('Y-m-d'));
     $timeDiff = ($productlinkToSec - $insertDateToSec);
     $interval = $timeDiff/86400;
@@ -98,7 +112,7 @@ while($row=mysqli_fetch_array($query)){
 
     $comment = $row[16];
     if($comment == null){
-      $comment = "N/A";
+      $comment = "No Comment";
     }
 
     //GET Item Name and Size on One Column
@@ -106,11 +120,11 @@ while($row=mysqli_fetch_array($query)){
     $deliveryNotePrint = "<a href=../deliveryNoteDownload.php?file_id=$row[0]>$row[4]";
 
     //Material Availability
-    $material = $row[15];
+    $material = $row[16];
     $materialAvailable = 'Yes';
 
     $subdata[]=$deliveryNotePrint;
-    $subdata[]=$row[14];
+    $subdata[]=$row[15];
     $subdata[]=$dateAvailability;
     $subdata[]=$row[3];
     $subdata[]=$interval;
