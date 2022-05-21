@@ -108,7 +108,7 @@ while($row=mysqli_fetch_array($query)){
     $materialAvailable = 'Yes';
 
     $subdata[]=$deliveryNotePrint;
-    $subdata[]=$row[14];
+    $subdata[]=$row[15];
     $subdata[]=$dateAvailability;
     $subdata[]=$row[3];
     $subdata[]=$interval;
