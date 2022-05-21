@@ -514,7 +514,7 @@ function loadSalesPerson(){
 						</div>
 					</div>
 					<div class="row justify-content-center">
-					<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
+						<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
 									<div class="input-group-text">
@@ -538,6 +538,29 @@ function loadSalesPerson(){
 								</select>
 							</div><!-- input-group -->
 						</div>
+					</div>
+					<div class="row justify-content-center">
+					<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										Date From
+									</div>
+								</div><!-- input-group-prepend -->
+									<input class="form-control fc-datepicker" name="search_fromdate" id="search_fromdate" placeholder="Delivery Date" type="text">
+							</div><!-- input-group -->
+						</div>
+						<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										Date to 
+									</div>
+								</div>
+									<input class="form-control fc-datepicker" name="search_todate" id="search_todate" placeholder="Delivery Date" type="text">
+							</div>
+						</div>
+
 					</div>
 					<!-- row opened -->
 					<div class="row row-sm">
@@ -611,11 +634,15 @@ function loadSalesPerson(){
 							var from = $('#branchFrom').val();
 							var salesConsultant = $('#salesconsultant').val();
 							var deliveryCity = $('#deliverylocation').val();
+							var from_date = $('#search_fromdate').val();
+							var to_date = $('#search_todate').val();
 
 							data.orderStatus = status;
 							data.branchId = from;
 							data.salesconsultant = salesConsultant;
 							data.deliverylocation = deliveryCity;
+							data.searchByFromdate = from_date;
+							data.searchByTodate = to_date;
 
 							// console.log(from);
 							// console.log(salesConsultant);
@@ -651,22 +678,27 @@ function loadSalesPerson(){
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "30%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "7%" },{ "sWidth": "3%" },{ "sWidth": "20%" },{"sWidth":"12%"}]
 				} );
 
-				$('#orderSearchText').keyup(function(){
-					tableone.search($(this).val()).column(0).draw() ;
-				});
+				// $('#orderSearchText').keyup(function(){
+				// 	tableone.search($(this).val()).column(0).draw() ;
+				// });
 
-				$('#orderStatus').change(function(){
-					tableone.draw();
-				});
-				$('#branchFrom').change(function(){
-					tableone.draw();
-				});
-				$('#salesconsultant').change(function(){
-					tableone.draw();
-				});
-				$('#deliverylocation').change(function(){
-					tableone.draw();
-				});
+				// $('#orderStatus').change(function(){
+				// 	tableone.draw();
+				// });
+				// $('#branchFrom').change(function(){
+				// 	tableone.draw();
+				// });
+				// $('#salesconsultant').change(function(){
+				// 	tableone.draw();
+				// });
+				// $('#deliverylocation').change(function(){
+				// 	tableone.draw();
+				// });
+				
+				// Search button
+				$('#btn_search').click(function(){
+				     tableone.draw();
+				  });
 
 				// $("#orderStatus").on('change', function() {
 				// 	var drpStats = $(this).val();
@@ -778,6 +810,7 @@ function loadSalesPerson(){
 
 		<!-- custom js -->
 		<script src="../assets/js/custom.js"></script>
+		<script src="../assets/plugins/jquery-ui/ui/widgets/datepicker.js"></script>
 		<script type="text/javascript">
 	  	// $( function() { $( "#search_fromdate" ).datepicker({ dateFormat: 'dd/mm/yy' }); } );
 		// Datapicker 
