@@ -15,12 +15,10 @@
 	}else if (!empty($_SESSION['_factoryLogin'])){
 		header('Location: base/factory.php');
 		exit;
-	}
-	else if (!empty($_SESSION['_staffLogin'])){
+	}else if (!empty($_SESSION['_staffLogin'])){
 		header('Location: base/staff.php');
 		exit;
-	}
-	else if (!empty($_SESSION['_deliveryLogin'])){
+	}else if (!empty($_SESSION['_deliveryLogin'])){
 		header('Location: base/delivery.php');
 		exit;
 	}
@@ -188,8 +186,8 @@
 			app_log("'".date('d-m-Y H:i:s')."' : STAFF User '".$username."' Logged In Successfully");			
 			header('Location: base/staff.php');
 			die();
-		}		
-		//delivery
+		}
+		//DELIVERY
 		else if(mysqli_num_rows($deliveryQuery)==1){
 			if(!empty($_POST["remember"])){
 				setcookie ("username", $_POST["username"], time() + (10 * 365 * 24 * 60 * 60));
@@ -210,10 +208,10 @@
 			$_SESSION['expire'] = time();
 			//LOG
 			date_default_timezone_set('Asia/Dubai');
-			app_log("'".date('d-m-Y H:i:s')."' : Delivery User '".$username."' Logged In Successfully");			
-			header('Location: base/delivery.php');
+			app_log("'".date('d-m-Y H:i:s')."' : DELIVERY User '".$username."' Logged In Successfully");			
+			header('Location: base/staff.php');
 			die();
-		}		
+		}	
 		else {
 			echo "<script>alert('Wrong User Name or Password, Please Try Again')</script>";
 		}
