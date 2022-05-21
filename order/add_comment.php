@@ -13,7 +13,7 @@ if(isset($_POST['selectedstat'])){
 	$query=mysqli_query($conn,$sql);
 	$_output .='<option value="" disabled selected>Select Invoice ID</option>';
 	while($row = mysqli_fetch_array($query)){
-		$_output .='<option data-id="'.$row['id'].'" value="'.$row["invoiceId"].'">'.$row["invoiceId"]." - ".$row["pname"].' </option>';
+		$_output .='<option data-id="'.$row["id"].'" value="'.$row["invoiceId"].'">'.$row["invoiceId"]." - ".$row["pname"].' </option>';
 	}
 	echo $_output;
 }
