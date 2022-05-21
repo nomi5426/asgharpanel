@@ -115,11 +115,11 @@ while($row=mysqli_fetch_array($query)){
     $deliveryNotePrint = "<a href=../deliveryNoteDownload.php?file_id=$row[0]>$row[4]";
 
     //Material Availability
-    $material = $row[15];
+    $material = $row[16];
     $materialAvailable = 'Yes';
 
     $subdata[]=$deliveryNotePrint;
-    $subdata[]=$row[14];
+    $subdata[]=$row[15];
     $subdata[]=$dateAvailability;
     $subdata[]=$row[3];
     $subdata[]=$interval;
