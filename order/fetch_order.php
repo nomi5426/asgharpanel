@@ -21,10 +21,6 @@
         10   =>  'city',
     );
 
-    // $sql ="SELECT * FROM product where pstatus = 'New Order'";
-    // $query=mysqli_query($conn,$sql);
-    // $totalData=mysqli_num_rows($query);
-    // $totalFilter=$totalData;
     //SEARCH
     if(!empty($status)){
         $sql ="SELECT * FROM product WHERE 1=1 and pstatus='".$status."'";
@@ -84,11 +80,11 @@
         $oneRow = "$row[6] | <strong>Color: $row[9]</strong><br><strong> Size - $row[8]</strong>";
         $deliveryNotePrint = "<a href=../deliveryNoteDownload.php?file_id=$row[0]>$row[4]";
         //MATERIAL AVAILABILITY
-        $material = $row[15];
+        $material = $row[16];
         $materialAvailable = 'Yes';
         //SUBDATA
         $subdata[]=$deliveryNotePrint;
-        $subdata[]=$row[14];
+        $subdata[]=$row[15];
         $subdata[]=$dateAvailability;
         $subdata[]=$row[3];
         $subdata[]=$interval;
