@@ -21,8 +21,8 @@
         $_invoiceReturn='';
         $_invoiceReturn .= '<option value = "Select Invoice">Select Invoice</option>';
         foreach($decoded_result['invoices'] as $result) {
-            $invoice_number = $result['invoice_number'];
-            $invoice_id = $result['invoice_id'];
+            $invoice_number = $result["invoice_number"];
+            $invoice_id = $result["invoice_id"];
             $_invoiceReturn .= '<option value = "'.$invoice_number.'">'.$invoice_number.'</option>';
         }
         return $_invoiceReturn;
@@ -99,7 +99,7 @@
                                 <div class="input-group mb-3">
                                     <select value="Select Zoho Invoice" name="_zohoInvoice" id="_zohoInvoice" class="SlectBox form-control">
                                         <?php echo _loadZohoInvoice(); ?>
-                                        <input hidden id="_zInvoiceId" name="_zInvoiceId" class="form-control"type="text">
+                                        <input hidden id="_zInvoiceId" name="_zInvoiceId" value="<?php echo $invoice_id;?>" class="form-control"type="text">
                                     </select>
                                 </div>
                                 <!--INVOICE FIELD CLOSED-->
@@ -304,7 +304,7 @@
         var itemSize;
         var itemQuantity;
         var divider;
-        var _zid = document.getElementById("_zohoInvoice").value;
+        var _zid = document.getElementById("_zInvoiceId").value;
         $.ajax({
             url:'../order/zoho_try_out.php',
             method: 'POST',
