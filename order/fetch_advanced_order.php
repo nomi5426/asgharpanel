@@ -62,15 +62,16 @@ $query=mysqli_query($conn,$sql);
 if(!empty($request['search']['value'])){
     $sql.=" AND (invoiceId Like '".$request['search']['value']."%') ";
 }
+// Total number of records with filtering
 $query=mysqli_query($conn,$sql);
 $totalData=mysqli_num_rows($query);
 $totalFilter=$totalData;
 
+// Fetch records
 $sql.=" ORDER BY ".$col[$request['order'][0]['column']]." ".$request['order'][0]['dir']."  LIMIT ".$request['start']."  ,".$request['length']."  ";
-
 $query=mysqli_query($conn,$sql);
-
 $data=array();
+
 while($row=mysqli_fetch_array($query)){
     $subdata=array();
     //Days Given and Days Left
