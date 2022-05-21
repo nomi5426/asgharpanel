@@ -34,7 +34,6 @@ function loadStaff(){
                     <div>
                         <div class="input-group mb-3">
                             <select name="invoice" id="invoice"  class="form-control select2-show-search select2-dropdown">
-                                <option value="">Select Invoice ID</option>
                                 <input hidden id="id" name="id" class="form-control"type="text">
                             </select>
                         </div>
@@ -74,6 +73,7 @@ $(document).ready(function(){
 
     $('#formNewOrderStaff').on('submit', function(e){
         e.preventDefault();
+        if(errorHandling()){
             var order_id = $('#invoice').val();
             var staff_id = $('#staff_name').val();
             $.ajax({
@@ -92,40 +92,12 @@ $(document).ready(function(){
                     }
                 }
             });
+        }
     });
-
-    // //ERROR HANDLING
-    // function errorHandling(){
-    //     var flag = true;
-    //     var _warningMessage;
-    //     var _warningText = "Mandatory Fields are Required to be Filled";
-
-    //     var _orderstatus = $("#orderstatus").val();
-    //     var _invoiceId = $("#invoice").val();
-    //     var _staffName = $("#staff_name").val();
-
-    //     if (_orderstatus == 'Select Order Status'){
-    //         _warningMessage = "Select Order with Status";
-    //         _staffWarning(_warningMessage, _warningText);
-    //         flag = false
-    //     }
-    //     else if (_invoiceId == 'Select Invoice ID'){
-    //         _warningMessage = "Invoice ID is Left Empty";
-    //         _staffWarning(_warningMessage, _warningText);
-    //         flag = false
-    //     } 
-    //     else if (_staffName == 'Select Staff ID'){
-    //         _warningMessage = "Staff Name is Left Empty";
-    //         _staffWarning(_warningMessage, _warningText);
-    //         flag = false
-    //     }else{
-    //         _staffAdded();
-    //     }
-    //     return flag;
-    // }
 
     //ERROR HANDLING
     function errorHandling(){
+        var flag = true;
         var _warningMessage;
         var _warningText = "Mandatory Fields are Required to be Filled";
 
@@ -150,16 +122,14 @@ $(document).ready(function(){
         }else{
             _staffAdded();
         }
+        return flag;
     }
 
     //WARNING ALERT
-    // function _staffWarning(_alertTitle, _alertText){
-    function _staffWarning(){
+    function _staffWarning(_alertTitle, _alertText){
         swal({
-            // title: _alertTitle,
-            // text: _alertText,
-            title: 'Select Fields',
-            text: 'Please do select the fields',
+            title: _alertTitle,
+            text: _alertText,
             type: "warning",
             confirmButtonClass: "btn btn-danger"
         });
