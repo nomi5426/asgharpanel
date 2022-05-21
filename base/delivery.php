@@ -66,6 +66,7 @@ if(!isset($_SESSION['_deliveryLogin'])){header('Location:../index.php');}
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
