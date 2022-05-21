@@ -126,7 +126,7 @@ function loadSalesPerson(){
 						</div>
 					</div>
 					<div class="row justify-content-center">
-					<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
+						<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
 									<div class="input-group-text">
@@ -146,11 +146,14 @@ function loadSalesPerson(){
 									<input class="form-control fc-datepicker" name="search_todate" id="search_todate" placeholder="Delivery Date" type="text">
 							</div>
 						</div>
-
 					</div>
-					<td>
-          <input type='button' id="btn_search" value="Search">
-       </td>
+					<div class="row row-sm justify-content-center">
+						<div>
+							<div class="input-group mb-3">
+         						<input class="btn btn-teal mr-2 btn-with-icon" type='button' id="btn_search" value="Search">
+							</div>
+						</div>
+					</div>						  
 					<!-- row opened -->
 					<div class="row row-sm">
 						<div class="col-xl-12">
@@ -297,40 +300,6 @@ function loadSalesPerson(){
 				  $('#btn_search').click(function(){
 				     tableone.draw();
 				  });
-
-
-				// $("#orderStatus").on('change', function() {
-				// 	var drpStats = $(this).val();
-				// 	alert(drpStats);
-				// 	$.ajax({
-				// 		url  :"fetch_advanced_order.php",
-				// 		type : "POST",
-				// 		data : {
-				// 			status : drpStats,
-				// 			from : $("#branchFrom option:selected").text(),
-				// 			salesConsultant : $("#salesconsultant option:selected").text(),
-				// 			deliveryCity : $("#deliverylocation option:selected").text()
-				// 		},
-				// 		success: function (data) {
-				// 			$('#exampleone').DataTable().ajax.reload();
-				// 		}
-				// 	});
-				// });
-
-				// $("#orderStatus").on('change', function() {
-				// var changeStat = $(this).val(); 
-				// 	$.ajax({
-				// 		url  :"filter_advanced_order.php",
-				// 		type : "POST",
-				// 		data : {
-				// 			changeStat : changeStat
-				// 			//from : _from
-				// 		},
-				// 		success: function (data) {
-				// 			$('#exampleone').DataTable().ajax.reload();
-				// 		}
-				// 	});
-				// });
 			} );
 
 			//Image Modal
@@ -417,38 +386,10 @@ function loadSalesPerson(){
 		// Datapicker 
 		$( ".fc-datepicker" ).datepicker({
 			"dateFormat": "yy-mm-dd",
-			changeYear: true
+			"changeYear": true
 		});
 	  	// $( function() { $( "#search_todate" ).datepicker({ dateFormat: 'dd/mm/yy' }); } );
 
  		</script>
-		<!--   <script type="text/javascript">
-		
-		$(document).ready(function(){
-			$.fn.dataTable.ext.search.push(
-			function (settings, data, dataIndex) {
-				var min = $('#minimumdate').datepicker("getDate");
-				var max = $('#maximumdate').datepicker("getDate");
-				var startDate = new Date(data[1]);
-				if (min == null && max == null) { return true; }
-				if (min == null && startDate <= max) { return true;}
-				if(max == null && startDate >= min) {return true;}
-				if (startDate <= max && startDate >= min) { return true; }
-				return false;
-			}
-			);
-
-		
-				$("#minimumdate").datepicker({ onSelect: function () { tableone.draw(); }, changeMonth: true, changeYear: true });
-				$("#maximumdate").datepicker({ onSelect: function () { tableone.draw(); }, changeMonth: true, changeYear: true });
-				var table = $('#exampleone').DataTable();
-
-				// Event listener to the two range filtering inputs to redraw on input
-				$('#minimumdate, #maximumdate').change(function () {
-					tableone.draw();
-				});
-			});
-
-	</script> -->
 	</body>
 </html>
