@@ -266,7 +266,22 @@
                 $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
             }
             $subdata[]=$row[20];
+        }        
+        else if($userrole == "delivery"){
+            $subdata[]=$qrcodeinvoicefordelivery;
+            $subdata[]=$row[15];
+            $subdata[]=$dateAvailability;
+            $subdata[]=$row[3];
+            $subdata[]=$interval;
+            $subdata[]=$oneRow;
+            $subdata[]=$row[9];
+            $subdata[]=$row[10];
+            $subdata[]=$row[12];
+            $subdata[]=$row[13];
+            $subdata[]='<img src="'.$upload_dir.$image.'" class="modal-effect" data-effect="effect-scale" id="tableImage" height="30" width="20" data-toggle="modal" data-target="#imagemodalone" data-id="'.$row[0].'"/>';
+            $subdata[]=$comment;
         }
+
         $data[]=$subdata;
     }
 
