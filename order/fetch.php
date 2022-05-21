@@ -101,6 +101,9 @@
         //FETCH ITEM
         $oneRow = "$row[6]<br><strong> Size - $row[8]</strong>";
         $deliveryNotePrint = "<a href=../base/deliveryNoteDownload.php?file_id=$row[0]>$row[4]";
+        $qrcodeinvoicefordelivery = "$row[4]";
+        $deliveryNotePrint = "<a href=../base/deliveryNoteDownload.php?file_id=$row[0]>$row[4] ";
+
 
         //MATERIAL AVAILABILITY
         $material = $row[16];
