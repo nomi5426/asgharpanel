@@ -100,9 +100,9 @@
 
         //FETCH ITEM
         $oneRow = "$row[6]<br><strong> Size - $row[8]</strong>";
-        $deliveryNotePrint = "<a href=../base/deliveryNoteDownload.php?file_id=$row[0]>$row[4]";
+        $deliveryNotePrintqr = "<a href=../base/deliveryNoteDownload.php?file_id=$row[0]>$row[4]</a><br><a href='../qrcodes/$row[22]' target='_blank'><img src='../qrcodes/$row[22]' /></a> ";
         $qrcodeinvoicefordelivery = "$row[4]";
-        $deliveryNotePrint = "<a href=../base/deliveryNoteDownload.php?file_id=$row[0]>$row[4] ";
+        $deliveryNotePrint = "<a href=../base/deliveryNoteDownload.php?file_id=$row[0]>$row[4]";
 
 
         //MATERIAL AVAILABILITY
@@ -208,7 +208,8 @@
 
         //FACTORY
         else if($userrole == "factory"){
-            $subdata[]=$deliveryNotePrint;
+            // $subdata[]=$deliveryNotePrint;
+            $subdata[]=$deliveryNotePrintqr; 
             $subdata[]=$row[15];
             $subdata[]=$dateAvailability;
             $subdata[]=$row[3];
