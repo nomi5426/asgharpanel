@@ -42,8 +42,11 @@ function loadDeliveryLocation(){
 
 function loadSalesPerson(){
     global $conn;
-    $salesPersonOutput='';   
-    $salesPersonSqlQuery = "SELECT firstname FROM user WHERE userrole = 'sales'";
+    $salesPersonOutput='';
+	$salesPersonSqlQuery = "SELECT firstname FROM user
+							WHERE sales_col = 1
+							AND active_status = 1
+							ORDER BY firstname ASC";
     $result = mysqli_query($conn, $salesPersonSqlQuery);
     while($row = mysqli_fetch_array($result)){
         $salesPersonOutput .= '<option value = "'.$row["firstname"].'">'.$row["firstname"].'</option>';
@@ -100,7 +103,7 @@ function loadSalesPerson(){
 						</div>
 					</div>
 					<div class="row justify-content-center">
-					<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
+						<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
 									<div class="input-group-text">
@@ -300,6 +303,40 @@ function loadSalesPerson(){
 				  $('#btn_search').click(function(){
 				     tableone.draw();
 				  });
+
+
+				// $("#orderStatus").on('change', function() {
+				// 	var drpStats = $(this).val();
+				// 	alert(drpStats);
+				// 	$.ajax({
+				// 		url  :"fetch_advanced_order.php",
+				// 		type : "POST",
+				// 		data : {
+				// 			status : drpStats,
+				// 			from : $("#branchFrom option:selected").text(),
+				// 			salesConsultant : $("#salesconsultant option:selected").text(),
+				// 			deliveryCity : $("#deliverylocation option:selected").text()
+				// 		},
+				// 		success: function (data) {
+				// 			$('#exampleone').DataTable().ajax.reload();
+				// 		}
+				// 	});
+				// });
+
+				// $("#orderStatus").on('change', function() {
+				// var changeStat = $(this).val(); 
+				// 	$.ajax({
+				// 		url  :"filter_advanced_order.php",
+				// 		type : "POST",
+				// 		data : {
+				// 			changeStat : changeStat
+				// 			//from : _from
+				// 		},
+				// 		success: function (data) {
+				// 			$('#exampleone').DataTable().ajax.reload();
+				// 		}
+				// 	});
+				// });
 			} );
 
 			//Image Modal
@@ -391,5 +428,33 @@ function loadSalesPerson(){
 	  	// $( function() { $( "#search_todate" ).datepicker({ dateFormat: 'dd/mm/yy' }); } );
 
  		</script>
+		<!--   <script type="text/javascript">
+		
+		$(document).ready(function(){
+			$.fn.dataTable.ext.search.push(
+			function (settings, data, dataIndex) {
+				var min = $('#minimumdate').datepicker("getDate");
+				var max = $('#maximumdate').datepicker("getDate");
+				var startDate = new Date(data[1]);
+				if (min == null && max == null) { return true; }
+				if (min == null && startDate <= max) { return true;}
+				if(max == null && startDate >= min) {return true;}
+				if (startDate <= max && startDate >= min) { return true; }
+				return false;
+			}
+			);
+
+		
+				$("#minimumdate").datepicker({ onSelect: function () { tableone.draw(); }, changeMonth: true, changeYear: true });
+				$("#maximumdate").datepicker({ onSelect: function () { tableone.draw(); }, changeMonth: true, changeYear: true });
+				var table = $('#exampleone').DataTable();
+
+				// Event listener to the two range filtering inputs to redraw on input
+				$('#minimumdate, #maximumdate').change(function () {
+					tableone.draw();
+				});
+			});
+
+	</script> -->
 	</body>
 </html>

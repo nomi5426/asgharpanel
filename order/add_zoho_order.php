@@ -48,8 +48,8 @@
 
 	//RETRIEVES RECORD FROM ADD ORDER MODAL
 	// if (isset($_POST['_newInvoiceId']) || isset($_POST['_newDeliveryDate']) || isset($_POST['_newItemName']) || isset($_POST['_newItemColor']) || isset($_POST['_newItemSize']) || isset($_POST['_newItemFrom']) || isset($_POST['_newDeliveryLocation']) || isset($_POST['_newStatus']) || isset($_POST['_newQuantity']) || isset($_POST['_newOrderNote']) || isset($_FILES['_newDeliveryNoteFile']) || isset($_POST['_newSalesConsultant']) || isset($_FILES['_newOrderImage']) || isset($_POST['_newCat_Id'])){
-	if (isset($_POST['_zohoInvoice']) || isset($_POST['_zDeliveryDate']) || isset($_POST['_zItemName']) || isset($_POST['_zItemColor']) || isset($_POST['_zItemSize']) || isset($_POST['_zItemFrom']) || isset($_POST['_zItemTo']) || isset($_POST['_zOrderStatus']) || isset($_POST['_zQuantity']) || isset($_POST['_zOrderNote']) || isset($_FILES['_zDeliveryNoteFile']) || isset($_POST['_zSalesConsultant']) || isset($_FILES['_zOrderImage']) || isset($_POST['_zCategory'])){
-		$invoice = $_POST['_zohoInvoice'];
+	if (isset($_POST['_zInvoiceId']) || isset($_POST['_zDeliveryDate']) || isset($_POST['_zItemName']) || isset($_POST['_zItemColor']) || isset($_POST['_zItemSize']) || isset($_POST['_zItemFrom']) || isset($_POST['_zItemTo']) || isset($_POST['_zOrderStatus']) || isset($_POST['_zQuantity']) || isset($_POST['_zOrderNote']) || isset($_FILES['_zDeliveryNoteFile']) || isset($_POST['_zSalesConsultant']) || isset($_FILES['_zOrderImage']) || isset($_POST['_zCategory'])){
+		$invoice = $_POST['_zInvoiceId'];
 		$deliveryDate = $_POST['_zDeliveryDate'];
 		$itemname = $_POST['_zItemName'];
 		$color = $_POST['_zItemColor'];

@@ -28,22 +28,26 @@ function loadDeliveryLocation(){
     return $cityOutput;
 }
 
-function loadOrderStatus(){
-    global $conn;
-    $statusOutput='';
-    $statusSqlQuery = "SELECT * FROM order_status ORDER BY order_status_sequence ASC";
-    $result = mysqli_query($conn, $statusSqlQuery);
-    $statusOutput .= '<option value = "Select Order Status">Select Order Status</option>';
-    while($row = mysqli_fetch_array($result)){
-        $statusOutput .= '<option value = "'.$row["status_name"].'">'.$row["status_name"].'</option>';
-    }
-    return $statusOutput;
-}
+// LOAD ORDER STATUS - PENDING
+// function loadOrderStatus(){
+//     global $conn;
+//     $statusOutput='';
+//     $statusSqlQuery = "SELECT * FROM order_status ORDER BY order_status_sequence ASC";
+//     $result = mysqli_query($conn, $statusSqlQuery);
+//     $statusOutput .= '<option value = "Select Order Status">Select Order Status</option>';
+//     while($row = mysqli_fetch_array($result)){
+//         $statusOutput .= '<option value = "'.$row["status_name"].'">'.$row["status_name"].'</option>';
+//     }
+//     return $statusOutput;
+// }
 
 function loadSalesPerson(){
     global $conn;
     $salesPersonOutput='';
-    $salesPersonSqlQuery = "SELECT firstname FROM user WHERE userrole = 'sales' ORDER BY firstname ASC";
+    $salesPersonSqlQuery = "SELECT firstname FROM user
+                            WHERE sales_col = 1
+                            AND active_status = 1
+                            ORDER BY firstname ASC";
     $result = mysqli_query($conn, $salesPersonSqlQuery);
     $salesPersonOutput .= '<option value = "Select Sales Consultant">Select Sales Consultant</option>';
     while($row = mysqli_fetch_array($result)){
@@ -128,7 +132,7 @@ function loadCat(){
                         <div class="col-lg-6">
                             <div class="input-group mb-3">
                                 <select value='Order Status' name="_newStatus" id="_newStatus" class="SlectBox form-control">
-                                    <?php echo loadOrderStatus(); ?>
+                                    <option value="Pending">Pending</option>
                                 </select>
                             </div>
                         </div>
@@ -240,10 +244,10 @@ function loadCat(){
     var month = (date.getMonth() + 1).toString().padStart(2, '0');
     var day = date.getDate().toString().padStart(2, '0');
     //Converting the date to a the YYYY-MM-DD format.
-    var _minDate = `${year}-${month}-${day}`; 
+    var _minDate = `${year}-${month}-${day}`;
     //document.getElementById("_deliveryDate").setAttribute("min", _minDate);
     $('#_newDeliveryDate').datepicker({
-        minDate: new Date(_minDate),
+        minDate: new Date(_minDate)
     });
     $('#_newDeliveryDate').datepicker('setDate', 'today');
 
@@ -266,10 +270,9 @@ function loadCat(){
                         $('.statusMsg').html('');
                         if(response.status === 1){
                             $("#formNewOrder")[0].reset();
-                            $('#exampleone').DataTable().ajax.reload();
-                            //TEST METHOD TO RESET DROPDOWN
                             postOrderSave();
-							$('#exampleone').DataTable().ajax.reload();
+                        }else if(response.status === 2){
+                            alert('Contact Admin');
                         }else{
                             $('.statusMsg').html(alert(response.message));
                         }

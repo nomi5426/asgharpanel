@@ -41,7 +41,10 @@
     function loadSalesPerson(){
         global $conn;
         $salesPersonOutput='';
-        $salesPersonSqlQuery = "SELECT firstname FROM user WHERE userrole = 'sales' ORDER BY firstname ASC";
+        $salesPersonSqlQuery = "SELECT firstname FROM user
+                                WHERE sales_col = 1
+                                AND active_status = 1
+                                ORDER BY firstname ASC";
         $result = mysqli_query($conn, $salesPersonSqlQuery);
         $salesPersonOutput .= '<option value = "Select Sales Consultant">Select Sales Consultant</option>';
         while($row = mysqli_fetch_array($result)){
