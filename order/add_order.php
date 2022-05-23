@@ -1,8 +1,6 @@
 <?php
 	include "../base/db.php";
 	
-	include('../library/phpqrcode/qrlib.php'); 
-
 	if(isset($_POST) && !empty($_POST)) {
 		include('../library/phpqrcode/qrlib.php'); 
 		$codesDir = "../qrcodes/";	
