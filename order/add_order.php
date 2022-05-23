@@ -1,7 +1,7 @@
 <?php
 	include "../base/db.php";
 	
-	include('../libs/phpqrcode/qrlib.php'); 
+	include('../library/phpqrcode/qrlib.php'); 
 
 	if(isset($_POST) && !empty($_POST)) {
 	include('../library/phpqrcode/qrlib.php'); 
@@ -23,6 +23,7 @@
 	$response['status'] = 0;
 	$response['message'] = 'NOT DONE!';
 	$response['success'] = 'false';
+
 
 	//SESSION MANAGEMENT
 	if (!session_id()) session_start();
@@ -132,7 +133,7 @@
 		
 		try{
 			if(!empty ($imageName)){
-				$insertQuery = "INSERT INTO product(
+				$insert = $conn->query("INSERT INTO product(
 					insertDate,
 					branchId,
 					city,
@@ -170,16 +171,11 @@
 				'".$dateAvailability."',
 				'".$userid."',
 				'".$codeFile."')");
-			}
-			$inject = mysqli_query($conn, $insertQuery);
-			if($inject){
-				$response['status'] = 1;
-				$response['message'] = 'Form data submitted successfully!';
-				$response['success'] = 'true';
-			}else{
-				$response['status'] = 2;
-				$response['message'] = 'Query Error';
-				$response['success'] = 'false';
+				if($insert){
+					$response['status'] = 1;
+					$response['message'] = 'Form data submitted successfully!';
+					$response['success'] = 'true';
+				}
 			}
 		}catch(Exception $error){
 			echo 'RZ|DAUNTE EXCEPTION: ',  $error->getMessage(), "\n";

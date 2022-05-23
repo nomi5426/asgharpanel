@@ -268,11 +268,9 @@ function loadCat(){
                     autoUpload: false,
                     success: function(response){
                         $('.statusMsg').html('');
-                        if(response.status === 1){
-                            $("#formNewOrder")[0].reset();
+                        if(response.status == 1){
                             postOrderSave();
-                        }else if(response.status === 2){
-                            alert('Contact Admin');
+                            $('#formNewOrder')[0].reset();
                         }else{
                             $('.statusMsg').html(alert(response.message));
                         }
@@ -397,6 +395,16 @@ function loadCat(){
             text: 'Check Saved Orders in Tables',
             type: 'success',
             confirmButtonColor: '#57a94f'
+        });
+    }
+
+    //SUCCESS ALERT
+    function dbErrorSwal(){
+        swal({
+            title: 'Contact Admin',
+            text: 'Contact System Admin for Info',
+            type: "warning",
+            confirmButtonClass: "btn btn-danger"
         });
     }
 
