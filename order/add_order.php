@@ -9,7 +9,7 @@
 	$codeFile = $_POST['_newInvoiceId'].'.png';
 	$formData = 'https://creative.tfs.ae/base/delivery.php?search='.$_POST['_newInvoiceId'];
 	// generating QR code
-	QRcode::png($formData, $codesDir.$codeFile); 
+	QRcode::png($formData, $codesDir.$codeFile);
 	// display generated QR code
 	// echo '<img class="img-thumbnail" src="'.$codesDir.$codeFile.'" />';
 	} else {
