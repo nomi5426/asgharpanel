@@ -13,17 +13,17 @@
     include "zoho_try_out.php";
 
     //FETCH INVOICES FROM ZOHO_TRY_OUT.PHP
-    $invoice_number = '';
     function _loadZohoInvoice(){
         global $decoded_result;
         global $result;
         global $invoice_id;
+        global $invoice_number;
         $_invoiceReturn='';
         $_invoiceReturn .= '<option value = "Select Invoice">Select Invoice</option>';
         foreach($decoded_result['invoices'] as $result) {
             $invoice_number = $result["invoice_number"];
             $invoice_id = $result["invoice_id"];
-            $_invoiceReturn .= '<option value = "'.$invoice_number.'">'.$invoice_number.'</option>';
+            $_invoiceReturn .= '<option value = "'.$invoice_id.'">'.$invoice_number.'</option>';
         }
         return $_invoiceReturn;
     }
@@ -71,7 +71,10 @@
     function loadSalesPerson(){
         global $conn;
         $salesPersonOutput='';
-        $salesPersonSqlQuery = "SELECT firstname FROM user WHERE userrole = 'sales' ORDER BY firstname ASC";
+        $salesPersonSqlQuery = "SELECT firstname FROM user
+                                WHERE sales_col = 1
+                                AND active_status = 1
+                                ORDER BY firstname ASC";
         $result = mysqli_query($conn, $salesPersonSqlQuery);
         $salesPersonOutput .= '<option value = "Select Sales Consultant">Select Sales Consultant</option>';
         while($row = mysqli_fetch_array($result)){
@@ -99,7 +102,7 @@
                                 <div class="input-group mb-3">
                                     <select value="Select Zoho Invoice" name="_zohoInvoice" id="_zohoInvoice" class="SlectBox form-control">
                                         <?php echo _loadZohoInvoice(); ?>
-                                        <input hidden id="_zInvoiceId" name="_zInvoiceId" value="<?php echo $invoice_id;?>" class="form-control"type="text">
+                                        <input hidden id="_zInvoiceId" name="_zInvoiceId" class="form-control"type="text">
                                     </select>
                                 </div>
                                 <!--INVOICE FIELD CLOSED-->
@@ -138,7 +141,7 @@
                                 <!--ORDER STATUS-->
                                 <div class="input-group mb-3">
                                     <select value='Order Status' name="_zOrderStatus" id="_zOrderStatus" class="SlectBox form-control">
-                                        <option value="Order Status">Pending</option>
+                                        <option value="Pending">Pending</option>
                                     </select>
                                 </div>
                                 <!--ORDER STATUS CLOSED-->
@@ -294,9 +297,10 @@
 
     //ORDER INVOICE SECOND DROPDOWN CHANGES
     $('#_zohoInvoice').change(function(e){
+        e.preventDefault();
         $('#_zProductName').html('');
         $('#_zProductName')[0].sumo.reload();
-        e.preventDefault();
+        _invoiceChangeEmpty();
         var selectedItem;
         var selectedProd;
         var itemName;
@@ -304,13 +308,16 @@
         var itemSize;
         var itemQuantity;
         var divider;
-        var _zid = document.getElementById("_zInvoiceId").value;
+        var _zid = document.getElementById("_zohoInvoice").value;
         $.ajax({
             url:'../order/zoho_try_out.php',
             method: 'POST',
             dataType: 'json',
             data: {_zid:_zid},
             success:function(data){
+                var con = data.invoice_number;
+                $("#_zInvoiceId").val(con);
+
                 $.each(data.line_items, function(i, item_list) {
                     $('#_zProductName')[0].sumo.add(item_list.description);
                     selectedItem = $('#_zProductName').val();
@@ -357,11 +364,7 @@
                     success: function(response){
                         $('.statusMsg').html('');
                         if(response.status == 1){
-                            $("#formZohoOrder")[0].reset();
-                            $('#exampleone').DataTable().ajax.reload();
-                            //TEST METHOD TO RESET DROPDOWN
                             postOrderSave();
-							$('#exampleone').DataTable().ajax.reload();
                         }else{
                             $('.statusMsg').html(alert(response.message));
                         }
@@ -378,7 +381,7 @@
         var flag = true;
         var _warningMessage;
         var _warningText = "Mandatory Fields are Required to be Filled";
-        var _invoiceId = $("#_zohoInvoice").val();
+        var _invoiceId = $("#_zInvoiceId").val();
         var _deliveryDate = $("#_zDeliveryDate").val();
         var _itemName = $("#_zItemName").val();
         var _itemColor = $("_zItemColor").val();
@@ -489,7 +492,42 @@
         });
     }
 
-    //CLEAR FILES AND LABEL AFTER SAVE
+    //FIELD HANDLING - IF INVOICE CHANGES
+    function _invoiceChangeEmpty(){
+        //FIELDS
+        $('#_zItemName').val('');
+        $('#_zItemSize').val('');
+        $('#_zItemColor').val('');
+        $('#_zProductName').html('');
+        //SELECTORS
+        $('#_zOrderStatus').html('<option value="Pending">Pending</option>');
+        $('#_zSalesConsultant').html('<?php echo loadSalesPerson();?>');
+        $('#_zCategory').html('<?php echo loadCat();?>');;
+        $('#_zItemFrom').html('<?php echo loadBranch();?>');
+        $('#_zItemTo').html('<?php echo loadDeliveryLocation();?>');
+        $('select.SlectBox')[1].sumo.reload();
+        $('select.SlectBox')[2].sumo.reload();
+        $('select.SlectBox')[3].sumo.reload();
+        $('select.SlectBox')[4].sumo.reload();
+        $('select.SlectBox')[5].sumo.reload();
+        $('select.SlectBox')[6].sumo.reload();
+        $('select.SlectBox')[7].sumo.reload();
+        $("#_zOrderNote").val('');
+        //FILE
+        $('#_zOrderImage').val('');
+        $('#_zDeliveryNoteFile').val('');
+        //FILE LABELS
+        //MAKE IMAGE EMPTY
+        var orderImageLabel = document.getElementById ("_zImageLabel");
+        orderImageLabel.placeholder = "Select Order Image";
+        $( 'div.preview' ).empty();
+        //MAKE DELIVERY NOTE EMPTY
+        var _dnLabel = document.getElementById ("_zDNLabel");
+        _dnLabel.placeholder = "Select Delivery Note";
+
+    }
+
+    //FIELD HANDLING - WHEN FORM SUBMISSION
     function postOrderSave(){
         //MAKE IMAGE EMPTY
         var orderImageLabel = document.getElementById ("_zImageLabel");
@@ -498,13 +536,12 @@
         //MAKE DELIVERY NOTE EMPTY
         var _dnLabel = document.getElementById ("_zDNLabel");
         _dnLabel.placeholder = "Select Delivery Note";
-        //MAKE SELECTORS EMPTY
-        $('select.SlectBox')[0].sumo.reload();
-        $('select.SlectBox')[1].sumo.reload();
-        $('select.SlectBox')[2].sumo.reload();
-        $('select.SlectBox')[3].sumo.reload();
-        $('select.SlectBox')[4].sumo.reload();
-        $('select.SlectBox')[5].sumo.reload();
+        
+        $('#_zItemName').val('');
+        $('#_zItemColor').val('');
+        $('#_zItemSize').val('');
+        $('#_zOrderImage').val('');
+        $('#_zDeliveryNoteFile').val('');
     }
 
     //ORDER IMAGE FUNCTION
@@ -598,4 +635,3 @@
 
 <!-- Internal Modal js-->
 <script src="../assets/js/modal.js"></script>
-

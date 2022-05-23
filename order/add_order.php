@@ -4,14 +4,14 @@
 	include('../library/phpqrcode/qrlib.php'); 
 
 	if(isset($_POST) && !empty($_POST)) {
-	include('../library/phpqrcode/qrlib.php'); 
-	$codesDir = "../qrcodes/";	
-	$codeFile = $_POST['_newInvoiceId'].'.png';
-	$formData = 'https://creative.tfs.ae/base/delivery.php?search='.$_POST['_newInvoiceId'];
-	// generating QR code
-	QRcode::png($formData, $codesDir.$codeFile);
-	// display generated QR code
-	// echo '<img class="img-thumbnail" src="'.$codesDir.$codeFile.'" />';
+		include('../library/phpqrcode/qrlib.php'); 
+		$codesDir = "../qrcodes/";	
+		$codeFile = $_POST['_newInvoiceId'].'.png';
+		$formData = 'https://creative.tfs.ae/base/delivery.php?search='.$_POST['_newInvoiceId'];
+		// generating QR code
+		QRcode::png($formData, $codesDir.$codeFile);
+		// display generated QR code
+		// echo '<img class="img-thumbnail" src="'.$codesDir.$codeFile.'" />';
 	} else {
 		header('location:./');
 	}
