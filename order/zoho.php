@@ -364,6 +364,7 @@
                     success: function(response){
                         $('.statusMsg').html('');
                         if(response.status == 1){
+                            //SAVE
                             postOrderSave();
                         }else{
                             $('.statusMsg').html(alert(response.message));

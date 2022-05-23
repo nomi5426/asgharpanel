@@ -5,8 +5,6 @@
 	
 	//DEFAULT RESPONSES
 	$response['status'] = 0;
-	$response['message'] = 'NOT DONE!';
-	$response['success'] = 'false';
 
 	//SESSION MANAGEMENT
 	if (!session_id()) session_start();
@@ -154,8 +152,6 @@
 			$result = mysqli_query($conn, $statement);
 			if($result){
 				$response['status'] = 1;
-				$response['message'] = 'Form data submitted successfully!';
-				$response['success'] = 'true';
 			}
 		}else{
 			$response['status'] = 0;
