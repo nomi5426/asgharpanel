@@ -145,7 +145,7 @@ if ( query ) {
                                 url  :"../order/fetch.php",
                                 type : "POST",
                                 data : {
-                                status : 'Out For Delivery',
+                                status : 'Out for Delivery',
                                 nextStatus : 'Delivered'
                                 }
                         },
