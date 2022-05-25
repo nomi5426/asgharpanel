@@ -32,7 +32,6 @@ $col =array(
 // $totalFilter=$totalData;
 
 //Search
-$ss = "Asad";
 if(!empty($stat)){
   $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$stat."' ";
 }else{

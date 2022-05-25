@@ -329,7 +329,61 @@ function loadSalesPerson(){
 		<!-- Back-to-top -->
 		<a href="#top" id="back-to-top"><i class="las la-angle-double-up"></i></a>
 
-		<script>
+		<!-- JQuery min js -->
+		<script src="../assets/plugins/jquery/jquery.min.js"></script>
+		<!--Internal  Datepicker js -->
+		<script src="../assets/plugins/jquery-ui/ui/widgets/datepicker.js"></script>
+		<!--Internal  jquery-simple-datetimepicker js -->
+		<script src="../assets/plugins/amazeui-datetimepicker/js/amazeui.datetimepicker.min.js"></script>
+		<!-- Ionicons js -->
+		<script src="../assets/plugins/jquery-simple-datetimepicker/jquery.simple-dtpicker.js"></script>
+		<!-- Bootstrap Bundle js -->
+		<script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!--Internal  Parsley.min js -->
+		<script src="../assets/plugins/parsleyjs/parsley.min.js"></script>
+		<!-- Internal Data tables -->
+		<script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+		<script src="../assets/plugins/datatable/js/dataTables.dataTables.min.js"></script>
+		<script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
+		<script src="../assets/plugins/datatable/js/responsive.dataTables.min.js"></script>
+		<script src="../assets/plugins/datatable/js/jquery.dataTables.js"></script>
+		<script src="../assets/plugins/datatable/js/dataTables.bootstrap4.js"></script>
+		<script src="../assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
+		<script src="../assets/plugins/datatable/js/buttons.bootstrap4.min.js"></script>
+		<script src="../assets/plugins/datatable/js/jszip.min.js"></script>
+		<script src="../assets/plugins/datatable/js/pdfmake.min.js"></script>
+		<script src="../assets/plugins/datatable/js/vfs_fonts.js"></script>
+		<script src="../assets/plugins/datatable/js/buttons.html5.min.js"></script>
+		<script src="../assets/plugins/datatable/js/buttons.print.min.js"></script>
+		<script src="../assets/plugins/datatable/js/buttons.colVis.min.js"></script>
+		<script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
+		<script src="../assets/plugins/datatable/js/responsive.bootstrap4.min.js"></script>
+		<!--Internal  Datatable js -->
+		<script src="../assets/js/table-data.js"></script>
+		<!-- Horizontalmenu js-->
+		<script src="../assets/plugins/horizontal-menu/horizontal-menu-2/horizontal-menu.js"></script>
+		<!-- Sticky js -->
+		<script src="../assets/js/sticky.js"></script>
+		<!-- Internal Select2 js-->
+		<script src="../assets/plugins/select2/js/select2.min.js"></script>
+		<!-- eva-icons js -->
+		<script src="../assets/js/eva-icons.min.js"></script>
+       	<!-- Internal Sumoselect js -->
+	   	<script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>      
+		<!-- Internal form-elements js -->
+		<script src="../assets/js/form-elements.js"></script>
+		<script src="../assets/plugins/rating/jquery.rating-stars.js"></script>
+		<!-- custom js -->
+		<script src="../assets/js/custom.js"></script>
+		<!-- Sweet-alert js  -->
+		<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
+		<script src="../assets/js/sweet-alert.js"></script>
+		<!-- Internal Modal js-->
+		<script src="../assets/js/modal.js"></script>
+		<!-- Internal Form-validation js -->
+		<script src="../assets/js/form-validation.js"></script>
+
+		<script type="text/javascript">
 			$(document).ready(function() {
 				var tableone = $('#exampleone').DataTable( {
 					"processing": 	true,
@@ -722,312 +776,275 @@ function loadSalesPerson(){
 					tableseven.search($(this).val()).column(0).draw() ;
 					tableeight.search($(this).val()).column(0).draw() ;
 				});
-			} );
 
-			//Image Modal
-			$(document).on('click','#tableImage',function(event){
-				event.preventDefault();
-				var per_id=$(this).data('id');
-				$('#content-data').html('');
-				$.ajax({
-					url:'../order/modal/orderImage.php',
-					type:'POST',
-					data:'id='+per_id,
-					dataType:'html'
-				}).done(function(data){
+				//Image Modal
+				$(document).on('click','#tableImage',function(event){
+					event.preventDefault();
+					var per_id=$(this).data('id');
 					$('#content-data').html('');
-					$('#content-data').html(data);
-				}).fail(function(){
-					$('#content-data').html('<p>Error</p>');
+					$.ajax({
+						url:'../order/modal/orderImage.php',
+						type:'POST',
+						data:'id='+per_id,
+						dataType:'html'
+					}).done(function(data){
+						$('#content-data').html('');
+						$('#content-data').html(data);
+					}).fail(function(){
+						$('#content-data').html('<p>Error</p>');
+					});
 				});
-        	});
 
-			//Add New Order Modal
-			$(document).on('click','#newOrderAdd',function(event){
-				event.preventDefault();
-				$('#add-order-content-data').html('');
-				var id=$(this).data('id');
-				$.ajax({
-					type:'POST',
-					url:'../order/addNewOrder.php',
-					data:{id:id}
-				}).done(function(data){
+				//Add New Order Modal
+				$(document).on('click','#newOrderAdd',function(event){
+					event.preventDefault();
 					$('#add-order-content-data').html('');
-					$('#add-order-content-data').html(data);
-				}).fail(function(){
-					$('#add-order-content-data').html('<p>Error</p>');
+					var id=$(this).data('id');
+					$.ajax({
+						type:'POST',
+						url:'../order/addNewOrder.php',
+						data:{id:id}
+					}).done(function(data){
+						$('#add-order-content-data').html('');
+						$('#add-order-content-data').html(data);
+					}).fail(function(){
+						$('#add-order-content-data').html('<p>Error</p>');
+					});
 				});
-			});
 
-			//Edit Modal
-			$(document).on('click','#orderEdit',function(event){
-				event.preventDefault();
-				$('#edit-order-content-data').html('');
-				$.ajax({
-					type:'POST',
-					url:'../order/editOrder.php'
-				}).done(function(data){
+				//Edit Modal
+				$(document).on('click','#orderEdit',function(event){
+					event.preventDefault();
 					$('#edit-order-content-data').html('');
-					$('#edit-order-content-data').html(data);
-				}).fail(function(){
-					$('#edit-order-content-data').html('<p>Error</p>');
+					$.ajax({
+						type:'POST',
+						url:'../order/editOrder.php'
+					}).done(function(data){
+						$('#edit-order-content-data').html('');
+						$('#edit-order-content-data').html(data);
+					}).fail(function(){
+						$('#edit-order-content-data').html('<p>Error</p>');
+					});
 				});
-			});
 
-			//ZOHO
-			$(document).on('click','#newZohoOrderAdd',function(event){
-				event.preventDefault();
-				$('#add-zoho-order-content-data').html('');
-				$.ajax({
-					type:'POST',
-					url:'../order/zoho.php'
-				}).done(function(data){
+				//ZOHO
+				$(document).on('click','#newZohoOrderAdd',function(event){
+					event.preventDefault();
 					$('#add-zoho-order-content-data').html('');
-					$('#add-zoho-order-content-data').html(data);
-				}).fail(function(){
-					$('#add-zoho-order-content-data').html('<p>Error</p>');
+					$.ajax({
+						type:'POST',
+						url:'../order/zoho.php'
+					}).done(function(data){
+						$('#add-zoho-order-content-data').html('');
+						$('#add-zoho-order-content-data').html(data);
+					}).fail(function(){
+						$('#add-zoho-order-content-data').html('<p>Error</p>');
+					});
 				});
-			});
 
-			//ADD COMMENT
-			$(document).on('click','#newCommentAdd',function(event){
-				event.preventDefault();
-				$('#add-comment-content-data').html('');
-				$.ajax({
-					type:'POST',
-					url:'../order/modal/addNewComment.php'
-				}).done(function(data){
+				//ADD COMMENT
+				$(document).on('click','#newCommentAdd',function(event){
+					event.preventDefault();
 					$('#add-comment-content-data').html('');
-					$('#add-comment-content-data').html(data);
-				}).fail(function(){
-					$('#add-comment-content-data').html('<p>Error</p>');
+					$.ajax({
+						type:'POST',
+						url:'../order/modal/addNewComment.php'
+					}).done(function(data){
+						$('#add-comment-content-data').html('');
+						$('#add-comment-content-data').html(data);
+					}).fail(function(){
+						$('#add-comment-content-data').html('<p>Error</p>');
+					});
 				});
-			});
 
-			//ORDER MADE STAFF
-			$(document).on('click','#addStaff',function(event){
-				event.preventDefault();
-				$('#add-order-staff-content-data').html('');
-				$.ajax({
-					type:'POST',
-					url:'../order/modal/addOrderStaff.php'
-				}).done(function(data){
+				//ORDER MADE STAFF
+				$(document).on('click','#addStaff',function(event){
+					event.preventDefault();
 					$('#add-order-staff-content-data').html('');
-					$('#add-order-staff-content-data').html(data);
-				}).fail(function(){
-					$('#add-order-staff-content-data').html('<p>Error</p>');
-				});
-			});
-
-			//CHANGE STATUS
-			$(document).on('click','#statusChangeNext',function(event){
-				if(confirm("Are you sure changing status?")){
-					event.preventDefault();
-					var statusid = $(this).attr('data-id');
 					$.ajax({
-						url     : '../order/statusChange.php',
-						method  : 'POST',
-						data    : {statusid : statusid},
-						success : function(response)
-						{
-							if(response.index == 2){
-								// alert('Mark Material Available');
-								_markMaterialAvailable();
-							}else if (response.index == 1){
-								// alert('Order Status has been Changed')
-								_statusChanged();
-								$('#exampleone').DataTable().ajax.reload();
-								$('#exampletwo').DataTable().ajax.reload();
-								$('#examplethree').DataTable().ajax.reload();
-								$('#examplefour').DataTable().ajax.reload();
-								$('#examplefive').DataTable().ajax.reload();
-								$('#examplesix').DataTable().ajax.reload();
-								$('#exampleseven').DataTable().ajax.reload();
-								$('#exampleeight').DataTable().ajax.reload();
-							}else if (response.index == 3){
-								// alert('Add Staff made The Product');
-								_staffEntry();
+						type:'POST',
+						url:'../order/addOrderStaff.php'
+					}).done(function(data){
+						$('#add-order-staff-content-data').html('');
+						$('#add-order-staff-content-data').html(data);
+					}).fail(function(){
+						$('#add-order-staff-content-data').html('<p>Error</p>');
+					});
+				});
+
+				//CHANGE STATUS
+				$(document).on('click','#statusChangeNext',function(event){
+					if(confirm("Are you sure changing status?")){
+						event.preventDefault();
+						var statusid = $(this).attr('data-id');
+						$.ajax({
+							url     : '../order/statusChange.php',
+							method  : 'POST',
+							dataType: 'json',
+							data    : {statusid : statusid},
+							success : function(response)
+							{
+								if(response.index == 1){
+									swal({
+										title: 'Status Changed',
+										text: 'Order Status is Changed Succesfully',
+										type: 'success',
+										confirmButtonColor: '#57a94f',
+										allowOutsideClick: true
+									});
+										$('#exampleone').DataTable().ajax.reload();
+										$('#exampletwo').DataTable().ajax.reload();
+										$('#examplethree').DataTable().ajax.reload();
+										$('#examplefour').DataTable().ajax.reload();
+										$('#examplefive').DataTable().ajax.reload();
+										$('#examplesix').DataTable().ajax.reload();
+										$('#exampleseven').DataTable().ajax.reload();
+										$('#exampleeight').DataTable().ajax.reload();
+								}else if (response.index == 2){
+									_markMaterialAvailable();
+								}else if (response.index == 3){
+									_staffEntry();
+								}else{
+									console.log('AUL AUL AUL');
+								}
 							}
-						}
+						});
+					}
+					else{
+						return false;
+					}
+				});
+
+				//CHANGE STATUS
+				$(document).on('click','#statusChangePrev',function(event){
+					if(confirm("Are you sure changing status?")){
+						event.preventDefault();
+						var statusPrev = $(this).attr('data-id');
+						$.ajax({
+							url     : '../order/statusChange.php',
+							method  : 'POST',
+							dataType: 'json',
+							data    : {statusPrev : statusPrev},
+							success : function(response){
+								if (response.index == 1){
+									swal({
+										title: 'Status Changed',
+										text: 'Order Status is Changed Succesfully',
+										type: 'success',
+										confirmButtonColor: '#57a94f',
+										allowOutsideClick: true
+									});
+									$('#exampleone').DataTable().ajax.reload();
+									$('#exampletwo').DataTable().ajax.reload();
+									$('#examplethree').DataTable().ajax.reload();
+									$('#examplefour').DataTable().ajax.reload();
+									$('#examplefive').DataTable().ajax.reload();
+									$('#examplesix').DataTable().ajax.reload();
+									$('#exampleseven').DataTable().ajax.reload();
+									$('#exampleeight').DataTable().ajax.reload();
+								}
+							}
+						});
+					}
+					else{
+						return false;
+					}
+				});
+
+				//WARNING ALERT
+				function _markMaterialAvailable(){
+					swal({
+						title: "Mark Material",
+						text: "Please confirm material availability before changing status",
+						type: "warning",
+						confirmButtonClass: "btn btn-danger"
 					});
 				}
-				else{
-					return false;
-				}
-			});
 
-			//CHANGE STATUS
-			$(document).on('click','#statusChangePrev',function(event){
-				if(confirm("Are you sure changing status?")){
-					event.preventDefault();
-					var statusPrev = $(this).attr('data-id');
-					$.ajax({
-						url     : '../order/statusChange.php',
-						method  : 'POST',
-						data    : {statusPrev : statusPrev},
-						success : function(response)
-						{
-							if (response.index == 1){
-								_statusChanged();
-								$('#exampleone').DataTable().ajax.reload();
-								$('#exampletwo').DataTable().ajax.reload();
-								$('#examplethree').DataTable().ajax.reload();
-								$('#examplefour').DataTable().ajax.reload();
-								$('#examplefive').DataTable().ajax.reload();
-								$('#examplesix').DataTable().ajax.reload();
-								$('#exampleseven').DataTable().ajax.reload();
-								$('#exampleeight').DataTable().ajax.reload();
-							}
-						}
+				//SUCCESS ALERT
+				function _statusChanged(){
+					swal({
+						title: 'Status Changed',
+						text: 'Order Status is Changed Succesfully',
+						type: 'success',
+						confirmButtonColor: '#57a94f',
+						allowOutsideClick: true
+					},
+					function(){
+						$.noConflict();
+						$('#exampleone').DataTable().ajax.reload();
+						$('#exampletwo').DataTable().ajax.reload();
+						$('#examplethree').DataTable().ajax.reload();
+						$('#examplefour').DataTable().ajax.reload();
+						$('#examplefive').DataTable().ajax.reload();
+						$('#examplesix').DataTable().ajax.reload();
+						$('#exampleseven').DataTable().ajax.reload();
+						$('#exampleeight').DataTable().ajax.reload();
 					});
 				}
-				else{
-					return false;
+
+				//WARNING ALERT
+				function _staffEntry(){
+					swal({
+						title: "Add Staff",
+						text: "Please add staff before marking next",
+						type: "warning",
+						confirmButtonClass: "btn btn-danger",
+						allowOutsideClick: true
+					},
+					function(){
+						$('#orderStaffModal').modal('show');
+						$('#add-order-staff-content-data').html('');
+						$.ajax({
+							type:'POST',
+							url:'../order/addOrderStaff.php'
+						}).done(function(data){
+							$('#add-order-staff-content-data').html('');
+							$('#add-order-staff-content-data').html(data);
+						}).fail(function(){
+							$('#add-order-staff-content-data').html('<p>Error</p>');
+						});
+					});
 				}
-			});
-
-			//WARNING ALERT
-			function _markMaterialAvailable(){
-				swal({
-					title: "Mark Material",
-					text: "Please confirm material availability before changing status",
-					type: "warning",
-					confirmButtonClass: "btn btn-danger"
-				});
-			}
-
-			//SUCCESS ALERT
-			function _statusChanged(){
-				swal({
-					title: 'Status Changed',
-					text: 'Order Status is Changed Succesfully',
-					type: 'success',
-					confirmButtonColor: '#57a94f'
-				});
-			}
-
-			//WARNING ALERT
-			function _staffEntry(){
-				swal({
-					title: "Add Staff",
-					text: "Please add staff before marking next",
-					type: "warning",
-					confirmButtonClass: "btn btn-danger"
-				});
-			}
 			
 
-			// //OLD MATERIAL
-			// $(document).on('click','#materialConfirm',function(event){
-			// 	if(confirm("Are you sure Confirming Material Availability?")){
-			// 		event.preventDefault();
-			// 		var materialid = $(this).attr('data-id');
-			// 		$.ajax({
-			// 			url     : '../order/statusChange.php',
-			// 			method  : 'POST',
-			// 			data    : {materialid : materialid},
-			// 			success : function(data){
-			// 				$('#exampleone').DataTable().ajax.reload();
-			// 			}
-			// 		});
-			// 	}
-			// 	else{
-			// 		return false;
-			// 	}
-			// });
+				// //OLD MATERIAL
+				// $(document).on('click','#materialConfirm',function(event){
+				// 	if(confirm("Are you sure Confirming Material Availability?")){
+				// 		event.preventDefault();
+				// 		var materialid = $(this).attr('data-id');
+				// 		$.ajax({
+				// 			url     : '../order/statusChange.php',
+				// 			method  : 'POST',
+				// 			data    : {materialid : materialid},
+				// 			success : function(data){
+				// 				$('#exampleone').DataTable().ajax.reload();
+				// 			}
+				// 		});
+				// 	}
+				// 	else{
+				// 		return false;
+				// 	}
+				// });
 
-			//MATERIAL
-			$(document).on('click','#_materialLpo',function(event){
-				event.preventDefault();
-				var id=$(this).data('id');
-				$('#material-content-data').html('');
-				$.ajax({
-					type:'POST',
-					url:'../order/materialLpoModal.php',
-					data:'id='+id,
-					dataType:'html'
-				}).done(function(data){
+				//MATERIAL
+				$(document).on('click','#_materialLpo',function(event){
+					event.preventDefault();
+					var id=$(this).data('id');
 					$('#material-content-data').html('');
-					$('#material-content-data').html(data);
-				}).fail(function(){
-					$('#material-content-data').html('<p>Error</p>');
+					$.ajax({
+						type:'POST',
+						url:'../order/materialLpoModal.php',
+						data:'id='+id,
+						dataType:'html'
+					}).done(function(data){
+						$('#material-content-data').html('');
+						$('#material-content-data').html(data);
+					}).fail(function(){
+						$('#material-content-data').html('<p>Error</p>');
+					});
 				});
-        	});
+			} );
 		</script>
-
-		<!-- Back-to-top -->
-		<a href="#top" id="back-to-top"><i class="ti-angle-double-up"></i></a>
-
-		<!-- JQuery min js -->
-		<script src="../assets/plugins/jquery/jquery.min.js"></script>
-
-		<!--Internal  Datepicker js -->
-		<script src="../assets/plugins/jquery-ui/ui/widgets/datepicker.js"></script>
-
-		<!--Internal  jquery-simple-datetimepicker js -->
-		<script src="../assets/plugins/amazeui-datetimepicker/js/amazeui.datetimepicker.min.js"></script>
-
-		<!-- Ionicons js -->
-		<script src="../assets/plugins/jquery-simple-datetimepicker/jquery.simple-dtpicker.js"></script>
-
-		<!-- Bootstrap Bundle js -->
-		<script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-		<!--Internal  Parsley.min js -->
-		<script src="../assets/plugins/parsleyjs/parsley.min.js"></script>
-
-		<!-- Internal Data tables -->
-		<script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
-		<script src="../assets/plugins/datatable/js/dataTables.dataTables.min.js"></script>
-		<script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
-		<script src="../assets/plugins/datatable/js/responsive.dataTables.min.js"></script>
-		<script src="../assets/plugins/datatable/js/jquery.dataTables.js"></script>
-		<script src="../assets/plugins/datatable/js/dataTables.bootstrap4.js"></script>
-		<script src="../assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
-		<script src="../assets/plugins/datatable/js/buttons.bootstrap4.min.js"></script>
-		<script src="../assets/plugins/datatable/js/jszip.min.js"></script>
-		<script src="../assets/plugins/datatable/js/pdfmake.min.js"></script>
-		<script src="../assets/plugins/datatable/js/vfs_fonts.js"></script>
-		<script src="../assets/plugins/datatable/js/buttons.html5.min.js"></script>
-		<script src="../assets/plugins/datatable/js/buttons.print.min.js"></script>
-		<script src="../assets/plugins/datatable/js/buttons.colVis.min.js"></script>
-		<script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
-		<script src="../assets/plugins/datatable/js/responsive.bootstrap4.min.js"></script>
-
-		<!--Internal  Datatable js -->
-		<script src="../assets/js/table-data.js"></script>
-
-		<!-- Horizontalmenu js-->
-		<script src="../assets/plugins/horizontal-menu/horizontal-menu-2/horizontal-menu.js"></script>
-
-		<!-- Sticky js -->
-		<script src="../assets/js/sticky.js"></script>
-
-		<!-- Internal Select2 js-->
-		<script src="../assets/plugins/select2/js/select2.min.js"></script>
-
-		<!-- eva-icons js -->
-		<script src="../assets/js/eva-icons.min.js"></script>
-
-       <!-- Internal Sumoselect js -->
-	   <script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
-            
-		<!-- Internal form-elements js -->
-		<script src="../assets/js/form-elements.js"></script>
-
-		<script src="../assets/plugins/rating/jquery.rating-stars.js"></script>
-
-		<!-- custom js -->
-		<script src="../assets/js/custom.js"></script>
-
-		<!-- Sweet-alert js  -->
-		<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
-		<script src="../assets/js/sweet-alert.js"></script>
-
-		<!-- Internal Modal js-->
-		<script src="../assets/js/modal.js"></script>
-
-		<!-- Internal Form-validation js -->
-		<script src="../assets/js/form-validation.js"></script>
 	</body>
 </html>

@@ -3,20 +3,21 @@ include "../base/db.php";
     /**
      * DECLARED VARIABLES FOR GET USER DETAIL
      */
+    if (!session_id()) session_start();
     $userId=1;
     $isApproved=1;
     $firstname='';
     //GET USER ROLE
-    // if(isset($_SESSION['userName'])){
-    //     $username = $_SESSION['userName'];
-    //     $userDetail= "SELECT * FROM user WHERE username='".$username."'";
-    //     $queryInject = mysqli_query($conn, $userDetail);
-    //     if(mysqli_num_rows($queryInject)){
-    //         while($row = mysqli_fetch_assoc($queryInject)) {
-    //             $userId = $row['id'];
-    //         }
-    //     }
-    // }
+    if(isset($_SESSION['userName'])){
+        $username = $_SESSION['userName'];
+        $userDetail= "SELECT * FROM user WHERE username='".$username."'";
+        $queryInject = mysqli_query($conn, $userDetail);
+        if(mysqli_num_rows($queryInject)){
+            while($row = mysqli_fetch_assoc($queryInject)) {
+                $userId = $row['id'];
+            }
+        }
+    }
 
     //GET USER NAME
     if(isset($_SESSION["userName"])){
@@ -25,94 +26,96 @@ include "../base/db.php";
 
     $response['index'] = 1;
 
-    if(isset($_POST['statusid'])){
-        $statusid = $_POST['statusid'];
-        $sql = "SELECT * FROM product WHERE id='".$statusid."'";
-        $query=mysqli_query($conn,$sql);
-        $row = mysqli_fetch_array($query);
-
-        $orderStatus = $row['pstatus'];
-        $materialStatus = $row['material'];
-
-        $statusChangeQuery = "";
-        $statusChangeMessage = "";
-
-        if($orderStatus == "New Order"){
-            if($materialStatus !== 'Yes'){
-                $statusChangeQuery = "update product set pstatus = 'New Order' where id=".$statusid;;
-                $statusChangeMessage = "Please Confirm Material Availability";
-                $response['index'] = 2;
-            }else{
-                $statusChangeQuery = "update product set pstatus = 'In Production' where id=".$statusid;
-                $statusChangeMessage = "Order status has been changed to In Production";$response['index'] = 1;
+    try{
+        if(isset($_POST['statusid'])){
+            $statusid = $_POST['statusid'];
+            $sql = "SELECT * FROM product WHERE id='".$statusid."'";
+            $query=mysqli_query($conn,$sql);
+            $row = mysqli_fetch_array($query);
+    
+            $orderStatus = $row['pstatus'];
+            $materialStatus = $row['material'];
+    
+            $statusChangeQuery = "";
+            $statusChangeMessage = "";
+    
+            if($orderStatus == "New Order"){
+                if($materialStatus !== 'Yes'){
+                    $statusChangeQuery = "update product set pstatus = 'New Order' where id=".$statusid;;
+                    $statusChangeMessage = "Please Confirm Material Availability";
+                    $response['index'] = 2;
+                }else{
+                    $statusChangeQuery = "update product set pstatus = 'In Production' where id=".$statusid;
+                    $statusChangeMessage = "Order status has been changed to In Production";
+                    $response['index'] = 1;
+                }
+            }
+            else if($orderStatus == "In Production"){
+                $_staffAssociate = $conn->query("SELECT * FROM order_staff WHERE order_id = ".$statusid);
+                if(mysqli_num_rows($_staffAssociate)!=0){
+                    $statusChangeQuery = "update product set pstatus = 'Ready' where id=".$statusid;
+                    $statusChangeMessage = "Order status has been changed to Ready";
+                    $response['index'] = 1;
+                }else{
+                    $statusChangeQuery = "update product set pstatus = 'In Production' where id=".$statusid;
+                    $statusChangeMessage = "Staff should be added, Order is at In Production, wasn't changed";
+                    $response['index'] = 3;
+                }
+            }
+            else if($orderStatus == "Ready"){
+                $statusChangeQuery = "update product set pstatus = 'Out for Delivery' where id=".$statusid;
+                $statusChangeMessage = "Order status has been changed to Out for Delivery";
                 $response['index'] = 1;
             }
-        }
-        else if($orderStatus == "In Production"){
-            $_staffAssociate = $conn->query("SELECT * FROM order_staff WHERE order_id = ".$statusid);
-            if(mysqli_num_rows($_staffAssociate)!=0){
-                $statusChangeQuery = "update product set pstatus = 'Ready' where id=".$statusid;
-                $statusChangeMessage = "Order status has been changed to Ready";
+            else if($orderStatus == "Out for Delivery"){
+                $statusChangeQuery = "update product set pstatus = 'Delivered' where id=".$statusid;
+                $statusChangeMessage = "Order status has been changed to Delivered";
                 $response['index'] = 1;
-            }else{
-                $statusChangeQuery = "update product set pstatus = 'In Production' where id=".$statusid;
-                $statusChangeMessage = "Order status has been changed to Ready";
-                $response['index'] = 3;
+            }
+            else if($orderStatus == "On Hold"){
+                $statusChangeQuery = "update product set pstatus = 'New Order' where id=".$statusid;
+                $statusChangeMessage = "Order status has been changed to Delivered";
+                $response['index'] = 1;
+            }
+            else if($orderStatus == "Cancelled"){
+                $statusChangeQuery = "update product set pstatus = 'New Order' where id=".$statusid;
+                $statusChangeMessage = "Order status has been changed to Delivered";
+                $response['index'] = 1;
+            }
+            $result = mysqli_query($conn,$statusChangeQuery);
+            if($result){
+                $response['index'];
             }
         }
-        else if($orderStatus == "Ready"){
-            $statusChangeQuery = "update product set pstatus = 'Out for Delivery' where id=".$statusid;
-            $statusChangeMessage = "Order status has been changed to Out for Delivery";
-            $response['index'] = 1;
-        }
-        else if($orderStatus == "Out for Delivery"){
-            $statusChangeQuery = "update product set pstatus = 'Delivered' where id=".$statusid;
-            $statusChangeMessage = "Order status has been changed to Delivered";
-            $response['index'] = 1;
-        }
-        else if($orderStatus == "On Hold"){
-            $statusChangeQuery = "update product set pstatus = 'New Order' where id=".$statusid;
-            $statusChangeMessage = "Order status has been changed to Delivered";
-            $response['index'] = 1;
-        }
-        else if($orderStatus == "Cancelled"){
-            $statusChangeQuery = "update product set pstatus = 'New Order' where id=".$statusid;
-            $statusChangeMessage = "Order status has been changed to Delivered";
-            $response['index'] = 1;
-        }
-        $result = mysqli_query($conn,$statusChangeQuery);
-        if($result){
-            $response['index'];
-        }
+    }catch(Exception $rzmessage){
+        echo 'RZDAUNTE exception: ',  $rzmessage->getMessage(), "\n";
     }
 
     if(isset($_POST['statusPrev'])){
         $prevStatusId = $_POST['statusPrev'];
-        $sql = "SELECT * FROM product WHERE id='".$prevStatusId."'";
-        $query=mysqli_query($conn,$sql);
-        $row = mysqli_fetch_array($query);
+        $sql = $conn->query("SELECT * FROM product WHERE id='".$prevStatusId."'");
+        $row = mysqli_fetch_array($sql);
         $orderStatus = $row['pstatus'];
         $statusChangeQuery = "";
         $statusChangeMessage = "";
     
         if($orderStatus == "In Production"){
-            $statusChangeQuery = "UPDATE product SET pstatus = 'New Order', statusChangedBy = '$username' WHERE id=".$prevStatusId;
+            $statusChangeQuery = $conn->query("UPDATE product SET pstatus = 'New Order', statusChangedBy = '$username' WHERE id=".$prevStatusId);
             $statusChangeMessage = "Order status has been changed to New Order";
             $response['index'] = 1;
         }
         else if($orderStatus == "Ready"){
-            $statusChangeQuery = "UPDATE product SET pstatus = 'In Production', statusChangedBy = '$username' WHERE id=".$prevStatusId;
+            $statusChangeQuery = $conn->query("UPDATE product SET pstatus = 'In Production', statusChangedBy = '$username' WHERE id=".$prevStatusId);
             $statusChangeMessage = "Order status has been changed to In Production";
             $response['index'] = 1;
             
         }
-        else if($orderStatus == "Out For Delivery"){
-            $statusChangeQuery = "UPDATE product SET pstatus = 'Ready', statusChangedBy = '$username' WHERE id=".$prevStatusId;
+        else if($orderStatus == "Out for Delivery"){
+            $statusChangeQuery = $conn->query("UPDATE product SET pstatus = 'Ready', statusChangedBy = '$username' WHERE id=".$prevStatusId);
             $statusChangeMessage = "Order status has been changed to Ready";
             $response['index'] = 1;
         }
-        $result = mysqli_query($conn,$statusChangeQuery);
-        if($result){
+        if($statusChangeQuery){
             $response['index'];
         }
     }
@@ -153,9 +156,9 @@ include "../base/db.php";
         }
         $insert_result = mysqli_query($conn, $newQuery);
         if($insert_result){
-            echo "<script type='text/javascript'>alert('DONE')</script>";
+            $response['index'];
         }
     }
-    header('Content-type: application/json');
+    // header('Content-type: application/json');
     echo json_encode($response);
 ?>
