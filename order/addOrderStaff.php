@@ -25,7 +25,7 @@ function loadStaff(){
                 <div class="col-lg-12">
                     <div>
                         <div class="input-group mb-3">
-                            <select name="orderstatus" id="orderstatus" class="SlectBox form-control">
+                            <select name="staffStatus" id="staffStatus" class="SlectBox form-control">
                                 <option value="Select Order Status">Select Order Status</option>
                                 <option value="In Production">In Production</option>
                             </select>
@@ -33,7 +33,7 @@ function loadStaff(){
                     </div>
                     <div>
                         <div class="input-group mb-3">
-                            <select name="invoice" id="invoice"  class="form-control select2-show-search select2-dropdown">
+                            <select name="staffInvoice" id="staffInvoice"  class="form-control select2-show-search select2-dropdown">
                             </select>
                             <input hidden id="id" name="id" class="form-control"type="text">
                         </div>
@@ -56,11 +56,6 @@ function loadStaff(){
         </form>
     </div>
 </div>
-<!-- Sweet-alert js  -->
-<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
-<script src="../assets/js/sweet-alert.js"></script>
-<!-- Internal Modal js-->
-<script src="../assets/js/modal.js"></script>
 <!-- Internal Sumoselect js -->
 <script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
 <!-- Internal Select2 js -->
@@ -68,10 +63,11 @@ function loadStaff(){
 <script src="../assets/plugins/select2/js/select2.min.js"></script>
 <!-- Internal Form-elements js -->
 <script src="../assets/js/advanced-form-elements.js"></script>
-
+<!-- Internal Modal js-->
+<script src="../assets/js/modal.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#orderstatus").change(function(e){
+        $("#staffStatus").change(function(e){
             e.preventDefault();
             var orderStatus = $(this).val();
             $.ajax({
@@ -79,15 +75,15 @@ function loadStaff(){
                 method: 'POST',
                 data: {orderStatus:orderStatus},
                 success:function(data){
-                    $("#invoice").html(data);
+                    $("#staffInvoice").html(data);
                 }
             });
         });
 
-        $('#formNewOrderStaff').on('submit', function(e){
-            e.preventDefault();
-            if(errorHandling()){
-                var order_id = $('#invoice').val();
+		$('#formNewOrderStaff').on('submit', function(e){
+			e.preventDefault();
+			if(errorHandling()){
+                var order_id = $('#staffInvoice').val();
                 var staff_id = $('#staff_name').val();
                 $.ajax({
                     type: "POST",
@@ -115,8 +111,8 @@ function loadStaff(){
             var _warningMessage;
             var _warningText = "Mandatory Fields are Required to be Filled";
 
-            var _orderstatus = $("#orderstatus").val();
-            var _invoiceId = $("#invoice").val();
+            var _orderstatus = $("#staffStatus").val();
+            var _invoiceId = $("#staffInvoice").val();
             var _staffName = $("#staff_name").val();
 
             if (_orderstatus == 'Select Order Status'){
@@ -140,7 +136,7 @@ function loadStaff(){
             return flag;
         }
 
-        //WARNING ALERT
+		//EMPTY FIELD - WARNING
         function _staffWarning(_alertTitle, _alertText){
             swal({
                 title: _alertTitle,
@@ -150,7 +146,7 @@ function loadStaff(){
             });
         }
 
-        //SUCCESS ALERT
+		//STAFF ADDEDD - SUCCESS
         function _staffAdded(){
             swal({
                 title: 'Staff Added',
@@ -160,7 +156,7 @@ function loadStaff(){
             });
         }
 
-        //WARNING ALERT
+		//STAFF EXISTS - WARNING
         function _staffExists(){
             swal({
                 title: 'Staff Exists',

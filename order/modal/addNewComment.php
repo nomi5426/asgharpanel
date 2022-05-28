@@ -64,107 +64,72 @@ function loadOrder(){
         </form>
     </div>
 </div>
-        
 <!-- Internal Sumoselect js -->
 <script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
-
 <!-- Internal Select2 js -->
 <!-- <script src="../assets/js/select2.js"></script> -->
 <script src="../assets/plugins/select2/js/select2.min.js"></script>
-
 <!-- Internal Form-elements js -->
 <script src="../assets/js/advanced-form-elements.js"></script>
-
 <!-- Internal Modal js-->
 <script src="../assets/js/modal.js"></script>
-
 <script type="text/javascript">
-$('#addedcomment').hide();
-$('#newcomment').hide();
-$(document).ready(function(){
-    $("#orderstatus").change(function(e){
-        e.preventDefault();
-        var stat = $(this).val();
-        $.ajax({
-            url:'../order/add_comment.php',
-            method: 'POST',
-            data: {selectedstat:stat},
-            success:function(data){
-                $("#invoice").html(data);
-            }
-        });
-    });
-    $("#invoice").change(function(e){
-        e.preventDefault();
-        var id = $(this).find(':selected').attr('data-id');
-        $.ajax({
-            url:'../order/add_comment.php',
-            method: 'POST',
-            data: {id:id},
-            success:function(data){
-                if(data === ""){
-                    $('#newcomment').fadeIn("slow");
-                    $('#newcomment').show();
-                    $('#addedcomment').hide();
-                    $('#id').val(id);
+    $('#addedcomment').hide();
+    $('#newcomment').hide();
+    $(document).ready(function(){
+        $("#orderstatus").change(function(e){
+            e.preventDefault();
+            var stat = $(this).val();
+            $.ajax({
+                url:'../order/add_comment.php',
+                method: 'POST',
+                data: {selectedstat:stat},
+                success:function(data){
+                    $("#invoice").html(data);
                 }
-                else{
-                    $('#addedcomment').fadeIn("slow");
-                    $('#addedcomment').show();
-                    $("#addedcomment").html(data);
-                    $('#newcomment').fadeIn("slow");
-                    $('#newcomment').show();
-                    $('#id').val(id);
+            });
+        });
+        $("#invoice").change(function(e){
+            e.preventDefault();
+            var id = $(this).find(':selected').attr('data-id');
+            $.ajax({
+                url:'../order/add_comment.php',
+                method: 'POST',
+                data: {id:id},
+                success:function(data){
+                    if(data === ""){
+                        $('#newcomment').fadeIn("slow");
+                        $('#newcomment').show();
+                        $('#addedcomment').hide();
+                        $('#id').val(id);
+                    }
+                    else{
+                        $('#addedcomment').fadeIn("slow");
+                        $('#addedcomment').show();
+                        $("#addedcomment").html(data);
+                        $('#newcomment').fadeIn("slow");
+                        $('#newcomment').show();
+                        $('#id').val(id);
+                    }
                 }
-            }
+            });
+        });
+        $('#formNewComment').on('submit', function(e){
+            e.preventDefault();
+            var id = $('#id').val();
+            var newcomment = $('#newcomment').val();
+            $.ajax({
+                type: "POST",
+                url: '../order/add_comment.php',
+                data: {oid:id, newcomment:newcomment},
+                success: function(data){
+                    $('#formNewComment')[0].reset();
+                    $('#id').val('');
+                    $('#newcomment').val('');
+                    $('#invoice').val('');
+                    $('#orderstatus').val('');
+                }
+            });
         });
     });
-    $('#formNewComment').on('submit', function(e){
-        e.preventDefault();
-        var id = $('#id').val();
-        var newcomment = $('#newcomment').val();
-        $.ajax({
-            type: "POST",
-            url: '../order/add_comment.php',
-            data: {oid:id, newcomment:newcomment},
-            success: function(data){
-                $('#formNewComment')[0].reset();
-                $('#id').val('');
-                $('#newcomment').val('');
-                $('#invoice').val('');
-                $('#orderstatus').val('');
-            }
-        });
-    });
-    // $('formNewComment').on('submit', function (e) {
-    //     e.preventDefault();
-    //     var usercomment = $('#newcomment').val();
-    //     var id = $('#id').val();
-    //     var dataString = 'usercomment='+ usercomment +'&id='+id;
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: 'order/add_comment.php',
-    //         data: dataString,
-    //         success: function (result) {
-    //             console.log('success');
-    //         }
-    //     });
-    // });
-
-    // $('formNewComment').submit(function(evt) {
-    //     evt.preventDefault();
-    //     var fd = new FormData();
-    //     fd.append('id', $('input[name=id]').val());
-    //     fd.append('newcomment', $('input[name=newcomment]').val());
-    //     $.ajax({
-    //         url: 'order/add_comment.php',
-    //         data: fd,
-    //         type: "POST",
-    //         success: function(data) {
-    //             console.log('success');      
-    //             $('#formNewComment')[0].reset();
-    //         }
-    //     });
-    // });
-});
 </script>

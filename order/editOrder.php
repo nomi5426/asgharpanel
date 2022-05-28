@@ -78,14 +78,9 @@
                             <div class="col-lg-6">
                                 <div class="input-group mb-3">
                                     <select name="orderstatusfilter" id="orderstatusfilter" class="SlectBox form-control">
-                                        <option value="" disabled selected>Select Order Status</option>
-                                            <?php
-                                                $statusSqlQuery = "SELECT * FROM order_status ORDER BY order_status_sequence ASC";
-                                                $result = mysqli_query($conn, $statusSqlQuery);
-                                                while($row = mysqli_fetch_array($result)){
-                                            ?>
-                                        <option value="<?= $row['status_name'];?>"><?=$row['status_name']?></option>
-                                        <?php }?>
+                                        <option value="Select Order Status" selected>Select Order Status</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="New Order">New Order</option>
                                     </select>
                                 </div>
                             </div>
@@ -232,101 +227,106 @@
             </form>
         </div>
     </div>
-
+    <!-- Internal Form-elements js -->
+    <script src="../assets/js/advanced-form-elements.js"></script>
+    <!-- Internal form-elements js -->
+    <script src="../assets/js/form-elements.js"></script>
+    <!-- Internal Modal js-->
+    <script src="../assets/js/modal.js"></script>
     <script type="text/javascript">
-        //ORDER STATUS FIRST DROPDOWN CHANGES
-        $("#orderstatusfilter").change(function(e){
-            e.preventDefault();
-            var selectedstat = $(this).val();
-            $.ajax({
-                url:'../order/fetch_order_detail.php',
-                method: 'POST',
-                data: {selectedstat:selectedstat},
-                success:function(data){
-                    $("#editinvoice").html(data);
-                }
+        $(document).ready(function(){
+            //ORDER STATUS FIRST DROPDOWN CHANGES
+            $("#orderstatusfilter").change(function(e){
+                e.preventDefault();
+                var selectedstat = $(this).val();
+                $.ajax({
+                    url:'../order/fetch_order_detail.php',
+                    method: 'POST',
+                    data: {selectedstat:selectedstat},
+                    success:function(data){
+                        $("#editinvoice").html(data);
+                    }
+                });
             });
-        });
-            
-        //ORDER INVOICE SECOND DROPDOWN CHANGES
-        $("#editinvoice").change(function(e){
-            e.preventDefault();
-            var id = $(this).find(':selected').attr('data-id');
-            $.ajax({
-                url:'../order/fetch_order_detail.php',
-                method: 'POST',
-                dataType: 'json',
-                data: {id:id},
-                success:function(data){
-                    $('#_eid').val(data[0].id);
-                    console.log(data[0].id);
-                    $('#_editInvoiceId').val(data[0].invoiceId);
-                    $('#_editDeliveryDate').val(data[0].productlink);
-                    $('#_editItemName').val(data[0].pname);
-                    $('#_editItemColor').val(data[0].color);
-                    $('#_editItemSize').val(data[0].size);
-                    $('#_editItemFrom')[0].sumo.selectItem(data[0].branchId);
-                    $('#_editDeliveryLocation')[0].sumo.selectItem(data[0].city);
-                    $('#_editStatus')[0].sumo.selectItem(data[0].pstatus);
-                    $('#_editQuantity')[0].sumo.selectItem(data[0].quantity);
-                    $('#_editSalesConsultant')[0].sumo.selectItem(data[0].salesperson);
-                    $('#_editCat_Id')[0].sumo.selectItem(data[0].cat_id);
-                    $('#_editOrderNote').val(data[0].ordernote);
+                
+            //ORDER INVOICE SECOND DROPDOWN CHANGES
+            $("#editinvoice").change(function(e){
+                e.preventDefault();
+                var id = $(this).find(':selected').attr('data-id');
+                $.ajax({
+                    url:'../order/fetch_order_detail.php',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {id:id},
+                    success:function(data){
+                        $('#_eid').val(data[0].id);
+                        console.log(data[0].id);
+                        $('#_editInvoiceId').val(data[0].invoiceId);
+                        $('#_editDeliveryDate').val(data[0].productlink);
+                        $('#_editItemName').val(data[0].pname);
+                        $('#_editItemColor').val(data[0].color);
+                        $('#_editItemSize').val(data[0].size);
+                        $('#_editItemFrom')[0].sumo.selectItem(data[0].branchId);
+                        $('#_editDeliveryLocation')[0].sumo.selectItem(data[0].city);
+                        $('#_editStatus')[0].sumo.selectItem(data[0].pstatus);
+                        $('#_editQuantity')[0].sumo.selectItem(data[0].quantity);
+                        $('#_editSalesConsultant')[0].sumo.selectItem(data[0].salesperson);
+                        $('#_editCat_Id')[0].sumo.selectItem(data[0].cat_id);
+                        $('#_editOrderNote').val(data[0].ordernote);
 
-                    //IMAGE
-                    var image_DB = data[0].pimage;
-                    var img_upload_dir = "../uploads/";
-                    var _imgInput = document.getElementById ("_editImageLabel");
+                        //IMAGE
+                        var image_DB = data[0].pimage;
+                        var img_upload_dir = "../uploads/";
+                        var _imgInput = document.getElementById ("_editImageLabel");
 
-                    //DELIVERY NOTE
-                    var dn_DB = data[0].deliveryNote;
-                    var dn_upload_dir = "../pdfUploads/";
-                    var _dnInput = document.getElementById ("_editDNLabel");
+                        //DELIVERY NOTE
+                        var dn_DB = data[0].deliveryNote;
+                        var dn_upload_dir = "../pdfUploads/";
+                        var _dnInput = document.getElementById ("_editDNLabel");
 
-                    //IF IMAGE COLUMN HAS A VALUE || IMAGE
-                    if(image_DB !== '')
-                    { 
-                        //IF THE COLUMN CONTAINTS MULTIPLE IMAGES
-                        if(image_DB.includes(',') !== false){ 
-                            //SPLITTING IT WITH COMMA -1
-                            var image = image_DB.split(',');
-                            //ITERATING VALUES TO FIND FILE NAME
-                            $.each(image, function(key, value){
+                        //IF IMAGE COLUMN HAS A VALUE || IMAGE
+                        if(image_DB !== '')
+                        { 
+                            //IF THE COLUMN CONTAINTS MULTIPLE IMAGES
+                            if(image_DB.includes(',') !== false){ 
+                                //SPLITTING IT WITH COMMA -1
+                                var image = image_DB.split(',');
+                                //ITERATING VALUES TO FIND FILE NAME
+                                $.each(image, function(key, value){
+                                    var img = document.createElement("IMG");
+                                    img.height = 90;
+                                    img.weight = 90;
+                                    //UPDATING IMAGE SOURCE
+                                    img.src = img_upload_dir+value; 
+                                    $('#preview').prepend(img);
+                                });
+                            }
+                            //IF THE COLUMN CONTAINTS ONE IMAGE WITHOUT COMMA
+                            else{
                                 var img = document.createElement("IMG");
                                 img.height = 90;
                                 img.weight = 90;
-                                //UPDATING IMAGE SOURCE
-                                img.src = img_upload_dir+value; 
+                                img.src = img_upload_dir+image_DB;
                                 $('#preview').prepend(img);
-                            });
+                            }
+                            _imgInput.placeholder = "Image Attached";
                         }
-                        //IF THE COLUMN CONTAINTS ONE IMAGE WITHOUT COMMA
+                        //IF NO IMAGE EXISTS
                         else{
-                            var img = document.createElement("IMG");
-                            img.height = 90;
-                            img.weight = 90;
-                            img.src = img_upload_dir+image_DB;
-                            $('#preview').prepend(img);
+                            $('#preview').empty();
+                            _imgInput.placeholder = "Select Order Image";
                         }
-                        _imgInput.placeholder = "Image Attached";
+                        if(dn_DB !== ''){
+                            _dnInput.placeholder = "Delivery Note Attached";
+                        }
+                        else{
+                            _dnInput.placeholder = "Select Delivery Note";
+                        }
                     }
-                    //IF NO IMAGE EXISTS
-                    else{
-                        $('#preview').empty();
-                        _imgInput.placeholder = "Select Order Image";
-                    }
-                    if(dn_DB !== ''){
-                        _dnInput.placeholder = "Delivery Note Attached";
-                    }
-                    else{
-                        _dnInput.placeholder = "Select Delivery Note";
-                    }
-                }
+                });
+                $('#preview').empty();
             });
-            $('#preview').empty();
-        });
 
-        $(document).ready(function(){
             //ORDER SUBMIT FOR UPDATE
             $("#formEditOrder").on('submit', function(e){
                 e.preventDefault();
@@ -339,13 +339,10 @@
                         dataType: 'json',
                         contentType: false,
                         processData:false,
-                        // cache: false,
-                        // async: false,
-                        // autoUpload: false,
                         success: function(response){
                             $('.statusMsg').html('');
-                            if(response.status === 1){
-                                console.log('HIT');
+                            if(response.status == 1){
+                                _succesEdit();
                             }else{
                                 console.log('IN ELSE');
                                 $('.statusMsg').html(alert(response.message));
@@ -356,170 +353,153 @@
                     });
                 }
             });
-        });
 
-        function errorHandling(){
-            var flag = true;
-            var _warningMessage;
-            var _warningText = "Mandatory Fields are Required to be Filled";
-            var _invoiceId = $("#_editInvoiceId").val();
-            var _deliveryDate = $("#_editDeliveryDate").val();
-            var _itemName = $("#_editItemName").val();
-            var _itemColor = $("_editItemColor").val();
-            var _itemSize = $("#_editItemSize").val();
-            var _branchFrom = $("#_editItemFrom").val();
-            var _deliveryTo = $("#_editDeliveryLocation").val();
-            var _orderStatus = $("#_editStatus").val();
-            var _itemQuantity = $("#_editQuantity").val();
-            var _orderNote = $("#_editOrderNote").val();
-            var _salesConsultant = $("#_editSalesConsultant").val();
-            var _categoryId = $("#_editCat_Id").val();
+            //ERROR HANDLING - EMPTY FIELD CHECK
+            function errorHandling(){
+                var flag = true;
+                var _warningMessage;
+                var _warningText = "Mandatory Fields are Required to be Filled";
+                var _invoiceId = $("#_editInvoiceId").val();
+                var _deliveryDate = $("#_editDeliveryDate").val();
+                var _itemName = $("#_editItemName").val();
+                var _itemColor = $("_editItemColor").val();
+                var _itemSize = $("#_editItemSize").val();
+                var _branchFrom = $("#_editItemFrom").val();
+                var _deliveryTo = $("#_editDeliveryLocation").val();
+                var _orderStatus = $("#_editStatus").val();
+                var _itemQuantity = $("#_editQuantity").val();
+                var _orderNote = $("#_editOrderNote").val();
+                var _salesConsultant = $("#_editSalesConsultant").val();
+                var _categoryId = $("#_editCat_Id").val();
 
-            if(_invoiceId == ''){
-                _warningMessage = "Invoice ID is Left Empty";
-                emptyFieldAlert(_warningMessage, _warningText);
-                flag = false
+                if(_invoiceId == ''){
+                    _warningMessage = "Invoice ID is Left Empty";
+                    emptyFieldAlert(_warningMessage, _warningText);
+                    flag = false
+                }
+                else if(_deliveryDate == ''){
+                    _warningMessage = "Select Delivery Date";
+                    emptyFieldAlert(_warningMessage, _warningText);
+                    flag = false
+                }
+                else if(_itemName == ''){
+                    _warningMessage = "Fill Order Name";
+                    emptyFieldAlert(_warningMessage, _warningText);
+                    flag = false
+                }
+                else if(_itemColor == ''){
+                    _warningMessage = "Fill Item Color";
+                    emptyFieldAlert(_warningMessage, _warningText);
+                    flag = false
+                }
+                else if(_itemSize == ''){
+                    _warningMessage = "Fill Item Size";
+                    emptyFieldAlert(_warningMessage, _warningText);
+                    flag = false
+                }
+                else if(_branchFrom == 'Choose Branch'){
+                    _warningMessage = "Select Order Branch";
+                    emptyFieldAlert(_warningMessage, _warningText);
+                    flag = false
+                }
+                else if(_deliveryTo == 'Delivery City'){
+                    _warningMessage = "City Left Empty";
+                    emptyFieldAlert(_warningMessage, _warningText);
+                    flag = false
+                }
+                else if(_orderStatus == 'Select Order Status'){
+                    _warningMessage = "Select Order Status";
+                    emptyFieldAlert(_warningMessage, _warningText);
+                    flag = false
+                }
+                else if(_itemQuantity == 'Choose Order Quantity'){
+                    _warningMessage = "Select Order Quantity";
+                    emptyFieldAlert(_warningMessage, _warningText);
+                    flag = false
+                }
+                else if(_orderNote == 'Choose Order Note'){
+                    _warningMessage = "Order Note Must be Filled";
+                    emptyFieldAlert(_warningMessage, _warningText);
+                    flag = false
+                }
+                else if(_salesConsultant == 'Select Sales Consultant'){
+                    _warningMessage = "Sales Consultant Left Empty";
+                    emptyFieldAlert(_warningMessage, _warningText);
+                    flag = false
+                }
+                else if(_categoryId == 'Select Category'){
+                    _warningMessage = "Category Left Empty";
+                    emptyFieldAlert(_warningMessage, _warningText);
+                    flag = false
+                }      
+                else{
+                    _succesEdit();
+                }
+                return flag;
             }
-            else if(_deliveryDate == ''){
-                _warningMessage = "Select Delivery Date";
-                emptyFieldAlert(_warningMessage, _warningText);
-                flag = false
-            }
-            else if(_itemName == ''){
-                _warningMessage = "Fill Order Name";
-                emptyFieldAlert(_warningMessage, _warningText);
-                flag = false
-            }
-            else if(_itemColor == ''){
-                _warningMessage = "Fill Item Color";
-                emptyFieldAlert(_warningMessage, _warningText);
-                flag = false
-            }
-            else if(_itemSize == ''){
-                _warningMessage = "Fill Item Size";
-                emptyFieldAlert(_warningMessage, _warningText);
-                flag = false
-            }
-            else if(_branchFrom == 'Choose Branch'){
-                _warningMessage = "Select Order Branch";
-                emptyFieldAlert(_warningMessage, _warningText);
-                flag = false
-            }
-            else if(_deliveryTo == 'Delivery City'){
-                _warningMessage = "City Left Empty";
-                emptyFieldAlert(_warningMessage, _warningText);
-                flag = false
-            }
-            else if(_orderStatus == 'Select Order Status'){
-                _warningMessage = "Select Order Status";
-                emptyFieldAlert(_warningMessage, _warningText);
-                flag = false
-            }
-            else if(_itemQuantity == 'Choose Order Quantity'){
-                _warningMessage = "Select Order Quantity";
-                emptyFieldAlert(_warningMessage, _warningText);
-                flag = false
-            }
-            else if(_orderNote == 'Choose Order Note'){
-                _warningMessage = "Order Note Must be Filled";
-                emptyFieldAlert(_warningMessage, _warningText);
-                flag = false
-            }
-            else if(_salesConsultant == 'Select Sales Consultant'){
-                _warningMessage = "Sales Consultant Left Empty";
-                emptyFieldAlert(_warningMessage, _warningText);
-                flag = false
-            }
-            else if(_categoryId == 'Select Category'){
-                _warningMessage = "Category Left Empty";
-                emptyFieldAlert(_warningMessage, _warningText);
-                flag = false
-            }      
-            else{
-                successMessage();
-            }
-            return flag;
-        }
 
-        //WARNING ALERT
-        function emptyFieldAlert(_alertTitle, _alertText){
-            swal({
-                title: _alertTitle,
-                text: _alertText,
-                type: "warning",
-                confirmButtonClass: "btn btn-danger"
-            });
-        }
+            //EMPTY FIELD CHECK - WARNING
+            function emptyFieldAlert(_alertTitle, _alertText){
+                swal({
+                    title: _alertTitle,
+                    text: _alertText,
+                    type: "warning",
+                    confirmButtonClass: "btn btn-danger"
+                });
+            }
 
-        //SUCCESS ALERT
-        function successMessage(){
-            swal({
-                title: 'Order is Edited Successfully!',
-                text: 'Check Edited Orders in Tables',
-                type: 'success',
-                confirmButtonColor: '#57a94f'
-            });
-        }
+            //ORDER EDITED - SUCCESS
+            function _succesEdit(){
+                swal({
+                    title: 'Order is Edited Successfully!',
+                    text: 'Check Edited Orders in Tables',
+                    type: 'success',
+                    confirmButtonColor: '#57a94f'
+                });
+            }
 
-        //ORDER IMAGE FUNCTION
-        $(function() {
-            //MULTIPLE IMAGES PREVIEW IN BROWSER
-            var imagesPreview = function(input, placeToInsertImagePreview) {
-                if (input.files) {
-                    var filesAmount = input.files.length;
+            //ORDER IMAGE FUNCTION
+            $(function() {
+                //MULTIPLE IMAGES PREVIEW IN BROWSER
+                var imagesPreview = function(input, placeToInsertImagePreview) {
+                    if (input.files) {
+                        var filesAmount = input.files.length;
 
-                    for (i = 0; i < filesAmount; i++) {
-                        var reader = new FileReader();
+                        for (i = 0; i < filesAmount; i++) {
+                            var reader = new FileReader();
 
-                        reader.onload = function(event) {
-                            $($.parseHTML('<img class="modalImage">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                            reader.onload = function(event) {
+                                $($.parseHTML('<img class="modalImage">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                            }
+                            reader.readAsDataURL(input.files[i]);
                         }
-                        reader.readAsDataURL(input.files[i]);
+                    }
+                };
+                $('#_editOrderImage').on('change', function() {
+                    imagesPreview(this, 'div.preview');
+                    $( 'div.preview' ).empty();
+                });
+            });
+
+            //ORDER FILE LABEL CHANGE
+            $('#_editDeliveryNoteFile').on("change", function(){
+                var input = document.getElementById ("_editDNLabel");
+                var _dnCount = $(this)[0].files.length;
+                var _pdfFileSize = this.files[0].size/1024;
+                var _pdfFileSizeLimit = 100;
+
+                if(_pdfFileSize > _pdfFileSizeLimit){
+                    $('#_editDeliveryNoteFile').val(null);
+                    var _warningSizeTitle = "Check File Size";
+                    var _warningSizeText = "Total File Size is Limited to 100 KB";
+                    emptyFieldAlert(_warningSizeTitle, _warningSizeText);
+                }else{
+                    if(_dnCount > 0){
+                        input.placeholder = "Delivery Note Attached";
+                    }else{
+                        input.placeholder = "Select Delivery Note";
                     }
                 }
-            };
-            $('#_editOrderImage').on('change', function() {
-                imagesPreview(this, 'div.preview');
-                $( 'div.preview' ).empty();
             });
         });
-
-        //ORDER FILE LABEL CHANGE
-        $('#_editDeliveryNoteFile').on("change", function(){
-            var input = document.getElementById ("_editDNLabel");
-            var _dnCount = $(this)[0].files.length;
-            var _pdfFileSize = this.files[0].size/1024;
-            var _pdfFileSizeLimit = 100;
-
-            if(_pdfFileSize > _pdfFileSizeLimit){
-                $('#_editDeliveryNoteFile').val(null);
-                var _warningSizeTitle = "Check File Size";
-                var _warningSizeText = "Total File Size is Limited to 100 KB";
-                emptyFieldAlert(_warningSizeTitle, _warningSizeText);
-            }else{
-                if(_dnCount > 0){
-                    input.placeholder = "Delivery Note Attached";
-                }else{
-                    input.placeholder = "Select Delivery Note";
-                }
-            }
-        });
-
     </script>
-<!-- Internal Form-elements js -->
-<script src="../assets/js/advanced-form-elements.js"></script>
-
-<!-- Internal form-elements js -->
-<script src="../assets/js/form-elements.js"></script>
-
-<!--Internal  Sweet-Alert js-->
-<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
-<script src="../assets/plugins/sweet-alert/jquery.sweet-alert.js"></script>
-
-<!-- Sweet-alert js  -->
-<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
-<script src="../assets/js/sweet-alert.js"></script>
-
-<!-- Internal Modal js-->
-<script src="../assets/js/modal.js"></script>
-

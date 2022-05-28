@@ -50,7 +50,7 @@ function loadSalesPerson(){
 								<button id="orderEdit" class="modal-effect btn btn-teal mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#editOrderModal" type="button"><i class="typcn typcn-document-edit"></i>Edit Order</button>
 							</div>
 							<div class="pr-1 mb-3 mb-xl-0">
-								<button id="addStaff" class="modal-effect btn btn-teal mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#orderStaffModal" type="button"><i class="typcn typcn-document-edit"></i>Staff Made</button>
+								<button id="changeStatus" class="modal-effect btn btn-teal mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#statusChangeModal" type="button"><i class="typcn typcn-document-edit"></i>Status Change</button>
 							</div>
 						</div>
 					</div>
@@ -320,6 +320,12 @@ function loadSalesPerson(){
 					</div>
 				</div>
 				<!--MODAL CLOSED-->
+				<!--COMMENT MODAL-->
+				<div class="modal effect-scale show" id="statusChangeModal">
+					<div class="modal-dialog" role="document">
+						<div id="status-change-content-data"></div>
+					</div>
+				</div>
 			</div>
 			<!-- main-content closed -->
 			<?php include "../footer/footer.php"; ?>
@@ -327,7 +333,7 @@ function loadSalesPerson(){
 		<!-- End Page -->
 
 		<!-- Back-to-top -->
-		<a href="#top" id="back-to-top"><i class="las la-angle-double-up"></i></a>
+		<a href="#top" id="back-to-top"><i class="ti-angle-double-up"></i></a>
 
 		<!-- JQuery min js -->
 		<script src="../assets/plugins/jquery/jquery.min.js"></script>
@@ -369,19 +375,19 @@ function loadSalesPerson(){
 		<!-- eva-icons js -->
 		<script src="../assets/js/eva-icons.min.js"></script>
        	<!-- Internal Sumoselect js -->
-	   	<script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>      
+	   	<script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
 		<!-- Internal form-elements js -->
 		<script src="../assets/js/form-elements.js"></script>
 		<script src="../assets/plugins/rating/jquery.rating-stars.js"></script>
 		<!-- custom js -->
 		<script src="../assets/js/custom.js"></script>
-		<!-- Sweet-alert js  -->
-		<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
-		<script src="../assets/js/sweet-alert.js"></script>
 		<!-- Internal Modal js-->
 		<script src="../assets/js/modal.js"></script>
 		<!-- Internal Form-validation js -->
 		<script src="../assets/js/form-validation.js"></script>
+		<!-- Sweet-alert js  -->
+		<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
+		<script src="../assets/js/sweet-alert.js"></script>
 
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -872,7 +878,7 @@ function loadSalesPerson(){
 					});
 				});
 
-				//CHANGE STATUS
+				//CHANGE STATUS TO NEXT
 				$(document).on('click','#statusChangeNext',function(event){
 					if(confirm("Are you sure changing status?")){
 						event.preventDefault();
@@ -904,7 +910,8 @@ function loadSalesPerson(){
 									_markMaterialAvailable();
 								}else if (response.index == 3){
 									_staffEntry();
-								}else{
+								}
+								else{
 									console.log('AUL AUL AUL');
 								}
 							}
@@ -915,7 +922,7 @@ function loadSalesPerson(){
 					}
 				});
 
-				//CHANGE STATUS
+				//CHANGE STATUS TO PREVIOUS
 				$(document).on('click','#statusChangePrev',function(event){
 					if(confirm("Are you sure changing status?")){
 						event.preventDefault();
@@ -951,7 +958,40 @@ function loadSalesPerson(){
 					}
 				});
 
-				//WARNING ALERT
+				//ADD MATERIAL LPO
+				$(document).on('click','#_materialLpo',function(event){
+					event.preventDefault();
+					var id=$(this).data('id');
+					$('#material-content-data').html('');
+					$.ajax({
+						type:'POST',
+						url:'../order/materialLpoModal.php',
+						data:'id='+id,
+						dataType:'html'
+					}).done(function(data){
+						$('#material-content-data').html('');
+						$('#material-content-data').html(data);
+					}).fail(function(){
+						$('#material-content-data').html('<p>Error</p>');
+					});
+				});
+
+				//CHANGE STATUS THROUGH MODAL
+				$(document).on('click','#changeStatus',function(event){
+					event.preventDefault();
+					$('#status-change-content-data').html('');
+					$.ajax({
+						type:'POST',
+						url:'../order/modal/statusModal.php'
+					}).done(function(data){
+						$('#status-change-content-data').html('');
+						$('#status-change-content-data').html(data);
+					}).fail(function(){
+						$('#status-change-content-data').html('<p>Error</p>');
+					});
+				});
+
+				//MARK MATERIAL
 				function _markMaterialAvailable(){
 					swal({
 						title: "Mark Material",
@@ -961,7 +1001,7 @@ function loadSalesPerson(){
 					});
 				}
 
-				//SUCCESS ALERT
+				//SUCCESS - STATUS CHANGED
 				function _statusChanged(){
 					swal({
 						title: 'Status Changed',
@@ -983,7 +1023,7 @@ function loadSalesPerson(){
 					});
 				}
 
-				//WARNING ALERT
+				//WARNING - ADD STAFF
 				function _staffEntry(){
 					swal({
 						title: "Add Staff",
@@ -1006,44 +1046,6 @@ function loadSalesPerson(){
 						});
 					});
 				}
-			
-
-				// //OLD MATERIAL
-				// $(document).on('click','#materialConfirm',function(event){
-				// 	if(confirm("Are you sure Confirming Material Availability?")){
-				// 		event.preventDefault();
-				// 		var materialid = $(this).attr('data-id');
-				// 		$.ajax({
-				// 			url     : '../order/statusChange.php',
-				// 			method  : 'POST',
-				// 			data    : {materialid : materialid},
-				// 			success : function(data){
-				// 				$('#exampleone').DataTable().ajax.reload();
-				// 			}
-				// 		});
-				// 	}
-				// 	else{
-				// 		return false;
-				// 	}
-				// });
-
-				//MATERIAL
-				$(document).on('click','#_materialLpo',function(event){
-					event.preventDefault();
-					var id=$(this).data('id');
-					$('#material-content-data').html('');
-					$.ajax({
-						type:'POST',
-						url:'../order/materialLpoModal.php',
-						data:'id='+id,
-						dataType:'html'
-					}).done(function(data){
-						$('#material-content-data').html('');
-						$('#material-content-data').html(data);
-					}).fail(function(){
-						$('#material-content-data').html('<p>Error</p>');
-					});
-				});
 			} );
 		</script>
 	</body>

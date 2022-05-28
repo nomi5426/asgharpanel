@@ -4,6 +4,12 @@ include "../base/db.php";
      * DECLARED VARIABLES FOR GET USER DETAIL
      */
     if (!session_id()) session_start();
+    //CURRENT TIMESTAMP
+	function curdate() {
+		date_default_timezone_set('Asia/Dubai'); 
+		return date('Y-m-d');
+	}
+
     $userId=1;
     $isApproved=1;
     $firstname='';
@@ -87,8 +93,8 @@ include "../base/db.php";
                 $response['index'];
             }
         }
-    }catch(Exception $rzmessage){
-        echo 'RZDAUNTE exception: ',  $rzmessage->getMessage(), "\n";
+    }catch(Exception $errMessage){
+        echo 'RZDAUNTE exception: ',  $errMessage->getMessage(), "\n";
     }
 
     if(isset($_POST['statusPrev'])){
@@ -115,29 +121,61 @@ include "../base/db.php";
             $statusChangeMessage = "Order status has been changed to Ready";
             $response['index'] = 1;
         }
+        else if($orderStatus == "On Hold"){
+            $statusChangeQuery = $conn->query("UPDATE product SET pstatus = 'New Order', statusChangedBy = '$username' WHERE id=".$prevStatusId);
+            $statusChangeMessage = "Order status has been changed to New Order";
+            $response['index'] = 1;
+        }
+        else if($orderStatus == "Cancelled"){
+            $statusChangeQuery = $conn->query("UPDATE product SET pstatus = 'New Order', statusChangedBy = '$username' WHERE id=".$prevStatusId);
+            $statusChangeMessage = "Order status has been changed to New Order";
+            $response['index'] = 1;
+        }
         if($statusChangeQuery){
-            $response['index'];
+            $response['index'] = 1;
         }
     }
     
-    //  OLD MATERIAL WITH BUTTON
-    //  if(isset($_POST['materialid'])){
-    //     $materialid = $_POST['materialid'];
-    //     $sql = "SELECT * FROM product WHERE id='".$materialid."'";
-    //     $query=mysqli_query($conn,$sql);
-    //     $row = mysqli_fetch_array($query);
+    try{
+        if(isset($_POST['s_id']) || isset($_POST['newcomment']) || isset($_POST['currentstatus']) || isset($_POST['newstatus'])){
+            $id = $_POST['s_id'];
+            $newcomment = $_POST['newcomment'];
+            $currentStatus = $_POST['currentstatus'];
+            $newStatus = $_POST['newstatus'];
 
-    //     $materialStatus = $row['pstatus'];
-    //     $materialAvilabilityQuery="";
+            $currentDate = curdate();
+            $all = $newcomment.' - '.$currentDate;
 
-    //     if($materialStatus !== "Yes"){
-    //         $materialAvilabilityQuery = "update product set material = 'Yes' where id=".$materialid;
-    //     }
-    //     $result = mysqli_query($conn,$materialAvilabilityQuery);
-    // 	if($result){
-    //         echo "<script type='text/javascript'>alert('DONE')</script>";
-    // 	}
-    // }
+            if($currentStatus == "In Production"){
+                $_staffAssociate = $conn->query("SELECT * FROM order_staff WHERE order_id = ".$id);
+                if(mysqli_num_rows($_staffAssociate) !== 0){
+                    $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
+                    if($commentUpdate){
+                        $response['index'] = 1;
+                    }
+                }
+                else{
+                    if($newStatus !== "New Order"){
+                        $response['index'] = 3;
+                    }else{
+                        $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
+                        if($commentUpdate){
+                            $response['index'] = 1;
+                        }
+                    }
+                }
+            }
+            else{
+                $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
+                if($commentUpdate){
+                    $response['index'] = 1;
+                }
+            }
+        }
+    }catch(Exception $errMessage){
+        echo 'RZDAUNTE exception: ',  $errMessage->getMessage(), "\n";
+    }
+
     if(isset($_POST['confirmOrder'])){
         $confirmOrder = $_POST['confirmOrder'];
         $sql = "SELECT * FROM product WHERE id='".$confirmOrder."'";
@@ -159,6 +197,5 @@ include "../base/db.php";
             $response['index'];
         }
     }
-    // header('Content-type: application/json');
     echo json_encode($response);
 ?>
