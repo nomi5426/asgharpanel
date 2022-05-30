@@ -45,8 +45,13 @@ include "../base/db.php";
     
             $statusChangeQuery = "";
             $statusChangeMessage = "";
-    
-            if($orderStatus == "New Order"){
+
+            if($orderStatus == "CRM"){
+                $statusChangeQuery = "update product set pstatus = 'New Order', material = 'No' where id=".$statusid;
+                $statusChangeMessage = "Order status has been changed to New Order";
+                $response['index'] = 1;
+            }
+            else if($orderStatus == "New Order"){
                 if($materialStatus !== 'Yes'){
                     $statusChangeQuery = "update product set pstatus = 'New Order' where id=".$statusid;
                     $statusChangeMessage = "Please Confirm Material Availability";
@@ -103,7 +108,7 @@ include "../base/db.php";
     }catch(Exception $errMessage){
         echo 'RZDAUNTE exception: ',  $errMessage->getMessage(), "\n";
     }
-
+    
     try{
         if(isset($_POST['s_id']) || isset($_POST['newcomment']) || isset($_POST['currentstatus']) || isset($_POST['newstatus'])){
             $id = $_POST['s_id'];

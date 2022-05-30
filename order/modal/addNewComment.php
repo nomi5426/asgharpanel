@@ -122,14 +122,31 @@ function loadOrder(){
                 type: "POST",
                 url: '../order/add_comment.php',
                 data: {oid:id, newcomment:newcomment},
-                success: function(data){
-                    $('#formNewComment')[0].reset();
-                    $('#id').val('');
-                    $('#newcomment').val('');
-                    $('#invoice').val('');
-                    $('#orderstatus').val('');
+                dataType: 'json',
+                success: function(response){
+                    if(response.index == 1){
+                        _commentAdded();
+                        $('#formNewComment')[0].reset();
+                        $('#id').val('');
+                        $('#newcomment').val('');
+                        $('#invoice').val('');
+                        $('#orderstatus').val('');
+                    }
                 }
             });
         });
+
+        //SUCCESS - COMMENT ADDED
+        function _commentAdded(){
+            swal({
+                title: 'Comment is Added!',
+                text: 'Order Comment is succesfully saved',
+                type: 'success',
+                confirmButtonColor: '#57a94f'
+            },
+            function loadPage(){
+                location.reload();
+            });
+        }
     });
 </script>

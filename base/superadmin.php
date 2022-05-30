@@ -69,8 +69,9 @@ function loadSalesPerson(){
 									<div class="panel panel-primary tabs-style-2">
 										<div class=" tab-menu-heading">
 											<div class="tabs-menu" id="tabId">
-												<ul class="nav panel-tabs main-nav-line nav-justified">
-													<li class="nav-item"><a href="#neworder" class="nav-link active" data-toggle="tab">New Order</a></li>
+											<ul class="nav panel-tabs main-nav-line nav-justified" id="myTab">
+													<li class="nav-item"><a href="#crm" class="nav-link active" data-toggle="tab">CRM</a></li>
+													<li class="nav-item"><a href="#neworder" class="nav-link" data-toggle="tab">New Order</a></li>
 													<li class="nav-item"><a href="#inproduction" class="nav-link" data-toggle="tab">In Production</a></li>
 													<li class="nav-item"><a href="#ready" class="nav-link" data-toggle="tab">Ready</a></li>
 													<li class="nav-item"><a href="#outfordelivery" class="nav-link" data-toggle="tab">Out for Delivery</a></li>
@@ -83,7 +84,30 @@ function loadSalesPerson(){
 										</div>
 										<div class="panel-body tabs-menu-body main-content-body-right border-top-0 border">
 											<div class="tab-content">
-												<div class="tab-pane active" id="neworder">
+												<div class="tab-pane active" id="crm">
+													<div class="table-responsive">
+														<table id="examplenine" class="testclass table key-buttons text-md-nowrap">
+															<thead>
+																<tr>
+																	<th class="border-bottom-0">IID</th>
+																	<th class="border-bottom-0">DEL/Date</th>
+																	<th class="border-bottom-0">D/G</th>
+																	<th class="border-bottom-0">City</th>
+																	<th class="border-bottom-0">D/L</th>
+																	<th class="border-bottom-0">Item</th>
+																	<th class="border-bottom-0">Color</th>
+																	<th class="border-bottom-0">QTY</th>
+																	<th class="border-bottom-0">Note</th>
+																	<th class="border-bottom-0">Consult</th>
+																	<th class="border-bottom-0">Image</th>
+																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Action</th>
+																</tr>
+															</thead>
+														</table>
+													</div>
+												</div>
+												<div class="tab-pane" id="neworder">
 													<div class="table-responsive">
 														<table id="exampleone" class="testclass table key-buttons text-md-nowrap">
 															<thead>
@@ -721,6 +745,10 @@ function loadSalesPerson(){
 					"serverSide": 	true,
 					"paging"	:	true,
 					"searching"	:	true,
+					"sDom": 'Brtip',
+					"buttons": [
+						
+					],
 					"iDisplayLength"	:	100,
 					"ajax": {
 						url  :"../order/fetch.php",
@@ -771,6 +799,52 @@ function loadSalesPerson(){
 						{ "sWidth": "5%" }
 					]
 				} );
+				//CRM
+				var tablenine = $('#examplenine').DataTable( {
+					"processing": 	true,
+					"serverSide": 	true,
+					"paging"	:	true,
+					"searching"	:	true,
+					"sDom": 'Brtip',
+					"buttons": [
+						
+					],
+					"iDisplayLength"	:	100,
+					"ajax": {
+						url  :"../order/fetch.php",
+						type : "POST",
+						data : {
+							status : 'CRM',
+							nextStatus : ''
+						}
+					},
+					"rowCallback": function( row, data, index ) {
+						if ( data[7] == "Sharaf DG" )
+						{
+							$('td', row).css('background-color', '#b5b5de');
+						}
+						else if ( data[7] != "Sharaf DG" )
+						{
+							$('td', row).css('background-color', 'white');
+						}
+					},
+					"drawCallback": function ( settings ) {
+						var api = this.api();
+						var rows = api.rows( {page:'current'} ).nodes();
+						var last=null; 
+						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
+							if ( last !== group ) {
+								$(rows).eq( i ).before(
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+								);
+								last = group;
+							}
+						} );
+					},
+					"autoWidth": false,
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+				} );
 				//SEARCH FUNCTION
 				$('#orderSearchText').keyup(function(){
 					tableone.search($(this).val()).column(0).draw() ;
@@ -781,6 +855,7 @@ function loadSalesPerson(){
 					tablesix.search($(this).val()).column(0).draw() ;
 					tableseven.search($(this).val()).column(0).draw() ;
 					tableeight.search($(this).val()).column(0).draw() ;
+					tablenine.search($(this).val()).column(0).draw() ;
 				});
 
 				//IMAGE FETCH
@@ -906,6 +981,7 @@ function loadSalesPerson(){
 										$('#examplesix').DataTable().ajax.reload();
 										$('#exampleseven').DataTable().ajax.reload();
 										$('#exampleeight').DataTable().ajax.reload();
+										$('#examplenine').DataTable().ajax.reload();
 								}else if (response.index == 2){
 									_markMaterialAvailable();
 								}else if (response.index == 3){
@@ -976,7 +1052,7 @@ function loadSalesPerson(){
 					});
 				});
 
-				//CHANGE STATUS
+				//CHANGE STATUS - BUTTON
 				$(document).on('click','#changeStatus',function(event){
 					event.preventDefault();
 					$('#status-change-content-data').html('');
@@ -1045,6 +1121,14 @@ function loadSalesPerson(){
 							$('#add-order-staff-content-data').html('<p>Error</p>');
 						});
 					});
+				}
+
+				$('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+                	localStorage.setItem('activeTab', $(e.target).attr('href'));
+				});
+				var activeTab = localStorage.getItem('activeTab');
+				if(activeTab){
+					$('#myTab a[href="' + activeTab + '"]').tab('show');
 				}
 			} );
 		</script>

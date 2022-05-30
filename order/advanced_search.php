@@ -153,7 +153,7 @@ function loadSalesPerson(){
 					<div class="row row-sm justify-content-center">
 						<div>
 							<div class="input-group mb-3">
-         						<input class="btn btn-teal mr-2 btn-with-icon" type='button' id="btn_search" value="Search">
+								<input class="btn btn-primary mr-2 btn-with-icon" type='button' id="btn_search" value="Search">
 							</div>
 						</div>
 					</div>						  

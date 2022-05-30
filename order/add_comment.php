@@ -10,6 +10,9 @@
 	 * PUSHED FROM AND GOES TO ADDNEWCOMMENT.PHP AND STATUSMODAL.PHP
 	 * 
 	 */
+
+	$response['index'] = 0;
+
 	if(isset($_POST['selectedstat'])){
 		$_output='';
 		$sql = "SELECT * FROM product WHERE pstatus='".$_POST['selectedstat']."' ORDER BY invoiceId";
@@ -40,9 +43,9 @@
 		$all = $newcomment.' - '.$currentDate;
 		$sql = "UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all') WHERE id = '$id'";
 		$result = mysqli_query($conn,$sql);
-		$commentAdded = "Comment has been added succesfully";
 		if($result){
-			echo "<script type='text/javascript'>alert('$commentAdded')</script>";
+			$response['index'] = 1;
 		}
 	}
+	json_encode ($response);
 ?>

@@ -46,6 +46,7 @@
                             <div class="input-group mb-3">
                                 <select name="newStatus" id="newStatus"  class="form-control select2-show-search select2-dropdown">
                                     <option value="Select New Status" selected>Select New Status</option>
+                                    <option value="CRM">CRM</option>
                                     <option value="New Order">New Order</option>
                                     <option value="In Production">In Production</option>
                                     <option value="Ready">Ready</option>

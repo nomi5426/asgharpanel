@@ -48,7 +48,7 @@ function loadMasterCat(){
 						</div>
 						<div class="d-flex my-xl-auto right-content">
 							<div class="pr-1 mb-3 mb-xl-0">
-								<button id="newStaffAdd" class="modal-effect btn btn-primary mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#newStaffModal" type="button"><i class="typcn typcn-document-add"></i>New Category</button>
+								<button id="newStaffAdd" class="modal-effect btn btn-primary mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#newStaffModal" type="button"><i class="typcn typcn-document-add"></i>New Staff</button>
 							</div>
 						</div>
 					</div>
