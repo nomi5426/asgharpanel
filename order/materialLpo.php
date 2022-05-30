@@ -4,10 +4,17 @@
 	$pdf_upload_dir = '../pdfUploads/';
 
 	$response['status'] = 0;
-	$response['message'] = 'NOT DONE!';
-	$response['success'] = 'false';
 
-	//EDIT CATEGORY - RETREIVES CATEGORY ID AND NAME 
+	if(isset($_POST['mat_id'])){
+		$_output='';
+		$sql="SELECT * FROM order_lpo where order_id = ".$_POST['mat_id'];
+		$query=mysqli_query($conn,$sql);
+		while($row = mysqli_fetch_array($query)){
+			$_output .=$row['lpo_id'];
+		}
+		echo $_output;
+	}
+
 	if(isset($_POST['id']) || isset($_POST['mat_status']) || isset($_POST['mat_lpo_id'])){
 		$id = $_POST['id'];
 		$materialStatus = $_POST['mat_status'];
@@ -30,10 +37,8 @@
 		$lpoResult = mysqli_query($conn,$lpoQuery);
 		if($lpoResult){
 			$response['status'] = 1;
-			$response['message'] = 'Lpo and Material are updated successfully';
-			$response['success'] = 'true';
 		}
 	}
-header('Content-type: application/json');
+// header('Content-type: application/json');
 echo json_encode($response);
 

@@ -496,7 +496,7 @@ input[type=file]::-webkit-file-upload-button {
   background-color: #6C6F7F;
   width: 166px;
 }
-#newCommentAdd:hover,#newOrderAdd:hover,#newZohoOrderAdd:hover,#orderEdit:hover,#addStaff:hover{
+#newCommentAdd:hover,#newOrderAdd:hover,#newZohoOrderAdd:hover,#orderEdit:hover,#changeStatus:hover{
   background-color: #0f4a9b;
 }
 .odd>td:last-child>.inner{

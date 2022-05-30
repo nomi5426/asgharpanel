@@ -333,8 +333,7 @@ function loadSalesPerson(){
 		<!-- End Page -->
 
 		<!-- Back-to-top -->
-		<a href="#top" id="back-to-top"><i class="ti-angle-double-up"></i></a>
-
+		<a href="#top" id="back-to-top"><i class="las la-angle-double-up"></i></a>
 		<!-- JQuery min js -->
 		<script src="../assets/plugins/jquery/jquery.min.js"></script>
 		<!--Internal  Datepicker js -->
@@ -391,6 +390,7 @@ function loadSalesPerson(){
 
 		<script type="text/javascript">
 			$(document).ready(function() {
+				//NEW ORDER
 				var tableone = $('#exampleone').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -439,7 +439,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
 				} );
-
+				//IN PRODUCTION
 				var tabletwo = $('#exampletwo').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -485,7 +485,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
 				} );
-
+				//READY
 				var tablethree = $('#examplethree').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -531,7 +531,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
 				} );
-
+				//OUT FOR DELIVERY
 				var tablefour = $('#examplefour').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -577,7 +577,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
 				} );
-
+				//DELIVERED
 				var tablefive = $('#examplefive').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -623,7 +623,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
-
+				//ON HOLD
 				var tablesix = $('#examplesix').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -669,7 +669,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
 				} );
-
+				//CANCELLED
 				var tableseven = $('#exampleseven').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -715,7 +715,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
 				} );
-
+				//ALL PRODUCTS
 				var tableeight = $('#exampleeight').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -771,7 +771,7 @@ function loadSalesPerson(){
 						{ "sWidth": "5%" }
 					]
 				} );
-
+				//SEARCH FUNCTION
 				$('#orderSearchText').keyup(function(){
 					tableone.search($(this).val()).column(0).draw() ;
 					tabletwo.search($(this).val()).column(0).draw() ;
@@ -783,7 +783,7 @@ function loadSalesPerson(){
 					tableeight.search($(this).val()).column(0).draw() ;
 				});
 
-				//Image Modal
+				//IMAGE FETCH
 				$(document).on('click','#tableImage',function(event){
 					event.preventDefault();
 					var per_id=$(this).data('id');
@@ -801,7 +801,7 @@ function loadSalesPerson(){
 					});
 				});
 
-				//Add New Order Modal
+				//NEW ORDER
 				$(document).on('click','#newOrderAdd',function(event){
 					event.preventDefault();
 					$('#add-order-content-data').html('');
@@ -818,7 +818,7 @@ function loadSalesPerson(){
 					});
 				});
 
-				//Edit Modal
+				//EDIT
 				$(document).on('click','#orderEdit',function(event){
 					event.preventDefault();
 					$('#edit-order-content-data').html('');
@@ -833,7 +833,7 @@ function loadSalesPerson(){
 					});
 				});
 
-				//ZOHO
+				//ZOHO ORDER
 				$(document).on('click','#newZohoOrderAdd',function(event){
 					event.preventDefault();
 					$('#add-zoho-order-content-data').html('');
@@ -878,7 +878,7 @@ function loadSalesPerson(){
 					});
 				});
 
-				//CHANGE STATUS TO NEXT
+				//CHANGE STATUS - NEXT
 				$(document).on('click','#statusChangeNext',function(event){
 					if(confirm("Are you sure changing status?")){
 						event.preventDefault();
@@ -922,7 +922,7 @@ function loadSalesPerson(){
 					}
 				});
 
-				//CHANGE STATUS TO PREVIOUS
+				//CHANGE STATUS - PREVIOUS
 				$(document).on('click','#statusChangePrev',function(event){
 					if(confirm("Are you sure changing status?")){
 						event.preventDefault();
@@ -958,7 +958,7 @@ function loadSalesPerson(){
 					}
 				});
 
-				//ADD MATERIAL LPO
+				//MATERIAL LPO CONFIRMATION
 				$(document).on('click','#_materialLpo',function(event){
 					event.preventDefault();
 					var id=$(this).data('id');
@@ -976,7 +976,7 @@ function loadSalesPerson(){
 					});
 				});
 
-				//CHANGE STATUS THROUGH MODAL
+				//CHANGE STATUS
 				$(document).on('click','#changeStatus',function(event){
 					event.preventDefault();
 					$('#status-change-content-data').html('');
@@ -991,7 +991,7 @@ function loadSalesPerson(){
 					});
 				});
 
-				//MARK MATERIAL
+				//WARNING ALERT
 				function _markMaterialAvailable(){
 					swal({
 						title: "Mark Material",
@@ -1001,7 +1001,7 @@ function loadSalesPerson(){
 					});
 				}
 
-				//SUCCESS - STATUS CHANGED
+				//SUCCESS ALERT
 				function _statusChanged(){
 					swal({
 						title: 'Status Changed',
@@ -1023,7 +1023,7 @@ function loadSalesPerson(){
 					});
 				}
 
-				//WARNING - ADD STAFF
+				//WARNING ALERT
 				function _staffEntry(){
 					swal({
 						title: "Add Staff",

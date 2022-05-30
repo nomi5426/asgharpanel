@@ -37,7 +37,13 @@ if(isset($_REQUEST['id'])){
                         <input type="text" name="mat_lpo_id" id="mat_lpo_id" class="form-control">
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit" name="_btnAddLpo" id="_btnEditCategory">Save</button>
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <label for="added_mat_lpo_id">ADDED LPO ID</label>
+                        <textarea id="added_mat_lpo_id" rows="3" type="text" class="form-control" name="added_mat_lpo_id" disabled value="Added LPO"></textarea>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit" name="_btnAddLpo" id="_btnAddLpo">Save</button>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Close</button>
             </form>
         </div>
@@ -48,18 +54,41 @@ if(isset($_REQUEST['id'])){
 
 <!-- Internal form-elements js -->
 <script src="../assets/js/advanced-form-elements.js"></script>
-
-
 <!--Internal  Sweet-Alert js-->
 <script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
 <script src="../assets/plugins/sweet-alert/jquery.sweet-alert.js"></script>
-
 <!-- Sweet-alert js  -->
 <script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
 <script src="../assets/js/sweet-alert.js"></script>
-
 <script type="text/javascript">
+    //HIDE BEFORE FETCH
+    $('#added_mat_lpo_id').hide();
     $(document).ready(function(){
+        //HIDE IF THERE IS NO PREVIOUS LPO
+        $(function(){
+            var mat_id = $('#id').val();
+            $.ajax({
+                type: "POST",
+                url: '../order/materialLpo.php',
+                data: {mat_id:mat_id},
+                dataType:'html',
+                success: function(data){
+                    console.log(data);
+                    if(data == ""){
+                        $('#id').val(mat_id);
+                    }
+                    else{
+                        var getRes = data.split('{');
+                        var splitLpo = getRes[0];
+                        $('#added_mat_lpo_id').show();
+                        $('#added_mat_lpo_id').html(splitLpo);
+                        $('#added_mat_lpo_id').fadeIn('slow');
+                        $('#id').val(mat_id);
+                    }
+                }
+            });
+        });
+
         $('#formAddLpo').on('submit', function(e){
             e.preventDefault();
             if(errorHandling()){
@@ -69,18 +98,16 @@ if(isset($_REQUEST['id'])){
                 $.ajax({
                     type: "POST",
                     url: '../order/materialLpo.php',
+                    dataType:'json',
                     data: {
                         id:id, 
                         mat_status:mat_status,
-                        mat_lpo_id:mat_lpo_id
+                        mat_lpo_id:mat_lpo_id +'\n'
                     },
                     success: function(response){
-                        if(response.status === 1){
+                        if(response.status == 1){
                             $("#formAddLpo")[0].reset();
-                            $('#exampleone').DataTable().ajax.reload();
-                        }
-                        else{
-                            console.log("Nothing");
+                            postLPOUpdate();
                         }
                     }
                 });
@@ -97,12 +124,10 @@ if(isset($_REQUEST['id'])){
                 _warningMessage = "LPO ID is Left Empty";
                 emptyFieldAlert(_warningMessage, _warningText);
                 flag = false
-            }else{
-                postLPOUpdate();
             }
             return flag;
         }
-        //WARNING ALERT
+        //EMPTY FIELD - WARNING
         function emptyFieldAlert(_alertTitle, _alertText){
             swal({
                 title: _alertTitle,
@@ -111,12 +136,16 @@ if(isset($_REQUEST['id'])){
                 confirmButtonClass: "btn btn-danger"
             });
         }
+        //LPO ADDED - SUCCESS
         function postLPOUpdate(){
             swal({
                 title: 'Success!',
                 text: 'Material and LPO is Updated Succesfully',
                 type: 'success',
                 confirmButtonColor: '#57a94f'
+            },
+            function reload(){
+                location.reload();
             });
         }
     });

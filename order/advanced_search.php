@@ -219,7 +219,10 @@ function loadSalesPerson(){
 					"serverSide": 	true,
 					"paging"	:	true,
 					"searching"	:	true,
-					"sDom": 'lrtip',
+					"dom": 'Bfrtip',
+					"buttons": [
+						'copy', 'csv', 'pdf', 'print'
+					],
 					"iDisplayLength"	:	100,
 					"processData": false,
 					"ajax": {
@@ -367,17 +370,13 @@ function loadSalesPerson(){
 
 		<!--Internal Sumoselect js-->
 		<script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
-
 		<!-- Internal Select2 js -->
 		<script src="../assets/js/select2.js"></script>
     	<script src="../assets/plugins/select2/js/select2.min.js"></script>
-
 		<!-- Internal Form-elements js -->
 		<script src="../assets/js/advanced-form-elements.js"></script>
-
 		<!-- Bootstrap Bundle js -->
 		<script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 		<!-- Internal Data tables -->
 		<script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
 		<script src="../assets/plugins/datatable/js/dataTables.dataTables.min.js"></script>
@@ -395,29 +394,21 @@ function loadSalesPerson(){
 		<script src="../assets/plugins/datatable/js/buttons.colVis.min.js"></script>
 		<script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
 		<script src="../assets/plugins/datatable/js/responsive.bootstrap4.min.js"></script>
-
 		<!--Internal  Datatable js -->
 		<script src="../assets/js/table-data.js"></script>
-
 		<!-- eva-icons js -->
 		<script src="../assets/js/eva-icons.min.js"></script>
-
 		<!-- Horizontalmenu js-->
 		<script src="../assets/plugins/horizontal-menu/horizontal-menu-2/horizontal-menu.js"></script>
-
 		<!-- Sticky js -->
 		<script src="../assets/js/sticky.js"></script>
-
 		<script src="../assets/plugins/rating/jquery.rating-stars.js"></script>
 		<script src="../assets/plugins/rating/jquery.barrating.js"></script>
-
 		<!-- Internal Modal js-->
 		<script src="../assets/js/modal.js"></script>
-
 		<!-- custom js -->
 		<script src="../assets/js/custom.js"></script>
 		<script src="../assets/plugins/jquery-ui/ui/widgets/datepicker.js"></script>
-
 		<script type="text/javascript">
 	  	// $( function() { $( "#search_fromdate" ).datepicker({ dateFormat: 'dd/mm/yy' }); } );
 		// Datapicker 
@@ -426,7 +417,6 @@ function loadSalesPerson(){
 			"changeYear": true
 		});
 	  	// $( function() { $( "#search_todate" ).datepicker({ dateFormat: 'dd/mm/yy' }); } );
-
  		</script>
 		<!--   <script type="text/javascript">
 		

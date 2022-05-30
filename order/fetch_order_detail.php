@@ -42,10 +42,9 @@ $pdf_upload_dir = '../pdfUploads/';
 	if(isset($_POST['selectedstat'])){
 		$_output='';
 		$filterNonMaterial='No';
-		$sql = "SELECT * FROM product WHERE pstatus='".$_POST['selectedstat']."'";
-		$sql .=	"AND material ='No' ORDER BY invoiceId";
+		$sql = "SELECT * FROM product WHERE pstatus='".$_POST['selectedstat']."' ORDER BY invoiceId";
 		$query=mysqli_query($conn,$sql);
-		$_output .='<option value="" disabled selected>Select Invoice ID</option>';
+		$_output .='<option value="Select Invoice ID">Select Invoice ID</option>';
 		while($row = mysqli_fetch_array($query)){
 			$_output .='<option data-id="'.$row['id'].'" value="'.$row["invoiceId"].'">'.$row["invoiceId"]." - ".$row["pname"].' </option>';
 		}
