@@ -39,9 +39,8 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 									<div class="panel panel-primary tabs-style-2">
 										<div class=" tab-menu-heading">
 											<div class="tabs-menu" id="tabId">
-												<!-- Tabs -->
-												<ul class="nav panel-tabs main-nav-line nav-justified">
-													<li class="nav-item"><a href="#neworder" class="nav-link active" data-toggle="tab">New Order</a></li>
+												<ul class="nav panel-tabs main-nav-line nav-justified" id="myTab">
+													<li class="nav-item"><a href="#crm" class="nav-link active" data-toggle="tab">CRM</a></li>
 													<li class="nav-item"><a href="#inproduction" class="nav-link" data-toggle="tab">In Production</a></li>
 													<li class="nav-item"><a href="#ready" class="nav-link" data-toggle="tab">Ready</a></li>
 													<li class="nav-item"><a href="#outfordelivery" class="nav-link" data-toggle="tab">Out for Delivery</a></li>

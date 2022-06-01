@@ -100,10 +100,9 @@
 
         //FETCH ITEM
         $oneRow = "$row[6]<br><strong> Size - $row[8]</strong>";
-        $deliveryNotePrintqr = "<a href=../base/deliveryNoteDownload.php?file_id=$row[0]>$row[4]</a><br><a href='../qrcodes/$row[22]' target='_blank'><img src='../qrcodes/$row[22]' /></a> ";
+        $deliveryNotePrintqr = "<a href=../base/deliveryNoteDownload.php?file_id=$row[0]>$row[4]</a><br><a href='../qrcodes/$row[22]' target='_blank'><img src='../qrcodes/$row[22]' /></a>";
         $qrcodeinvoicefordelivery = "$row[4]";
         $deliveryNotePrint = "<a href=../base/deliveryNoteDownload.php?file_id=$row[0]>$row[4]";
-
 
         //MATERIAL AVAILABILITY
         $material = $row[16];
@@ -207,7 +206,7 @@
 
         //FACTORY
         else if($userrole == "factory"){
-            $subdata[]=$deliveryNotePrintqr; 
+            $subdata[]=$deliveryNotePrintqr;
             $subdata[]=$row[15];
             $subdata[]=$dateAvailability;
             $subdata[]=$row[3];
@@ -221,12 +220,11 @@
             $subdata[]=$comment;
             if($status == "New Order"){
                 if ($material !== $materialAvailable){
-                $subdata[]='<div class="inner"><button id="_materialLpo" type="button" title="Confirm Material" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#materialLpoModal" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></button>
-                            <div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
+                $subdata[]='<div class="inner"><button id="_materialLpo" type="button" title="Confirm Material" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#materialLpoModal" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button>
+                            <button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
                 }
                 else{
-                $subdata[]='<button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button>';
-                            
+                $subdata[]='<button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button>';   
                 }
             }
             else if($status == ''){

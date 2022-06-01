@@ -69,7 +69,7 @@ function loadSalesPerson(){
 									<div class="panel panel-primary tabs-style-2">
 										<div class=" tab-menu-heading">
 											<div class="tabs-menu" id="tabId">
-											<ul class="nav panel-tabs main-nav-line nav-justified" id="myTab">
+												<ul class="nav panel-tabs main-nav-line nav-justified" id="myTab">
 													<li class="nav-item"><a href="#crm" class="nav-link active" data-toggle="tab">CRM</a></li>
 													<li class="nav-item"><a href="#neworder" class="nav-link" data-toggle="tab">New Order</a></li>
 													<li class="nav-item"><a href="#inproduction" class="nav-link" data-toggle="tab">In Production</a></li>
@@ -414,6 +414,7 @@ function loadSalesPerson(){
 
 		<script type="text/javascript">
 			$(document).ready(function() {
+
 				//NEW ORDER
 				var tableone = $('#exampleone').DataTable( {
 					"processing": 	true,
@@ -463,6 +464,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
 				} );
+
 				//IN PRODUCTION
 				var tabletwo = $('#exampletwo').DataTable( {
 					"processing": 	true,
@@ -509,6 +511,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
 				} );
+
 				//READY
 				var tablethree = $('#examplethree').DataTable( {
 					"processing": 	true,
@@ -555,6 +558,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
 				} );
+
 				//OUT FOR DELIVERY
 				var tablefour = $('#examplefour').DataTable( {
 					"processing": 	true,
@@ -601,6 +605,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
 				} );
+
 				//DELIVERED
 				var tablefive = $('#examplefive').DataTable( {
 					"processing": 	true,
@@ -647,6 +652,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
+
 				//ON HOLD
 				var tablesix = $('#examplesix').DataTable( {
 					"processing": 	true,
@@ -693,6 +699,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
 				} );
+
 				//CANCELLED
 				var tableseven = $('#exampleseven').DataTable( {
 					"processing": 	true,
@@ -739,6 +746,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
 				} );
+
 				//ALL PRODUCTS
 				var tableeight = $('#exampleeight').DataTable( {
 					"processing": 	true,
@@ -799,6 +807,7 @@ function loadSalesPerson(){
 						{ "sWidth": "5%" }
 					]
 				} );
+
 				//CRM
 				var tablenine = $('#examplenine').DataTable( {
 					"processing": 	true,
@@ -845,6 +854,7 @@ function loadSalesPerson(){
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
+
 				//SEARCH FUNCTION
 				$('#orderSearchText').keyup(function(){
 					tableone.search($(this).val()).column(0).draw() ;
