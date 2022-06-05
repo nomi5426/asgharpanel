@@ -29,7 +29,7 @@
 	$host = "localhost";
 	$username = "root";
 	$password = "";
-	$dbname = "creati55_crud";
+	$dbname = "asgharpanel";
 	//MAKES THE CONNECTION
 	$conn = mysqli_connect($host, $username, $password, $dbname);
 	if (!$conn) {
