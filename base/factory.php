@@ -1,20 +1,41 @@
 <?php
-session_start();
-include "../base/db.php";
-include '../base/deliveryNoteDownload.php';
-if(!isset($_SESSION['_factoryLogin'])){header('Location:../index.php');}
 
-function loadSalesPerson(){
-    global $conn;
-    $salesPersonOutput='';   
-    $salesPersonSqlQuery = "SELECT firstname FROM user WHERE userrole = 'sales'";
-    $result = mysqli_query($conn, $salesPersonSqlQuery);
-    while($row = mysqli_fetch_array($result)){
-        $salesPersonOutput .= '<option value = "'.$row["firstname"].'">'.$row["firstname"].'</option>';
-    }
-    return $salesPersonOutput;
-}
+	/*********************************************************************************
+	* PROJECT: ZETA 1.0.0
+	* AUTHOR: ROSHAN ZAID AKA DAUNTE
+	* FILE FOR: FACTORY ROLE USER INTERFACE AND TABLES OF ALL STATUSES
+	* 
+	* VARIABLES
+	* @PARAM	{STRING}	CONN								//DB CONNECT VARIABLE
+	* @PARAM	{STRING}	MESSAGE								//LOG MESSAGE
+	* @PARAM	{STRING}	LOGFILE								//LOG FILE PATH
+	*
+	* FUNCTIONS
+	* APP_LOG()													//LOG WRITING
+	/********************************************************************************/
 
+	//INCLUDE DIRECTORIES
+	include "../base/db.php";
+	include '../base/deliveryNoteDownload.php';
+
+	/**
+	 * MASTER METHOD FOR LOG TRACKING
+	 * @PARAM {STRING}	MESSAGE
+	 */
+	function app_log($message){
+		date_default_timezone_set('Asia/Dubai');
+		$logfile = 'log/log_'.date('d-M-Y').'.log';
+		file_put_contents($logfile, $message . "\n", FILE_APPEND);
+	}
+
+	//KEEP TRACK ON SESSION VARIABLES
+    if(!session_id()) session_start();
+	if(!isset($_SESSION['_factoryLogin'])){
+		date_default_timezone_set('Asia/Dubai'); 
+		app_log("'".date('d-m-Y H:i:s')."' : Session is not set, Login Attempt FACTORY User");
+		header('Location:../index.php');
+	}
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,14 +43,10 @@ function loadSalesPerson(){
 		<?php include "../header/header_css.php"; ?>
 	</head>
 	<body class="main-body">
-		<!-- Page -->
 		<div class="page">
-			<!-- main-content opened -->
 			<?php include "../header/header.php";?>
 			<div class="main-content horizontal-content">
-				<!-- container opened -->
 				<div class="container">
-					<!-- breadcrumb -->
 					<div class="breadcrumb-header justify-content-between">
 						<div class="my-auto">
 							<div class="d-flex">
@@ -37,8 +54,6 @@ function loadSalesPerson(){
 							</div>
 						</div>
 					</div>
-					<!-- breadcrumb -->
-					<!-- row opened -->
 					<div class="row row-sm">
 						<div class="col-xl-12">
 							<div class="card mg-b-20">
@@ -175,7 +190,6 @@ function loadSalesPerson(){
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
-																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
@@ -220,7 +234,6 @@ function loadSalesPerson(){
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
-																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
@@ -243,7 +256,6 @@ function loadSalesPerson(){
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
-																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
@@ -281,7 +293,6 @@ function loadSalesPerson(){
 						</div>
 					</div>
 				</div>
-				<!-- Container closed -->
 				<!--MODAL OPEN-->				
 				<!--IMAGE MODAL-->
 				<div class="modal effect-scale show" id="imagemodalone">
@@ -303,7 +314,6 @@ function loadSalesPerson(){
 				</div>
 				<!--MODAL CLOSED-->
 			</div>
-			<!-- main-content closed -->
 			<?php include "../footer/footer.php"; ?>
 		</div>
 		<!-- End Page -->
@@ -367,7 +377,14 @@ function loadSalesPerson(){
 		<script type="text/javascript">
 			$(document).ready(function() {
 
-				//NEW ORDER
+				//DATATABLE IMPLEMENTATION
+
+				//INITIATING TABLE NEW ORDER
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: NEW ORDER TO FETCH ALL NEW ORDER RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: IN PRODUCTION TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tableone = $('#exampleone').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -428,7 +445,12 @@ function loadSalesPerson(){
 					]
 				} );
 
-				//IN PRODUCTION
+				//INITIATING TABLE IN PRODUCTION
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: IN PRODUCTION TO FETCH ALL IN PRODUCTION RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: READY TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tabletwo = $('#exampletwo').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -475,7 +497,12 @@ function loadSalesPerson(){
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
 				} );
 
-				//READY
+				//INITIATING TABLE READY
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: READY TO FETCH ALL READY RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: OUT FOR DELIVERY TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablethree = $('#examplethree').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -522,7 +549,12 @@ function loadSalesPerson(){
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "25%" },{ "sWidth": "15%" },{ "sWidth": "3%" },{ "sWidth": "20%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{"sWidth":"15%"}]
 				} );
 
-				//OUT FOR DELIVERY
+				//INITIATING TABLE OUT FOR DELIVERY
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: OUT FOR DELIVERY TO FETCH ALL OUT FOR DELIVERY RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: DELIVERED TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablefour = $('#examplefour').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -569,7 +601,11 @@ function loadSalesPerson(){
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
-				//DELIVERED
+				//INITIATING TABLE DELIVERED
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: DELIVERED TO FETCH ALL DELIVERED RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablefive = $('#examplefive').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -616,7 +652,11 @@ function loadSalesPerson(){
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
-				//ON HOLD
+				//INITIATING TABLE ON HOLD
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: ON HOLD TO FETCH ALL ON HOLD RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablesix = $('#examplesix').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -663,7 +703,11 @@ function loadSalesPerson(){
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
-				//CANCELLED
+				//INITIATING TABLE CANCELLED
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: CANCELLED TO FETCH ALL CANCELLED RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tableseven = $('#exampleseven').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -710,7 +754,11 @@ function loadSalesPerson(){
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
-				//ALL PRODUCTS
+				//INITIATING TABLE ALL PRODUCTS
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- EMPTY STATUS - ALL RECORDS WILL BE FETCHED
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tableeight = $('#exampleeight').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -771,7 +819,11 @@ function loadSalesPerson(){
 					]
 				} );
 
-				//CRM
+				//INITIATING TABLE CRM
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: CRM TO FETCH ALL CRM RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablenine = $('#examplenine').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -818,7 +870,8 @@ function loadSalesPerson(){
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
-				//SEARCH FUNCTION
+				//@ORDERSEARCHTEXT IS THE TEXT FIELD WHERE THE INVOICES WILL BE SEARCHED
+				//TABLES WILL BE REDRAWN AS PER THE INSERT VALUE
 				$('#orderSearchText').keyup(function(){
 					tableone.search($(this).val()).column(0).draw() ;
 					tabletwo.search($(this).val()).column(0).draw() ;
@@ -831,7 +884,10 @@ function loadSalesPerson(){
 					tablenine.search($(this).val()).column(0).draw() ;
 				});
 
-				//IMAGE FETCH
+				//IMAGE FETCH			-	ONCLICKEVENT
+				//A MODAL OPEN FOR THUMBNAIL IMAGE CLICK
+				//IMAGE WILL BE IDENTIFIED WITH THE ORDER ROW ID AND BE PASSED TO ORDERIMAGE.PHP TO VIEW FULL VIEW IMAGE IN MODAL
+				//DATA WILL BE PASSED AND RETREIVED AS HTML
 				$(document).on('click','#tableImage',function(event){
 					event.preventDefault();
 					var per_id=$(this).data('id');
@@ -849,22 +905,15 @@ function loadSalesPerson(){
 					});
 				});
 
-				//ORDER MADE STAFF
-				$(document).on('click','#addStaff',function(event){
-					event.preventDefault();
-					$('#add-order-staff-content-data').html('');
-					$.ajax({
-						type:'POST',
-						url:'../order/addOrderStaff.php'
-					}).done(function(data){
-						$('#add-order-staff-content-data').html('');
-						$('#add-order-staff-content-data').html(data);
-					}).fail(function(){
-						$('#add-order-staff-content-data').html('<p>Error</p>');
-					});
-				});
-
-				//CHANGE STATUS - NEXT
+				//STATUSCHANGENEXT		-	ONCLICKEVENT
+				//CURRENT STATUS OF AN ORDER WILL BE CHANGED TO NEXT STATUS
+				//STATUSID - THE ROW ID SENT TO STATUSCHANGE.PHP AND CHANGE THE NEXT STATUS THAT WAS SENT FROM EACH TABLE
+				//CONDITION - IF STATUS: NEW ORDER = CANT CHANGE TO NEXT UNLESS MATERIAL IS MARKED AVAILABLE
+				//CONDITION - IF STATUS: IN PRODUCTION = CANT CHANGE STATUS TO NEXT UNLESS THE STAFF WHO MADE IS MARKED
+				//CONDITION - IF BOTH ARE CLEAR, STATUS WILL BE CHANGED AND USER GETS SUCCESS MESSAGE
+				//CONDITION - IF ANY FAILS TO MEET CONDITION, USER WILL GET CUSTOM WARNING
+				//ALERTS WILL BE DECIDED ON THE INDEXES THAT IS RECEIVED FROM STATUSCHANGE.PHP
+				//DATA WILL BE PASSED AND RETREIVED AS JSON
 				$(document).on('click','#statusChangeNext',function(event){
 					if(confirm("Are you sure changing status?")){
 						event.preventDefault();
@@ -909,7 +958,9 @@ function loadSalesPerson(){
 					}
 				});
 
-				//MATERIAL LPO CONFIRMATION
+				//MATERIAL MARK		-	ONCLICKEVENT
+				//A MODAL OPEN FOR MARKING MATERIAL LPO OF AN ORDER
+				//DATA WILL BE PASSED AND RETREIVED AS HTML
 				$(document).on('click','#_materialLpo',function(event){
 					event.preventDefault();
 					var id=$(this).data('id');
@@ -927,7 +978,8 @@ function loadSalesPerson(){
 					});
 				});
 
-				//WARNING ALERT
+				//SUCCESS SWAL - MATERIAL
+				//CONFIRMATION OF MATERIAL AVAILABILITY
 				function _markMaterialAvailable(){
 					swal({
 						title: "Mark Material",
@@ -937,7 +989,8 @@ function loadSalesPerson(){
 					});
 				}
 
-				//SUCCESS ALERT
+				//SUCCESS SWAL - STATUS CHANGED
+				//CONFIRMATION OF STATUS CHANGED TO ANY STATUS
 				function _statusChanged(){
 					swal({
 						title: 'Status Changed',
@@ -959,7 +1012,9 @@ function loadSalesPerson(){
 					});
 				}
 
-				//WARNING ALERT
+				//WARNING SWAL - STATUS CHANGED
+				//WARNING ON MISSING STAFF DURING IN PRODUCTION
+				//ONCE THE WARNING IS CLOSED ADD STAFF PER ORDER WILL BE SHOWN
 				function _staffEntry(){
 					swal({
 						title: "Add Staff",
@@ -983,6 +1038,8 @@ function loadSalesPerson(){
 					});
 				}
 
+				//TOGGLE TAB WILL GET THE TOGGLE ELEMENT AND WILL SAVE THE LAST ACTIVE TOGGLE TABLE BEFORE REFRESH ON LOCAL STORAGE
+				//AND SET THE SAVED TOGGLE AS ACTIVE TAB
 				$('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
                 	localStorage.setItem('activeTab', $(e.target).attr('href'));
 				});

@@ -1,21 +1,52 @@
 <?php
-session_start();
-include "../base/db.php";
-include '../base/deliveryNoteDownload.php';
-if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
+
+	/*********************************************************************************
+	* PROJECT: ZETA 1.0.0
+	* AUTHOR: ROSHAN ZAID AKA DAUNTE
+	* FILE FOR: SALES ROLE USER INTERFACE AND TABLES OF ALL STATUSES
+	* 
+	* VARIABLES
+	* @PARAM	{STRING}	CONN								//DB CONNECT VARIABLE
+	* @PARAM	{STRING}	MESSAGE								//LOG MESSAGE
+	* @PARAM	{STRING}	LOGFILE								//LOG FILE PATH
+	*
+	* FUNCTIONS
+	* APP_LOG()													//LOG WRITING
+	/********************************************************************************/
+	
+	//INCLUDE DIRECTORIES
+	include "../base/db.php";
+	include '../base/deliveryNoteDownload.php';
+
+	//KEEP TRACK ON SESSION VARIABLES
+    if(!session_id()) session_start();
+	if(!isset($_SESSION['_salesLogin'])){
+		date_default_timezone_set('Asia/Dubai'); 
+		app_log("'".date('d-m-Y H:i:s')."' : Session is not set, Login Attempt SALES User");
+		header('Location:../index.php');
+	}
+	
+	/**
+	 * MASTER METHOD FOR LOG TRACKING
+	 * @PARAM {STRING}	MESSAGE
+	 */
+	function app_log($message){
+		date_default_timezone_set('Asia/Dubai');
+		$logfile = 'log/log_'.date('d-M-Y').'.log';
+		file_put_contents($logfile, $message . "\n", FILE_APPEND);
+	}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<?php include "../header/header_css.php"; ?>
+	<head>
+		<?php include "../header/header_css.php"; ?>
+	</head>
 	<body class="main-body">
-		<!-- Page -->
 		<div class="page">
-			<!-- main-content opened -->
 			<?php include "../header/header.php";?>
 			<div class="main-content horizontal-content">
-				<!-- container opened -->
 				<div class="container">
-					<!-- breadcrumb -->
 					<div class="breadcrumb-header justify-content-between">
 						<div class="my-auto">
 							<div class="d-flex">
@@ -23,10 +54,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 							</div>
 						</div>
 					</div>
-					<!-- breadcrumb -->
-					<!-- row opened -->
 					<div class="row row-sm">
-						<!--div-->
 						<div class="col-xl-12">
 							<div class="card mg-b-20">
 								<div class="card-header pb-0">
@@ -41,6 +69,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 											<div class="tabs-menu" id="tabId">
 												<ul class="nav panel-tabs main-nav-line nav-justified" id="myTab">
 													<li class="nav-item"><a href="#crm" class="nav-link active" data-toggle="tab">CRM</a></li>
+													<li class="nav-item"><a href="#neworder" class="nav-link" data-toggle="tab">New Order</a></li>
 													<li class="nav-item"><a href="#inproduction" class="nav-link" data-toggle="tab">In Production</a></li>
 													<li class="nav-item"><a href="#ready" class="nav-link" data-toggle="tab">Ready</a></li>
 													<li class="nav-item"><a href="#outfordelivery" class="nav-link" data-toggle="tab">Out for Delivery</a></li>
@@ -53,7 +82,32 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 										</div>
 										<div class="panel-body tabs-menu-body main-content-body-right border-top-0 border">
 											<div class="tab-content">
-												<div class="tab-pane active" id="neworder">
+												<!--CRM TABLE-->
+												<div class="tab-pane active" id="crm">
+													<div class="table-responsive">
+														<table id="examplenine" class="testclass table key-buttons text-md-nowrap">
+															<thead>
+																<tr>
+																	<th class="border-bottom-0">IID</th>
+																	<th class="border-bottom-0">DEL/Date</th>
+																	<th class="border-bottom-0">D/G</th>
+																	<th class="border-bottom-0">City</th>
+																	<th class="border-bottom-0">D/L</th>
+																	<th class="border-bottom-0">Item</th>
+																	<th class="border-bottom-0">Color</th>
+																	<th class="border-bottom-0">QTY</th>
+																	<th class="border-bottom-0">Note</th>
+																	<th class="border-bottom-0">Consult</th>
+																	<th class="border-bottom-0">Image</th>
+																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Action</th>
+																</tr>
+															</thead>
+														</table>
+													</div>
+												</div>
+												<!--NEW ORDER TABLE-->
+												<div class="tab-pane" id="neworder">
 													<div class="table-responsive">
 														<table id="exampleone" class="testclass table key-buttons text-md-nowrap">
 															<thead>
@@ -76,6 +130,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 														</table>
 													</div>
 												</div>
+												<!--IN PRODUCTION TABLE-->
 												<div class="tab-pane" id="inproduction">
 													<div class="table-responsive">
 														<table id="exampletwo" class="testclass table key-buttons text-md-nowrap">
@@ -98,6 +153,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 														</table>
 													</div>
 												</div>
+												<!--READY TABLE-->
 												<div class="tab-pane" id="ready">
 													<div class="table-responsive">
 														<table id="examplethree" class="testclass table key-buttons text-md-nowrap">
@@ -120,6 +176,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 														</table>
 													</div>
 												</div>
+												<!--OUT FOR DELIVERY TABLE-->
 												<div class="tab-pane" id="outfordelivery">
 													<div class="table-responsive">
 														<table id="examplefour" class="testclass table key-buttons text-md-nowrap">
@@ -142,6 +199,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 														</table>
 													</div>
 												</div>
+												<!--DELIVERED TABLE-->
 												<div class="tab-pane" id="delivered">
 													<div class="table-responsive">
 														<table id="examplefive" class="testclass table key-buttons text-md-nowrap">
@@ -164,6 +222,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 														</table>
 													</div>
 												</div>
+												<!--ON HOLD TABLE-->
 												<div class="tab-pane" id="onhold">
 													<div class="table-responsive">
 														<table id="examplesix" class="testclass table key-buttons text-md-nowrap">
@@ -186,6 +245,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 														</table>
 													</div>
 												</div>
+												<!--CANCELLED TABLE-->
 												<div class="tab-pane" id="cancelled">
 													<div class="table-responsive">
 														<table id="exampleseven" class="testclass table key-buttons text-md-nowrap">
@@ -208,6 +268,7 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 														</table>
 													</div>
 												</div>
+												<!--ALL PRODUCTS TABLE-->
 												<div class="tab-pane" id="allproduct">
 													<div class="table-responsive">
 														<table id="exampleeight" class="testclass table key-buttons text-md-nowrap">
@@ -239,33 +300,90 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 							</div>
 						</div>
 					</div>
-
-					<!--Image Modal-->
+					<!--IMAGE-->
 					<div class="modal effect-scale show" id="imagemodalone">
 						<div class="modal-dialog modal-dialog-centered" role="document">
 							<div id="content-data"></div>
 						</div>
 					</div>
-
-					<!--New Order Modal-->
+					<!--NEW ORDER-->
 					<div class="modal effect-scale show" id="newOrderModal">
 						<div class="modal-dialog-new-order" role="document">
 							<div id="add-order-content-data"></div>
 						</div>
 					</div>
 				</div>
-				<!-- Container closed -->
 			</div>
-			<!-- main-content closed -->
 			<?php include "../footer/footer.php"; ?>
 		</div>
-		<!-- End Page -->
+		<!-- END PAGE -->
 
-		<!-- Back-to-top -->
+		<!-- BACK TO TOP-->
 		<a href="#top" id="back-to-top"><i class="las la-angle-double-up"></i></a>
+		<!-- JQuery min js -->
+		<script src="../assets/plugins/jquery/jquery.min.js"></script>
+		<!--Internal  Datepicker js -->
+		<script src="../assets/plugins/jquery-ui/ui/widgets/datepicker.js"></script>
+		<!--Internal  jquery-simple-datetimepicker js -->
+		<script src="../assets/plugins/amazeui-datetimepicker/js/amazeui.datetimepicker.min.js"></script>
+		<!-- Ionicons js -->
+		<script src="../assets/plugins/jquery-simple-datetimepicker/jquery.simple-dtpicker.js"></script>
+		<!-- Bootstrap Bundle js -->
+		<script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!--Internal  Parsley.min js -->
+		<script src="../assets/plugins/parsleyjs/parsley.min.js"></script>
+		<!-- Internal Data tables -->
+		<script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+		<script src="../assets/plugins/datatable/js/dataTables.dataTables.min.js"></script>
+		<script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
+		<script src="../assets/plugins/datatable/js/responsive.dataTables.min.js"></script>
+		<script src="../assets/plugins/datatable/js/jquery.dataTables.js"></script>
+		<script src="../assets/plugins/datatable/js/dataTables.bootstrap4.js"></script>
+		<script src="../assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
+		<script src="../assets/plugins/datatable/js/buttons.bootstrap4.min.js"></script>
+		<script src="../assets/plugins/datatable/js/jszip.min.js"></script>
+		<script src="../assets/plugins/datatable/js/pdfmake.min.js"></script>
+		<script src="../assets/plugins/datatable/js/vfs_fonts.js"></script>
+		<script src="../assets/plugins/datatable/js/buttons.html5.min.js"></script>
+		<script src="../assets/plugins/datatable/js/buttons.print.min.js"></script>
+		<script src="../assets/plugins/datatable/js/buttons.colVis.min.js"></script>
+		<script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
+		<script src="../assets/plugins/datatable/js/responsive.bootstrap4.min.js"></script>
+		<!--Internal  Datatable js -->
+		<script src="../assets/js/table-data.js"></script>
+		<!-- Horizontalmenu js-->
+		<script src="../assets/plugins/horizontal-menu/horizontal-menu-2/horizontal-menu.js"></script>
+		<!-- Sticky js -->
+		<script src="../assets/js/sticky.js"></script>
+		<!-- Internal Select2 js-->
+		<script src="../assets/plugins/select2/js/select2.min.js"></script>
+		<!-- eva-icons js -->
+		<script src="../assets/js/eva-icons.min.js"></script>
+       	<!-- Internal Sumoselect js -->
+	   	<script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
+		<!-- Internal form-elements js -->
+		<script src="../assets/js/form-elements.js"></script>
+		<script src="../assets/plugins/rating/jquery.rating-stars.js"></script>
+		<!-- custom js -->
+		<script src="../assets/js/custom.js"></script>
+		<!-- Internal Modal js-->
+		<script src="../assets/js/modal.js"></script>
+		<!-- Internal Form-validation js -->
+		<script src="../assets/js/form-validation.js"></script>
+		<!-- Sweet-alert js  -->
+		<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
+		<script src="../assets/js/sweet-alert.js"></script>
 
-		<script>
+		<script type="text/javascript">
 			$(document).ready(function() {
+
+				//DATATABLE IMPLEMENTATION
+
+				//INITIATING TABLE NEW ORDER
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: NEW ORDER TO FETCH ALL NEW ORDER RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tableone = $('#exampleone').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -312,6 +430,11 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
+				//INITIATING TABLE IN PRODUCTION
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: IN PRODUCTION TO FETCH ALL IN PRODUCTION RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tabletwo = $('#exampletwo').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -358,6 +481,11 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
+				//INITIATING TABLE READY
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: READY TO FETCH ALL READY RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablethree = $('#examplethree').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -404,6 +532,11 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
+				//INITIATING TABLE OUT FOR DELIVERY
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: OUT FOR DELIVERY TO FETCH ALL OUT FOR DELIVERY RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablefour = $('#examplefour').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -450,6 +583,11 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
+				//INITIATING TABLE DELIVERED
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: DELIVERED TO FETCH ALL DELIVERED RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablefive = $('#examplefive').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -496,6 +634,11 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
+				//INITIATING TABLE ON HOLD
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: ON HOLD TO FETCH ALL ON HOLD RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablesix = $('#examplesix').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -542,6 +685,11 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
+				//INITIATING TABLE CANCELLED
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: CANCELLED TO FETCH ALL CANCELLED RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tableseven = $('#exampleseven').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -588,6 +736,11 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
+				//INITIATING TABLE ALL PRODUCTS
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- EMPTY STATUS - ALL RECORDS WILL BE FETCHED
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tableeight = $('#exampleeight').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -595,6 +748,9 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					"searching"	:	true,
 					"iDisplayLength"	:	100,
 					"sDom": 'Brtip',
+					"buttons": [
+						
+					],
 					"ajax": {
 						url  :"../order/fetch.php",
 						type : "POST",
@@ -631,6 +787,59 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
+				//INITIATING TABLE CRM
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: CRM TO FETCH ALL CRM RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
+				var tablenine = $('#examplenine').DataTable( {
+					"processing": 	true,
+					"serverSide": 	true,
+					"paging"	:	true,
+					"searching"	:	true,
+					"sDom": 'Brtip',
+					"buttons": [
+						
+					],
+					"iDisplayLength"	:	100,
+					"ajax": {
+						url  :"../order/fetch.php",
+						type : "POST",
+						data : {
+							status : 'CRM',
+							nextStatus : ''
+						}
+					},
+					"rowCallback": function( row, data, index ) {
+						if ( data[7] == "Sharaf DG" )
+						{
+							$('td', row).css('background-color', '#b5b5de');
+						}
+						else if ( data[7] != "Sharaf DG" )
+						{
+							$('td', row).css('background-color', 'white');
+						}
+					},
+					"drawCallback": function ( settings ) {
+						var api = this.api();
+						var rows = api.rows( {page:'current'} ).nodes();
+						var last=null; 
+						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
+							if ( last !== group ) {
+								$(rows).eq( i ).before(
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+								);
+								last = group;
+							}
+						} );
+					},
+					"autoWidth": false,
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+				} );
+								
+				//@ORDERSEARCHTEXT IS THE TEXT FIELD WHERE THE INVOICES WILL BE SEARCHED
+				//TABLES WILL BE REDRAWN AS PER THE INSERT VALUE
 				$('#orderSearchText').keyup(function(){
 					tableone.search($(this).val()).column(0).draw() ;
 					tabletwo.search($(this).val()).column(0).draw() ;
@@ -640,166 +849,32 @@ if(!isset($_SESSION['_salesLogin'])){header('Location:../index.php');}
 					tablesix.search($(this).val()).column(0).draw() ;
 					tableseven.search($(this).val()).column(0).draw() ;
 					tableeight.search($(this).val()).column(0).draw() ;
+					tablenine.search($(this).val()).column(0).draw() ;
+				});
+				
+				//IMAGE FETCH			-	ONCLICKEVENT
+				//A MODAL OPEN FOR THUMBNAIL IMAGE CLICK
+				//IMAGE WILL BE IDENTIFIED WITH THE ORDER ROW ID AND BE PASSED TO ORDERIMAGE.PHP TO VIEW FULL VIEW IMAGE IN MODAL
+				//DATA WILL BE PASSED AND RETREIVED AS HTML
+				$(document).on('click','#tableImage',function(event){
+					event.preventDefault();
+					var per_id=$(this).data('id');
+					$('#content-data').html('');
+					$.ajax({
+						url:'../order/modal/orderImage.php',
+						type:'POST',
+						data:'id='+per_id,
+						dataType:'html'
+					}).done(function(data){
+						$('#content-data').html('');
+						$('#content-data').html(data);
+					}).fail(function(){
+						$('#content-data').html('<p>Error</p>');
+					});
 				});
 
 			} );
 
-			//Image Modal
-			$(document).on('click','#tableImage',function(event){
-				event.preventDefault();
-				var per_id=$(this).data('id');
-				$('#content-data').html('');
-				$.ajax({
-					url:'../order/modal/orderImage.php',
-					type:'POST',
-					data:'id='+per_id,
-					dataType:'html'
-				}).done(function(data){
-					$('#content-data').html('');
-					$('#content-data').html(data);
-				}).fail(function(){
-					$('#content-data').html('<p>Error</p>');
-				});
-			});
-
-			//Add New Order Modal
-			$(document).on('click','#newOrderAdd',function(event){
-				event.preventDefault();
-				$('#add-order-content-data').html('');
-				$.ajax({
-					type:'POST',
-					url:'../order/modal/addNewOrder.php'
-				}).done(function(data){
-					$('#add-order-content-data').html('');
-					$('#add-order-content-data').html(data);
-				}).fail(function(){
-					$('#add-order-content-data').html('<p>Error</p>');
-				});
-			});
-
-			//Add Comment Modal
-			$(document).on('click','#newCommentAdd',function(event){
-				event.preventDefault();
-				$('#add-comment-content-data').html('');
-				$.ajax({
-					type:'POST',
-					url:'../order/modal/addNewComment.php'
-				}).done(function(data){
-					$('#add-comment-content-data').html('');
-					$('#add-comment-content-data').html(data);
-				}).fail(function(){
-					$('#add-comment-content-data').html('<p>Error</p>');
-				});
-			});
-
-			//Change Status
-			$(document).on('click','#statusChangeNext',function(event){
-				if(confirm("Are you sure changing status?")){
-					event.preventDefault();
-					var statusid = $(this).attr('data-id');
-					$.ajax({
-						url     : '../order/statusChange.php',
-						method  : 'POST',
-						data    : {statusid : statusid},
-						success : function(data)
-						{
-							$('#exampleone').DataTable().ajax.reload();
-							$('#exampletwo').DataTable().ajax.reload();
-							$('#examplethree').DataTable().ajax.reload();
-							$('#examplefour').DataTable().ajax.reload();
-							$('#examplefive').DataTable().ajax.reload();
-							$('#examplesix').DataTable().ajax.reload();
-							$('#exampleseven').DataTable().ajax.reload();
-							$('#exampleeight').DataTable().ajax.reload();
-						}
-					});
-				}
-				else{
-					return false;
-				}
-			});
-
-			$(document).on('click','#materialConfirm',function(event){
-				if(confirm("Are you sure Confirming Material Availability?")){
-					event.preventDefault();
-					var materialid = $(this).attr('data-id');
-					$.ajax({
-						url     : '../order/statusChange.php',
-						method  : 'POST',
-						data    : {materialid : materialid},
-						success : function(data)
-						{
-							$('#exampleone').DataTable().ajax.reload();
-						}
-					});
-				}
-				else{
-					return false;
-				}
-			});
-
-			//GET TAB TEXT
-			// $(document).ready(function(){
-				// $('#tabId').tabs({
-				// 	select: function(e, ui){
-				// 		alert($(ui.tab).text());
-				// 	}
-				// });
-			// });
 		</script>
-
-		<!-- Back-to-top -->
-		<a href="#top" id="back-to-top"><i class="ti-angle-double-up"></i></a>
-
-		<!-- JQuery min js -->
-		<script src="../assets/plugins/jquery/jquery.min.js"></script>
-
-		<!-- Bootstrap Bundle js -->
-		<script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-		<!-- Internal Data tables -->
-		<script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
-		<script src="../assets/plugins/datatable/js/dataTables.dataTables.min.js"></script>
-		<script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
-		<script src="../assets/plugins/datatable/js/responsive.dataTables.min.js"></script>
-		<script src="../assets/plugins/datatable/js/jquery.dataTables.js"></script>
-		<script src="../assets/plugins/datatable/js/dataTables.bootstrap4.js"></script>
-		<script src="../assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
-		<script src="../assets/plugins/datatable/js/buttons.bootstrap4.min.js"></script>
-		<script src="../assets/plugins/datatable/js/jszip.min.js"></script>
-		<script src="../assets/plugins/datatable/js/pdfmake.min.js"></script>
-		<script src="../assets/plugins/datatable/js/vfs_fonts.js"></script>
-		<script src="../assets/plugins/datatable/js/buttons.html5.min.js"></script>
-		<script src="../assets/plugins/datatable/js/buttons.print.min.js"></script>
-		<script src="../assets/plugins/datatable/js/buttons.colVis.min.js"></script>
-		<script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
-		<script src="../assets/plugins/datatable/js/responsive.bootstrap4.min.js"></script>
-
-		<!--Internal  Datatable js -->
-		<script src="../assets/js/table-data.js"></script>
-
-		<!-- eva-icons js -->
-		<script src="../assets/js/eva-icons.min.js"></script>
-
-		<!-- Horizontalmenu js-->
-		<script src="../assets/plugins/horizontal-menu/horizontal-menu-2/horizontal-menu.js"></script>
-
-		<!-- Sticky js -->
-		<script src="../assets/js/sticky.js"></script>
-
-		<!-- Internal Select2 js-->
-		<script src="../assets/plugins/select2/js/select2.min.js"></script>
-
-		<!--Internal Sumoselect js-->
-		<script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
-
-		<script src="../assets/plugins/rating/jquery.rating-stars.js"></script>
-		<script src="../assets/plugins/rating/jquery.barrating.js"></script>
-
-		<!-- custom js -->
-		<script src="../assets/js/custom.js"></script>
-
-		<!-- Internal Modal js-->
-		<script src="../assets/js/modal.js"></script>
 	</body>
 </html>

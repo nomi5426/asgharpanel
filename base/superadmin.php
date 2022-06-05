@@ -1,20 +1,40 @@
 <?php
-session_start();
-include "../base/db.php";
-include '../base/deliveryNoteDownload.php';
-if(!isset($_SESSION['_superAdminLogin'])){header('Location:../index.php');}
 
-function loadSalesPerson(){
-    global $conn;
-    $salesPersonOutput='';   
-    $salesPersonSqlQuery = "SELECT firstname FROM user WHERE userrole = 'sales'";
-    $result = mysqli_query($conn, $salesPersonSqlQuery);
-    while($row = mysqli_fetch_array($result)){
-        $salesPersonOutput .= '<option value = "'.$row["firstname"].'">'.$row["firstname"].'</option>';
-    }
-    return $salesPersonOutput;
-}
+	/*********************************************************************************
+	* PROJECT: ZETA 1.0.0
+	* AUTHOR: ROSHAN ZAID AKA DAUNTE
+	* FILE FOR: SUPER ADMIN ROLE USER INTERFACE AND TABLES OF ALL STATUSES
+	* 
+	* VARIABLES
+	* @PARAM	{STRING}	CONN								//DB CONNECT VARIABLE
+	* @PARAM	{STRING}	MESSAGE								//LOG MESSAGE
+	* @PARAM	{STRING}	LOGFILE								//LOG FILE PATH
+	*
+	* FUNCTIONS
+	* APP_LOG()													//LOG WRITING
+	/********************************************************************************/
+	
+	//INCLUDE DIRECTORIES
+	include "../base/db.php";
+	include '../base/deliveryNoteDownload.php';
 
+	//KEEP TRACK ON SESSION VARIABLES
+    if(!session_id()) session_start();
+	if(!isset($_SESSION['_superAdminLogin'])){
+		date_default_timezone_set('Asia/Dubai'); 
+		app_log("'".date('d-m-Y H:i:s')."' : Session is not set, Login Attempt SUPER ADMIN User");
+		header('Location:../index.php');
+	}
+
+	/**
+	 * MASTER METHOD FOR LOG TRACKING
+	 * @PARAM {STRING}	MESSAGE
+	 */
+	function app_log($message){
+		date_default_timezone_set('Asia/Dubai');
+		$logfile = 'log/log_'.date('d-M-Y').'.log';
+		file_put_contents($logfile, $message . "\n", FILE_APPEND);
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,14 +42,10 @@ function loadSalesPerson(){
 		<?php include "../header/header_css.php"; ?>
 	</head>
 	<body class="main-body">
-		<!-- Page -->
 		<div class="page">
-			<!-- main-content opened -->
 			<?php include "../header/header.php";?>
 			<div class="main-content horizontal-content">
-				<!-- container opened -->
 				<div class="container">
-					<!-- breadcrumb -->
 					<div class="breadcrumb-header justify-content-between">
 						<div class="my-auto">
 							<div class="d-flex">
@@ -54,8 +70,6 @@ function loadSalesPerson(){
 							</div>
 						</div>
 					</div>
-					<!-- breadcrumb -->
-					<!-- row opened -->
 					<div class="row row-sm">
 						<div class="col-xl-12">
 							<div class="card mg-b-20">
@@ -1140,7 +1154,7 @@ function loadSalesPerson(){
 				if(activeTab){
 					$('#myTab a[href="' + activeTab + '"]').tab('show');
 				}
-			} );
+			});
 		</script>
 	</body>
 </html>
