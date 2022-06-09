@@ -500,34 +500,34 @@ input[type=file]::-webkit-file-upload-button {
   background-color: #0f4a9b;
 }
 .odd>td:last-child>.inner{
-  display: flex;
+  display: inline-flex;
 }
 .even>td:last-child>.inner{
-  display: flex;
+  display: inline-flex;
 }
 .odd>td:last-child>.inner>button{
   margin: 0px 2px;
   padding: 0;
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
 }
 .even>td:last-child>.inner>button{
   margin: 0px 2px;
   padding: 0;
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
 }
 .odd>td:last-child>button{
   margin: 0px 2px;
   padding: 0;
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
 }
 .even>td:last-child>button{
   margin: 0px 2px;
   padding: 0;
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
 }
 /*Zaid - Icon Button - START*/
 .tbl-btn-icon {
