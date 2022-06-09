@@ -13,7 +13,7 @@ else if(($_GET['action'] == 'select') && isset($_GET['id']))
     $id = $_GET['id'];
     $sql = "Select * FROM product WHERE id = '$id'";
     $result = mysqli_query($conn, $sql);
-    $logoURL = "../qrprint/pdflogo.png";
+    $logoURL = "../qrprint/pdfLogo.png";
     
     $pdf = new FPDF('P','mm',array(100,180));
     $pdf->SetAutoPageBreak(TRUE, 0);
