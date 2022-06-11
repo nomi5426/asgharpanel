@@ -1,12 +1,28 @@
 <?php
+
+	/*********************************************************************************
+	* PROJECT: ZETA 1.0.0
+	* AUTHOR: ROSHAN ZAID AKA DAUNTE
+	* FILE FOR: APPROVE PENDING ORDERS BY RELEVANT SALES OR ADMIN OR SUPER ADMIN
+	* 
+	* VARIABLES
+	* @PARAM	{STRING}	CONN								//DB CONNECT VARIABLE
+	* @PARAM	{STRING}	MESSAGE								//LOG MESSAGE
+	* @PARAM	{STRING}	LOGFILE								//LOG FILE PATH
+	*
+	* FUNCTIONS
+	* APP_LOG()													//LOG WRITING
+	/********************************************************************************/
+
+    //INCLUDE DIRECTORIES
+    include "../base/db.php";
+    include '../base/deliveryNoteDownload.php';
+
+	//KEEP TRACK ON SESSION VARIABLES
     session_start();
     if( (!isset($_SESSION['_superAdminLogin'])) && (!isset($_SESSION['_adminLogin'])) && (!isset($_SESSION['_salesLogin'])) && (!isset($_SESSION['_factoryLogin'])) ){ 
         header("Location:../index.php");
     }
-    include "../base/db.php";
-    include '../base/deliveryNoteDownload.php';
-
-
 
 ?>
 <!DOCTYPE html>
@@ -70,10 +86,58 @@
 
         <!-- Back-to-top -->
         <a href="#top" id="back-to-top"><i class="las la-angle-double-up"></i></a>
-
+        <!-- Back-to-top -->
+        <a href="#top" id="back-to-top"><i class="ti-angle-double-up"></i></a>
+        <!-- JQuery min js -->
+        <script src="../assets/plugins/jquery/jquery.min.js"></script>
+        <!-- Bootstrap Bundle js -->
+        <script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Internal Data tables -->
+        <script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+        <script src="../assets/plugins/datatable/js/dataTables.dataTables.min.js"></script>
+        <script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
+        <script src="../assets/plugins/datatable/js/responsive.dataTables.min.js"></script>
+        <script src="../assets/plugins/datatable/js/jquery.dataTables.js"></script>
+        <script src="../assets/plugins/datatable/js/dataTables.bootstrap4.js"></script>
+        <script src="../assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
+        <script src="../assets/plugins/datatable/js/buttons.bootstrap4.min.js"></script>
+        <script src="../assets/plugins/datatable/js/jszip.min.js"></script>
+        <script src="../assets/plugins/datatable/js/pdfmake.min.js"></script>
+        <script src="../assets/plugins/datatable/js/vfs_fonts.js"></script>
+        <script src="../assets/plugins/datatable/js/buttons.html5.min.js"></script>
+        <script src="../assets/plugins/datatable/js/buttons.print.min.js"></script>
+        <script src="../assets/plugins/datatable/js/buttons.colVis.min.js"></script>
+        <script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
+        <script src="../assets/plugins/datatable/js/responsive.bootstrap4.min.js"></script>
+        <!--Internal  Datatable js -->
+        <script src="../assets/js/table-data.js"></script>
+        <!-- eva-icons js -->
+        <script src="../assets/js/eva-icons.min.js"></script>
+        <!-- Horizontalmenu js-->
+        <script src="../assets/plugins/horizontal-menu/horizontal-menu-2/horizontal-menu.js"></script>
+        <!-- Sticky js -->
+        <script src="../assets/js/sticky.js"></script>
+        <!-- Internal Select2 js-->
+        <script src="../assets/plugins/select2/js/select2.min.js"></script>
+        <!--Internal Sumoselect js-->
+        <script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
+        <script src="../assets/plugins/rating/jquery.rating-stars.js"></script>
+        <script src="../assets/plugins/rating/jquery.barrating.js"></script>
+        <!-- Internal Modal js-->
+        <script src="../assets/js/modal.js"></script>
+        <!-- custom js -->
+        <script src="../assets/js/custom.js"></script>
+        <!-- Sweet-alert js  -->
+		<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
+		<script src="../assets/js/sweet-alert.js"></script>
         <script>
+            
             $(document).ready(function() {
-                var tableone = $('#pendingTable').DataTable( {
+
+                //INITIALIZING DATATABLE AS PENDINGTABLE AND FETCH ALL STATUS OF PENDING ORDERS
+                //IF THE USER ROLE IS SALES, THEY WOULD BE VIEWING ONLY THE ORDERS WHICH WERE APPOINTED TO THEM
+                //STATUS PENDING WILL BE SENT TO RETREIVE ALL PENDING STATUSES OF ORDERS
+				var tableone = $('#pendingTable').DataTable( {
                     "processing": 	true,
                     "serverSide": 	true,
                     "paging"	:	true,
@@ -119,89 +183,56 @@
                     tableone.search($(this).val()).column(0).draw() ;
                 });
 
-            } );
-
-            //Approve Order
-            $(document).on('click','#confirmOrder',function(event){
-                if(confirm("Are you sure approving order?")){
-                    event.preventDefault();
-                    var confirmOrder = $(this).attr('data-id');
-                    $.ajax({
-                        url     : 'statusChange.php',
-                        method  : 'POST',
-                        dataType: 'json',
-                        data    : {confirmOrder : confirmOrder},
-                        success : function(response){
-                            if(response.index == 1){
-                                $('#pendingTable').DataTable().ajax.reload();
+                //APPROVE ORDER
+                $(document).on('click','#confirmOrder',function(event){
+                    if(confirm("Are you sure approving order?")){
+                        event.preventDefault();
+                        var confirmOrder = $(this).attr('data-id');
+                        $.ajax({
+                            url     : 'statusChange.php',
+                            method  : 'POST',
+                            dataType: 'json',
+                            data    : {confirmOrder : confirmOrder},
+                            success : function(response){
+                                if(response.index == 2){
+                                    approvedSuccess();
+                                }
                             }
-                        }
-                    });
-                }
-                else{
-                    return false;
-                }
-            });
-
-            //Image Modal
-            $(document).on('click','#tableImage',function(event){
-                event.preventDefault();
-                var per_id=$(this).data('id');
-                $('#content-data').html('');
-                $.ajax({
-                    url:'modal/orderImageSingle.php',
-                    type:'POST',
-                    data:'id='+per_id,
-                    dataType:'html'
-                }).done(function(data){
-                    $('#content-data').html('');
-                    $('#content-data').html(data);
-                }).fail(function(){
-                    $('#content-data').html('<p>Error</p>');
+                        });
+                    }
                 });
-            });
-        </script>
+            
+                //SUCCESS - APPROVE SUCCESS AND RELOADS TABLE
+                function approvedSuccess(){
+                    swal({
+                        title: 'Order is Approved',
+                        text: 'Pending Order is sent to New Order',
+                        type: 'success',
+                        confirmButtonColor: '#57a94f'
+                    },
+                    function(){
+                        $('#pendingTable').DataTable().ajax.reload();
+                    });
+                }   
 
-        <!-- Back-to-top -->
-        <a href="#top" id="back-to-top"><i class="ti-angle-double-up"></i></a>
-        <!-- JQuery min js -->
-        <script src="../assets/plugins/jquery/jquery.min.js"></script>
-        <!-- Bootstrap Bundle js -->
-        <script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- Internal Data tables -->
-        <script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
-        <script src="../assets/plugins/datatable/js/dataTables.dataTables.min.js"></script>
-        <script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
-        <script src="../assets/plugins/datatable/js/responsive.dataTables.min.js"></script>
-        <script src="../assets/plugins/datatable/js/jquery.dataTables.js"></script>
-        <script src="../assets/plugins/datatable/js/dataTables.bootstrap4.js"></script>
-        <script src="../assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
-        <script src="../assets/plugins/datatable/js/buttons.bootstrap4.min.js"></script>
-        <script src="../assets/plugins/datatable/js/jszip.min.js"></script>
-        <script src="../assets/plugins/datatable/js/pdfmake.min.js"></script>
-        <script src="../assets/plugins/datatable/js/vfs_fonts.js"></script>
-        <script src="../assets/plugins/datatable/js/buttons.html5.min.js"></script>
-        <script src="../assets/plugins/datatable/js/buttons.print.min.js"></script>
-        <script src="../assets/plugins/datatable/js/buttons.colVis.min.js"></script>
-        <script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
-        <script src="../assets/plugins/datatable/js/responsive.bootstrap4.min.js"></script>
-        <!--Internal  Datatable js -->
-        <script src="../assets/js/table-data.js"></script>
-        <!-- eva-icons js -->
-        <script src="../assets/js/eva-icons.min.js"></script>
-        <!-- Horizontalmenu js-->
-        <script src="../assets/plugins/horizontal-menu/horizontal-menu-2/horizontal-menu.js"></script>
-        <!-- Sticky js -->
-        <script src="../assets/js/sticky.js"></script>
-        <!-- Internal Select2 js-->
-        <script src="../assets/plugins/select2/js/select2.min.js"></script>
-        <!--Internal Sumoselect js-->
-        <script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
-        <script src="../assets/plugins/rating/jquery.rating-stars.js"></script>
-        <script src="../assets/plugins/rating/jquery.barrating.js"></script>
-        <!-- Internal Modal js-->
-        <script src="../assets/js/modal.js"></script>
-        <!-- custom js -->
-        <script src="../assets/js/custom.js"></script>
+                //IMAGE MODAL
+                $(document).on('click','#tableImage',function(event){
+                    event.preventDefault();
+                    var per_id=$(this).data('id');
+                    $('#content-data').html('');
+                    $.ajax({
+                        url:'modal/orderImageSingle.php',
+                        type:'POST',
+                        data:'id='+per_id,
+                        dataType:'html'
+                    }).done(function(data){
+                        $('#content-data').html('');
+                        $('#content-data').html(data);
+                    }).fail(function(){
+                        $('#content-data').html('<p>Error</p>');
+                    });
+                });
+            } );
+        </script>
     </body>
 </html>
