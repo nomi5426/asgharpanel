@@ -1,27 +1,44 @@
 <?php
-session_start();
-require_once  "../base/db.php";
-require_once  "../base/deliveryNoteDownload.php";
 
-if( (!isset($_SESSION['_superAdminLogin'])) && (!isset($_SESSION['_adminLogin'])) && (!isset($_SESSION['_factoryLogin'])) )
-{ 
-  date_default_timezone_set('Asia/Dubai');
-  header("Location:index.php");
-  app_log("'".date('d-m-Y H:i:s')."' : Session is not set, Login Attempt Admin User");
-}
+	/*********************************************************************************************************
+	* PROJECT: ZETA 1.0.0
+	* AUTHOR: ROSHAN ZAID AKA DAUNTE
+	* FILE FOR: FETCH STAFF FOR TABLE FROM DB
+	* 
+	* VARIABLES
+	* @PARAM	{STRING}	CONN								//DB CONNECT VARIABLE
+	* @PARAM	{STRING}	MESSAGE								//LOG MESSAGE
+	* @PARAM	{STRING}	LOGFILE								//LOG FILE PATH
+	*
+	* FUNCTIONS
+	* APP_LOG()													//LOG WRITING
+	/*********************************************************************************************************/
 
-//MODAL - LOAD MASTER CATEGORY
-function loadMasterCat(){
-    global $conn;
-    $staffOuput='';
-    $staffSqlQuery = "SELECT staff_category_name FROM staff_category";
-    $result = mysqli_query($conn, $staffSqlQuery);
-    $staffOuput .= '<option value = "Select Master Category">Select Master Category</option>';
-    while($row = mysqli_fetch_array($result)){
-        $staffOuput .= '<option value = "'.$row["staff_category_name"].'">'.$row["staff_category_name"].'</option>';
-    }
-    return $staffOuput;
-}
+	//INCLUDE DIRECTORIES
+	require_once  "../base/db.php";
+	require_once  "../base/deliveryNoteDownload.php";
+
+	//KEEP TRACK ON SESSION VARIABLES
+	session_start();
+	if( (!isset($_SESSION['_superAdminLogin'])) && (!isset($_SESSION['_adminLogin'])) && (!isset($_SESSION['_factoryLogin'])) )
+	{ 
+		date_default_timezone_set('Asia/Dubai');
+		header("Location:index.php");
+		app_log("'".date('d-m-Y H:i:s')."' : Session is not set, Login Attempt Admin User");
+	}
+
+	//MODAL - LOAD MASTER CATEGORY
+	function loadMasterCat(){
+		global $conn;
+		$staffOuput='';
+		$staffSqlQuery = "SELECT staff_category_name FROM staff_category";
+		$result = mysqli_query($conn, $staffSqlQuery);
+		$staffOuput .= '<option value = "Select Master Category">Select Master Category</option>';
+		while($row = mysqli_fetch_array($result)){
+			$staffOuput .= '<option value = "'.$row["staff_category_name"].'">'.$row["staff_category_name"].'</option>';
+		}
+		return $staffOuput;
+	}
 
 ?>
 <!DOCTYPE html>
@@ -52,8 +69,6 @@ function loadMasterCat(){
 							</div>
 						</div>
 					</div>
-					<!-- breadcrumb -->
-					<!-- row opened -->
 					<div class="row row-sm">
 						<!--div-->
 						<div class="col-xl-12">
@@ -73,6 +88,7 @@ function loadMasterCat(){
 														<tr>
 															<th class="border-bottom-0">Name</th>
 															<th class="border-bottom-0">Staff Department</th>
+															<th class="border-bottom-0">Staff Type</th>
 															<th style="text-align:center" class="border-bottom-0">Action</th>
 														</tr>
 													</thead>
@@ -85,7 +101,6 @@ function loadMasterCat(){
 						</div>
 					</div>
 				</div>
-				<!-- Container closed -->
 
 				<!-- Add Category Modal -->
 				<div class="modal effect-scale show" id="newStaffModal">
@@ -122,8 +137,8 @@ function loadMasterCat(){
 						type : "POST"
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [0,1,2] } ],
-					"aoColumns": [{ "sWidth": "30%" }, { "sWidth": "30%" },{ "sWidth": "40%" }]
+					"aoColumnDefs": [{ "bSortable": false, "className": "dt-center", "bSearchable": false, "aTargets": [3] } ],
+					"aoColumns": [{ "sWidth": "25%" }, { "sWidth": "25%" },{ "sWidth": "25%" },{ "sWidth": "25%" }]
 				} );
 
 				
@@ -167,35 +182,14 @@ function loadMasterCat(){
 					$('#edit-staff-content-data').html('<p>Error</p>');
 				});
         	});
-
-			// //Edit Category Modal
-			// $(document).on('click','#_editCat',function(event){
-			// 	event.preventDefault();
-			// 	var id=$(this).data('id');
-			// 	$('#edit-cat-content-data').html('');
-			// 	$.ajax({
-			// 		type:'POST',
-			// 		url:'../category/modal/editCategory.php',
-			// 		data:'id='+id,
-			// 		dataType:'html'
-			// 	}).done(function(data){
-			// 		$('#edit-cat-content-data').html('');
-			// 		$('#edit-cat-content-data').html(data);
-			// 	}).fail(function(){
-			// 		$('#edit-cat-content-data').html('<p>Error</p>');
-			// 	});
-        	// });
 		</script>
 
 		<!-- Back-to-top -->
 		<a href="#top" id="back-to-top"><i class="ti-angle-double-up"></i></a>
-
 		<!-- JQuery min js -->
 		<script src="../assets/plugins/jquery/jquery.min.js"></script>
-
 		<!-- Bootstrap Bundle js -->
 		<script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 		<!-- Internal Data tables -->
 		<script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
 		<script src="../assets/plugins/datatable/js/dataTables.dataTables.min.js"></script>
@@ -213,28 +207,20 @@ function loadMasterCat(){
 		<script src="../assets/plugins/datatable/js/buttons.colVis.min.js"></script>
 		<script src="../assets/plugins/datatable/js/dataTables.responsive.min.js"></script>
 		<script src="../assets/plugins/datatable/js/responsive.bootstrap4.min.js"></script>
-
 		<!--Internal  Datatable js -->
 		<script src="../assets/js/table-data.js"></script>
-
 		<!-- eva-icons js -->
 		<script src="../assets/js/eva-icons.min.js"></script>
-
 		<!-- Horizontalmenu js-->
 		<script src="../assets/plugins/horizontal-menu/horizontal-menu-2/horizontal-menu.js"></script>
-
 		<!-- Sticky js -->
 		<script src="../assets/js/sticky.js"></script>
-
 		<!-- Internal Select2 js-->
 		<script src="../assets/plugins/select2/js/select2.min.js"></script>
-
 		<!--Internal Sumoselect js-->
 		<script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
-
 		<script src="../assets/plugins/rating/jquery.rating-stars.js"></script>
 		<script src="../assets/plugins/rating/jquery.barrating.js"></script>
-
 		<!-- custom js -->
 		<script src="../assets/js/custom.js"></script>
 	</body>

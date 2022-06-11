@@ -1,4 +1,20 @@
 <?php
+
+	/*********************************************************************************************************
+	* PROJECT: ZETA 1.0.0
+	* AUTHOR: ROSHAN ZAID AKA DAUNTE
+	* FILE FOR: FETCH STAFF FOR TABLE FROM DB
+	* 
+	* VARIABLES
+	* @PARAM	{STRING}	CONN								//DB CONNECT VARIABLE
+	* @PARAM	{STRING}	MESSAGE								//LOG MESSAGE
+	* @PARAM	{STRING}	LOGFILE								//LOG FILE PATH
+	*
+	* FUNCTIONS
+	* APP_LOG()													//LOG WRITING
+	/*********************************************************************************************************/
+
+    //INCLUDE DIRECTORIES
     include "../base/db.php";
     include '../base/deliveryNoteDownload.php';
 
@@ -40,7 +56,8 @@
         $subdata=array();
         $subdata[] = $row[1];
         $subdata[] = $row[2];
-        $subdata[]='<div class="inner" style="text-align:center"><button id="_editStaff" type="button" title="Edit Staff" class="tbl-btn btn-primary tbl-btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#editStaffModal" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i>Edit</button></div>';
+        $subdata[] = $row[3];
+        $subdata[]='<div class="inner" style="text-align:center"><button id="_editStaff" type="button" title="Edit Staff" class="btn btn-primary mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#editStaffModal" data-id="'.$row[0].'"><i class="typcn typcn-pencil"></i></button></div>';
         $data[]=$subdata;
     }
 

@@ -1,6 +1,29 @@
 <?php
-    session_start();
+
+	/*********************************************************************************************************
+	* PROJECT: ZETA 1.0.0
+	* AUTHOR: ROSHAN ZAID AKA DAUNTE
+	* FILE FOR: MODAL USED FOR ADDING STAFF
+	* 
+	* VARIABLES
+	* @PARAM	{STRING}	CONN								//DB CONNECT VARIABLE
+	* @PARAM	{STRING}	MESSAGE								//LOG MESSAGE
+	* @PARAM	{STRING}	LOGFILE								//LOG FILE PATH
+	*
+	* FUNCTIONS
+	* APP_LOG()													//LOG WRITING
+	/*********************************************************************************************************/
+
+    //INCLUDE DIRECTORIES
     require_once   "../base/db.php";
+
+	//KEEP TRACK ON SESSION VARIABLES
+    session_start();
+
+    /**
+     * METHOD USED TO GET ALL STAFF CATEGORY AND
+     * SET IT ON HTML DROPDOWN
+     */
     function loadStaff(){
         global $conn;
         $staffOutput='';
@@ -26,7 +49,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="input-group mb-3">
-                                <input class="form-control" id="staff_name" name="staff_name" placeholder="Staff Name" type="text">
+                                <input class="form-control" id="add_staff_name" name="add_staff_name" placeholder="Staff Name" type="text">
                                 <span class="text-danger"></span>
                             </div>
                         </div>
@@ -42,7 +65,17 @@
                     </div>
                 </div>
             </div>
-
+            <div class="row row-sm">
+                <div class="col-md-12">
+                    <div class="input-group mb-3">
+                        <select value='Staff Type' name="staff_type" id="staff_type" class="SlectBox form-control">
+                            <option value = "Select Staff Type">Select Staff Type</option>
+                            <option value = "Production">Production</option>
+                            <option value = "Delivery">Delivery</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="form-group mb-0 mt-3 justify-content-end">
                 <div>
                     <input type="submit" id="_add" onclick="errorHandling();" name="_add" class="btn btn-primary btn-size" value="Add"/>
@@ -54,27 +87,22 @@
 
 <!-- Internal Sumoselect js -->
 <script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
-
 <!-- Internal Select2 js -->
 <!-- <script src="../assets/js/select2.js"></script> -->
 <script src="../assets/plugins/select2/js/select2.min.js"></script>
-
 <!-- Internal Form-elements js -->
 <script src="../assets/js/advanced-form-elements.js"></script>
-
 <!-- Internal Modal js-->
 <script src="../assets/js/modal.js"></script>
-
 <!--Internal  Sweet-Alert js-->
 <script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
 <script src="../assets/plugins/sweet-alert/jquery.sweet-alert.js"></script>
-
 <!-- Sweet-alert js  -->
 <script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
 <script src="../assets/js/sweet-alert.js"></script>
-
 <script type="text/javascript">
     $(document).ready(function(){
+        
         $("#formNewStaff").on('submit', function(e){
             e.preventDefault();
             if(errorHandling()){
@@ -112,6 +140,7 @@
         var _warningMessage;
         var _staffName = $("#staff_name").val();
         var _masterCat = $("#master_cat").val();
+        var _staffType = $("#staff_type").val();
 
         if(_staffName == ''){
             _warningMessage = "Staff Name is Left Empty";
@@ -120,6 +149,11 @@
         }
         else if(_masterCat == 'Select Staff Category'){
             _warningMessage = "Staff Category is Empty";
+            emptyFieldAlert(_warningMessage);
+            flag = false
+        }
+        else if(_staffType == 'Select Staff Type'){
+            _warningMessage = "Staff Type is Empty";
             emptyFieldAlert(_warningMessage);
             flag = false
         }
@@ -153,6 +187,7 @@
     function postOrderSave(){
         //MAKE SELECTORS EMPTY
         $('select.SlectBox')[0].sumo.reload();
+        $('select.SlectBox')[1].sumo.reload();
     }
 
 </script>
