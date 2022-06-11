@@ -1,36 +1,95 @@
 <?php
+
+	/***************************************************************************************************************************
+	* PROJECT: ZETA 1.0.0
+	* AUTHOR: ROSHAN ZAID AKA DAUNTE
+	* FILE FOR: MANUAL ORDER ADDING DB MANAGMENT / RELATED FILE - 
+	*			PUSHED FROM AND GOES TO ADDNEWORDER.PHP
+	* 
+	* VARIABLES
+	* @PARAM	{STRING}	CONN								//DB CONNECT VARIABLE
+	* @PARAM	{STRING}	MESSAGE								//LOG MESSAGE
+	* @PARAM	{STRING}	LOGFILE								//LOG FILE PATH
+	* @PARAM	{STRING}	RESPONSE							//DEFAULT RESPONSE
+	* @PARAM	{STRING}	SQL									//SQL STATEMENT
+	* @PARAM	{STRING}	QUERY								//SQLI PARAM TO IMPLEMENT QUERY
+	* @PARAM	{STRING}	_OUTPUT								//RETURN DATA TO SOURCE DIRECTORY
+	* @PARAM	{STRING}	CODESDIR							//QR CODE FILE DIRECTORY
+	* @PARAM	{STRING}	IMAGE_UPLOAD_DIR					//IMAGE FILE DIRECTORY
+	* @PARAM	{STRING}	PDF_UPLOAD_DIR						//DELIVERY NOTE FILE DIRECTORY
+	* @PARAM	{STRING}	CODESDIR							//QR CODE FILE DIRECTORY
+	* @PARAM	{STRING}	CODEFILE							//QR CODE FILE NAME - INV ID + ITEM NAME
+	* @PARAM	{STRING}	FORMDATA							//QR CODE URL FOR SEARCHING
+	* @PARAM	{STRING}	INVOCIE								//SET USER INPUT - INVOICE ID
+	* @PARAM	{STRING}	DD									//SET USER INPUT - DELIVERY DATE WITH CUSTOM FORMAT
+	* @PARAM	{STRING}	ITEMNAME							//SET USER INPUT - ITEM NAME
+	* @PARAM	{STRING}	COLOR								//SET USER INPUT - COLOR
+	* @PARAM	{STRING}	SIZE								//SET USER INPUT - SIZE
+	* @PARAM	{STRING}	FROM								//SET USER INPUT - FROM LOCATION
+	* @PARAM	{STRING}	DELIVERYLOCATION					//SET USER INPUT - DELIVERYLOCATION
+	* @PARAM	{STRING}	STATUS								//SET USER INPUT - STATUS
+	* @PARAM	{STRING}	QUANTITY							//SET USER INPUT - QUANTITY
+	* @PARAM	{STRING}	ORDERNOTE							//SET USER INPUT - ORDERNOTE
+	* @PARAM	{STRING}	SALESCONSULTANT						//SET USER INPUT - SALESCONSULTANT
+	* @PARAM	{STRING}	CAT_ID								//SET USER INPUT - CAT_ID
+	* @PARAM	{STRING}	DELIVERYDATE						//SET USER INPUT - DELIVERYDATE
+	* @PARAM	{STRING}	INSERTDATE							//CURRENT DATE
+	* @PARAM	{STRING}	USERID								//FIND CURRENT USER
+	* @PARAM	{STRING}	DELIVERYDATETOSEC					//CONVERT DELIVERY DATE TO SECOND
+	* @PARAM	{STRING}	INSERTDATETOSEC						//CONVERT INSERT DATE TO SECOND
+	* @PARAM	{STRING}	TIMEDIFF							//FIND THE DIFFERENCE BETWEEN INSERT DATE AND DELIVERY DATE
+	* @PARAM	{STRING}	DATEAVAILABILITY					//DEDUCTING IT AND GET THE AVAILABLE DAYS
+	* @PARAM	{STRING}	IMAGENAME							//DECLARED IMAGE NAME - EMPTY
+	* @PARAM	{STRING}	IMAGE								//DECLARED IMAGE NAME - SET IMG NAME WITH A RANDOM STRING
+	* @PARAM	{STRING}	IMGTMPNAME							//DECLARED TEMPORARY IMAGE NAME
+	* @PARAM	{STRING}	NAME								//GENERATE RANDOM NUMBERS WITH 3 DIGITS
+	* @PARAM	{STRING}	RANDOM								//RANDOM PARAMETER WHICH SHUFFLES NUMBERS
+	* @PARAM	{STRING}	RESULT								//SAVES IMAGE TO IMAGE DIRECTORY
+	* @PARAM	{STRING}	_PDFDN								//DECLARED DELIVERY NOTE NAME - EMPTY
+	* @PARAM	{STRING}	_DNTMP								//DECLARED TEMPORARY DELIVERY NOTE NAME
+	* @PARAM	{STRING}	INSERT								//SQL INJECTING STATETMENT TO ADD RECORDS OF AN ORDER
+	* @PARAM	{STRING}	RESPONSE							//RESPONSE SEND TO ADDNEWORDER.PHP
+	*
+	* FUNCTIONS
+	* APP_LOG()													//LOG WRITING
+	/****************************************************************************************************************************/
+
+	//INCLUDE DIRECTORIES
 	include "../base/db.php";
-	
+	include('../library/phpqrcode/qrlib.php'); 
+	$codesDir = "../qrcodes/";	
+	$image_upload_dir = '../uploads/';
+	$pdf_upload_dir = '../pdfUploads/';
+
+	/**
+	 * SAVES QR WITH ITS FILE NAME IF POST RECEIVES, 
+	 * ELSE LOCATE TO INDEX
+	 */
 	if(isset($_POST) && !empty($_POST)) {
-		include('../library/phpqrcode/qrlib.php'); 
-		$codesDir = "../qrcodes/";	
-		$codeFile = $_POST['_newInvoiceId'].'.png';
-		$formData = 'https://creative.tfs.ae/base/delivery.php?search='.$_POST['_newInvoiceId'];
-		// generating QR code
-		QRcode::png($formData, $codesDir.$codeFile);
-		// display generated QR code
-		// echo '<img class="img-thumbnail" src="'.$codesDir.$codeFile.'" />';
+		$codeFile = $_POST['_newInvoiceId'].$_POST['_newItemName'].'.png';
+		$formData = 'https://localhost/base/delivery.php?search='.$_POST['_newInvoiceId'];
+		QRcode::png($formData, $codesDir.$codeFile); 
 	} else {
 		header('location:./');
 	}
-
-	$image_upload_dir = '../uploads/';
-	$pdf_upload_dir = '../pdfUploads/';
 
 	//DEFAULT RESPONSES
 	$response['status'] = 0;
 	$response['message'] = 'NOT DONE!';
 	$response['success'] = 'false';
 
-
-	//SESSION MANAGEMENT
+	/**
+	 * SESSION MANAGEMENT - ALLOWS SUPER ADMIN / ADMIN / SALES TO ADDNEWORDER
+	 * ELSE REDIRECTS TO INDEX.PHP
+	 * FINDS THEIR SESSION TIME AS WELL USING SESSION VARIABLES
+	 */	
 	if (!session_id()) session_start();
 	//USERS WITH ACCESS
 	if( (!isset($_SESSION['_superAdminLogin'])) && (!isset($_SESSION['_adminLogin'])) && (!isset($_SESSION['_salesLogin'])) )
 	{
 		date_default_timezone_set('Asia/Dubai'); 
 		header("Location:index.php");
-		app_log("'".date('d-m-Y H:i:s')."' : Session is not set, Login Attempt Admin User");
+		app_log("'".date('d-m-Y H:i:s')."' : Session is not set, Login Attempt");
 	}
 	else{
 		if(time()-$_SESSION['expire'] > 365*24*60*60)
@@ -47,22 +106,28 @@
 		}
 	}
 
-	//LOG MANAGEMENT
+	/**
+	 * MASTER METHOD FOR LOG TRACKING
+	 * @PARAM {STRING}	MESSAGE
+	 */	
 	function app_log($message){
 		date_default_timezone_set('Asia/Dubai');
 		$logfile = '../log/log_'.date('d-M-Y').'.log';
 		file_put_contents($logfile, $message . "\n", FILE_APPEND);
 	}
 
-	//CURRENT TIME
+	/**
+	 * GETS CURRENT TIME AND RETURNS AS LOCAL TIME
+	 */
 	function curdate() {
-		//GETS CURRENT TIMESTAMP
 		date_default_timezone_set('Asia/Dubai');
 		return date('Y-m-d');
 	}
 
-	//RETRIEVES RECORD FROM ADD ORDER MODAL
-	// if (isset($_POST['_newInvoiceId']) || isset($_POST['_newDeliveryDate']) || isset($_POST['_newItemName']) || isset($_POST['_newItemColor']) || isset($_POST['_newItemSize']) || isset($_POST['_newItemFrom']) || isset($_POST['_newDeliveryLocation']) || isset($_POST['_newStatus']) || isset($_POST['_newQuantity']) || isset($_POST['_newOrderNote']) || isset($_FILES['_newDeliveryNoteFile']) || isset($_POST['_newSalesConsultant']) || isset($_FILES['_newOrderImage']) || isset($_POST['_newCat_Id'])){
+	/**
+	 * RETREIVES USER ENTRY FROM ADDNEWORDER.PHP AND STORES IT 
+	 * IN LOCAL VARIABLES
+	 */
 	if (isset($_POST['_newInvoiceId']) || isset($_POST['_newDeliveryDate']) || isset($_POST['_newItemName']) || isset($_POST['_newItemColor']) || isset($_POST['_newItemSize']) || isset($_POST['_newItemFrom']) || isset($_POST['_newDeliveryLocation']) || isset($_POST['_newStatus']) || isset($_POST['_newQuantity']) || isset($_POST['_newOrderNote']) || isset($_FILES['_newDeliveryNoteFile']) || isset($_POST['_newSalesConsultant']) || isset($_FILES['_newOrderImage']) || isset($_POST['_newCat_Id'])){
 		$invoice = $_POST['_newInvoiceId'];
 		$dd = $_POST['_newDeliveryDate'];
@@ -90,8 +155,9 @@
 		$dateAvailability = $timeDiff/86400;
 		$dateAvailability = intval($dateAvailability);
 
-		////IMAGE UPLOAD
-		// $uploadStatus = 1;
+		/**
+		 * SINGLE / MULTIPLE IMAGE UPLOAD
+		 */
 		$imageName = '';
 		$image = '';
 		foreach($_FILES['_newOrderImage']['tmp_name'] as $key => $_newOrderImage) 
@@ -100,17 +166,14 @@
 			{
 				$imageTmpName = $_FILES['_newOrderImage']['tmp_name'][$key];
 				$name = $_FILES['_newOrderImage']['name'][$key];
-
-				//Image name prefexified with a random number
+				//IMAGE NAME WILL BE PREFIXED WITH RANDOM NUMBERS
 				$random = rand(000,999);
 				$random = str_pad($random, 3, '0', STR_PAD_LEFT);
 				$name = $random.$name;
-
-				//Image name will be saved with comma
+				//MULTIPLE IMAGE NAMES WILL BE SAVED WITH COMMAS
 				$image=$image.$name.",";
-				//Delete Last Comma of the Image
+				//DELETE LAST COMMA
 				$imageName = substr(trim($image), 0, -1);
-
 				$result = move_uploaded_file($imageTmpName,$image_upload_dir.$name);
 			}
 			else{
@@ -118,7 +181,9 @@
 			}
 		}
 
-		//PDF UPLOAD
+		/**
+		 * DELIVERY NOTE UPLOAD - PDF
+		 */
 		$_pdfDN = '';
 		if(!empty($_FILES['_newDeliveryNoteFile']['name'])){
 			$dnTMP = $_FILES['_newDeliveryNoteFile']['tmp_name'];
@@ -129,6 +194,10 @@
 			$_pdfDN = 'No Note Attached';
 		}
 		
+		/**
+		 * SAVES ALL USER ENTRY ALONG WITH ENTRY CREATED USER
+		 * AND GENERATED QR CODE
+		 */
 		try{
 			if(!empty ($imageName)){
 				$insert = $conn->query("INSERT INTO product(
@@ -181,4 +250,5 @@
 
 	}
 	echo json_encode($response);
+
 ?>

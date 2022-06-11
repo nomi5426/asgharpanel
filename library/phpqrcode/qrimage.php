@@ -86,10 +86,10 @@
                 }
             }
             
-            $target_image =ImageCreate( ($imgW * $pixelPerPoint) * 3, ($imgH * $pixelPerPoint) * 3);
-            ImageCopyResized($target_image, $base_image, 0, 0, 0, 0, ($imgW * $pixelPerPoint) * 3, ($imgH * $pixelPerPoint) * 3, $imgW, $imgH);
+            $target_image =ImageCreate( ($imgW * $pixelPerPoint), ($imgH * $pixelPerPoint));
+            ImageCopyResized($target_image, $base_image, 0, 0, 0, 0, ($imgW * $pixelPerPoint), ($imgH * $pixelPerPoint), $imgW, $imgH);
             ImageDestroy($base_image);
-            
+
             return $target_image;
         }
     }

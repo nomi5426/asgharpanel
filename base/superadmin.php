@@ -60,7 +60,7 @@
 								<button id="newOrderAdd" class="modal-effect btn btn-primary mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#newOrderModal" type="button"><i class="typcn typcn-document-add"></i>New Order</button>
 							</div>
 							<div class="pr-1 mb-3 mb-xl-0">
-								<button id="newZohoOrderAdd" class="modal-effect btn btn-primary mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#zohoModal" type="button"><i class="typcn typcn-document-add"></i>Zoho</button>
+							<button id="newZohoOrderAdd" class="modal-effect btn btn-primary mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#zohoModal" type="button"><i class="typcn typcn-document-add"></i>Zoho Order</button>
 							</div>
 							<div class="pr-1 mb-3 mb-xl-0">
 								<button id="orderEdit" class="modal-effect btn btn-teal mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#editOrderModal" type="button"><i class="typcn typcn-document-edit"></i>Edit Order</button>

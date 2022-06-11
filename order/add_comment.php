@@ -1,18 +1,44 @@
 <?php
+
+	/*********************************************************************************
+	* PROJECT: ZETA 1.0.0
+	* AUTHOR: ROSHAN ZAID AKA DAUNTE
+	* FILE FOR: COMMENT ADDING DB MANAGMENT / RELATED FILE - 
+	*			PUSHED FROM AND GOES TO ADDNEWCOMMENT.PHP AND STATUSMODAL.PHP
+	* 
+	* VARIABLES
+	* @PARAM	{STRING}	CONN								//DB CONNECT VARIABLE
+	* @PARAM	{STRING}	MESSAGE								//LOG MESSAGE
+	* @PARAM	{STRING}	LOGFILE								//LOG FILE PATH
+	* @PARAM	{STRING}	RESPONSE							//DEFAULT RESPONSE
+	* @PARAM	{STRING}	SQL									//SQL STATEMENT
+	* @PARAM	{STRING}	QUERY								//SQLI PARAM TO IMPLEMENT QUERY
+	* @PARAM	{STRING}	_OUTPUT								//RETURN DATA TO SOURCE DIRECTORY
+	*
+	* FUNCTIONS
+	* APP_LOG()													//LOG WRITING
+	/********************************************************************************/
+
+	//INCLUDE DIRECTORIES
 	include "../base/db.php";
-	//CURRENT TIMESTAMP
-	function curdate() {
+	
+	/**
+	 * MASTER METHOD FOR LOG TRACKING
+	 * @PARAM {STRING}	MESSAGE
+	 */	function curdate() {
 		date_default_timezone_set('Asia/Dubai'); 
-		return date('Y-m-d');
+		return date('Y-m-d H:i');
 	}
 
 	/**
-	 * PUSHED FROM AND GOES TO ADDNEWCOMMENT.PHP AND STATUSMODAL.PHP
-	 * 
+	 * @PARAM RESPONSE -RETURN VALUE
 	 */
-
 	$response['index'] = 0;
 
+	/**
+	 * RECEIVES SELECTEDSTAT FROM ADDNEWCOMMENT.PHP 
+	 * AND RETURNS INVOICE ID AND ITEM NAME
+	 */
 	if(isset($_POST['selectedstat'])){
 		$_output='';
 		$sql = "SELECT * FROM product WHERE pstatus='".$_POST['selectedstat']."' ORDER BY invoiceId";
@@ -24,7 +50,11 @@
 		echo $_output;
 	}
 
-
+	/**
+	 * RECEIVES ID FROM ADDNEWCOMMENT.PHP 
+	 * AND STATUSCHANGEMODAL.PHP FOR RETURNING
+	 * EXISTING USERCOMMENT
+	 */
 	if(isset($_POST['id'])){
 		$_output='';
 		$sql="SELECT * FROM product where id='".$_POST['id']."'";
@@ -35,17 +65,23 @@
 		echo $_output;
 	}
 
+	/**
+	 * RECEIVES OID AND NEW COMMENT FROM 
+	 * ADDNEWCOMMENT.PHP AND STATUSCHANGEMODAL.PHP TO
+	 * SAVE NEW USERCOMMENT AND RETURNS @PARAM RESPONSE = 1 AS SUCCESS
+	 */
 	if(isset($_POST['oid']) || isset($_POST['newcomment'])){
 		$newcomment = $_POST['newcomment'];
 		$id = $_POST['oid'];
 		// echo 'Received record is: ' . $newcomment.$id;
 		$currentDate = curdate();
-		$all = $newcomment.' - '.$currentDate;
-		$sql = "UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all') WHERE id = '$id'";
-		$result = mysqli_query($conn,$sql);
+		$all = $newcomment.' - '.$currentDate."</br>";
+		$result = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all') WHERE id = '$id'");
 		if($result){
 			$response['index'] = 1;
 		}
 	}
-	json_encode ($response);
+
+	echo json_encode ($response);
+
 ?>
