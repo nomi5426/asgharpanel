@@ -1,7 +1,24 @@
 <?php
+
+	/*********************************************************************************
+	* PROJECT: ZETA 1.0.0
+	* AUTHOR: ROSHAN ZAID AKA DAUNTE
+	* FILE FOR: LISTING ALL PENDING ORDERS TO VIEW QR STICKERS
+	* 
+	* VARIABLES
+	* @PARAM	{STRING}	CONN								//DB CONNECT VARIABLE
+	* @PARAM	{STRING}	MESSAGE								//LOG MESSAGE
+	* @PARAM	{STRING}	LOGFILE								//LOG FILE PATH
+	*
+	* FUNCTIONS
+	* APP_LOG()													//LOG WRITING
+	/********************************************************************************/
+
+	//KEEP TRACK ON SESSION VARIABLES
     if (!session_id()) session_start();
+	
+	//INCLUDE DIRECTORIES
     include "../base/db.php";
-    //   include '..DeliveryNote.php';
     $upload_dir = 'uploads/';
 ?>
 
@@ -55,20 +72,8 @@
 							</div>
 						</div>
 					</div>
-
-					
-
-					<!--New Order Modal
-					<div class="modal effect-scale show" id="newOrderModal">
-						<div class="modal-dialog-new-order" role="document">
-							<div id="add-order-content-data"></div>
-						</div>
-					</div> -->
 				</div>
-				<!-- Container closed -->
 			</div>
-			<!-- main-content closed -->
-
 			<!-- Image Modal -->
 			<div class="modal effect-scale show" id="imagemodalone">
 				<div class="modal-dialog modal-dialog-centered" role="document">
