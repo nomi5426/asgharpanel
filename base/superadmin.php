@@ -962,21 +962,6 @@
 					});
 				});
 
-				//ORDER MADE STAFF
-				$(document).on('click','#addStaff',function(event){
-					event.preventDefault();
-					$('#add-order-staff-content-data').html('');
-					$.ajax({
-						type:'POST',
-						url:'../order/addOrderStaff.php'
-					}).done(function(data){
-						$('#add-order-staff-content-data').html('');
-						$('#add-order-staff-content-data').html(data);
-					}).fail(function(){
-						$('#add-order-staff-content-data').html('<p>Error</p>');
-					});
-				});
-
 				//CHANGE STATUS - NEXT
 				$(document).on('click','#statusChangeNext',function(event){
 					if(confirm("Are you sure changing status?")){

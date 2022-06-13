@@ -3,17 +3,6 @@
 	
 	$response['index'] = 0;
 
-	if(isset($_POST['orderStatus'])){
-		$_output='';
-		$sql = "SELECT * FROM product WHERE pstatus='".$_POST['orderStatus']."' ORDER BY invoiceId";
-		$query=mysqli_query($conn,$sql);
-		$_output .='<option value="Select Invoice ID">Select Invoice ID</option>';
-		while($row = mysqli_fetch_array($query)){
-			$_output .='<option value="'.$row['id'].'">'.$row["invoiceId"]." - ".$row["pname"].' </option>';
-		}
-		echo $_output;
-	}
-
 	try{
 		if(isset($_POST['order_id']) && isset($_POST['staff_id'])){
 			$order_id = $_POST['order_id'];
@@ -27,7 +16,10 @@
 			else{
 				$insertStaff = $conn->query("INSERT INTO order_staff (order_id, staff_id) VALUES ('".$order_id."', '".$staff_id."')");
 				if($insertStaff){
-					$response['index'] = 2;
+					$updateStatus = $conn->query("UPDATE product SET pstatus = 'Ready' WHERE id =".$order_id);
+					if($updateStatus){
+						$response['index'] = 2;
+					}
 				}else{
 					$response['index'] = 0;
 				}
@@ -38,6 +30,5 @@
 	}catch(Exception $error){
 		echo 'RZDAUNTE exception: ',  $error->getMessage(), "\n";
 	}
-
 	echo json_encode($response);
 ?>
