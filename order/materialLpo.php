@@ -28,7 +28,7 @@
 		$materialAvilabilityQuery="";
 		//IF THE STATUS IS UNKNOWN
 		if($materialStatus !== "Yes"){
-			$materialAvilabilityQuery = "update product set material = 'Yes' where id=".$id;
+			$materialAvilabilityQuery = "UPDATE product SET material = 'Yes', pstatus = 'In Production' WHERE id=".$id;
 		}
 		$result = mysqli_query($conn,$materialAvilabilityQuery);
 		if($result){

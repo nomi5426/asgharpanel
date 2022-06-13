@@ -96,6 +96,8 @@
         $comment = $row[17];
         if($comment == null){
             $comment = "N/A";
+        }else{
+            
         }
 
         //FETCH ITEM
@@ -124,13 +126,7 @@
             $subdata[]=$comment;
             if($status == "New Order"){
                 if ($material !== $materialAvailable){
-                // $subdata[]='<div class="inner"><button id="materialConfirm" title="Confirm Material" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button>
-                //             <button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
-                    $subdata[]='<div class="inner"><button id="_materialLpo" type="button" title="Confirm Material" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#materialLpoModal" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></button>            
-                            <button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
-                }
-                else{
-                    $subdata[]='<button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button>';            
+                    $subdata[]='<div class="inner"><button id="_materialLpo" type="button" title="Confirm Material" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#materialLpoModal" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></div>';
                 }
             }
             else if($status == ''){
@@ -157,11 +153,7 @@
             $subdata[]=$comment;
             if($status == "New Order"){
                 if ($material !== $materialAvailable){
-                    $subdata[]='<div class="inner"><button id="materialConfirm" title="Material Confirm" class="btn btn-primary btn-icon" data-id="'.$row[0].'" disabled><i class="typcn typcn-tick"></i></button></div>
-                                <div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
-                }
-                else{
-                    $subdata[]='<button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button>';          
+                    $subdata[]='<div class="inner"><button id="materialConfirm" title="Material Confirm" class="btn btn-primary btn-icon" data-id="'.$row[0].'" disabled><i class="typcn typcn-tick"></i></button></div>';
                 }
             }
             else if($status == ''){
@@ -191,9 +183,6 @@
                 if ($material !== $materialAvailable){
                     $subdata[]='<div class="inner"><button id="materialConfirm" title="Material Confirm" class="btn btn-primary btn-icon" data-id="'.$row[0].'" disabled><i class="typcn typcn-tick"></i></button></div>';
                 }
-                else{
-                    $subdata[]='';
-                }
             }
             else if($status == ''){
                 $subdata[]=$row[11];
@@ -220,11 +209,7 @@
             $subdata[]=$comment;
             if($status == "New Order"){
                 if ($material !== $materialAvailable){
-                $subdata[]='<div class="inner"><button id="_materialLpo" type="button" title="Confirm Material" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#materialLpoModal" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button>
-                            <button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
-                }
-                else{
-                $subdata[]='<button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button>';   
+                    $subdata[]='<div class="inner"><button id="_materialLpo" type="button" title="Confirm Material" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#materialLpoModal" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></div>';
                 }
             }
             else if($status == ''){
@@ -251,12 +236,7 @@
             $subdata[]=$comment;
             if($status == "New Order"){
                 if ($material !== $materialAvailable){
-                $subdata[]='<div class="inner"><button id="materialConfirm" title="Material Confirm" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></div>
-                            <div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
-                }
-                else{
-                $subdata[]='<button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button>';
-                            
+                    $subdata[]='<div class="inner"><button id="materialConfirm" title="Material Confirm" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></div>';
                 }
             }
             else if($status == ''){
@@ -280,7 +260,6 @@
             $subdata[]=$row[13];
             $subdata[]='<img src="'.$upload_dir.$image.'" class="modal-effect" data-effect="effect-scale" id="tableImage" height="30" width="20" data-toggle="modal" data-target="#imagemodalone" data-id="'.$row[0].'"/>';
             $subdata[]=$comment;
-            $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
         }
 
         $data[]=$subdata;
