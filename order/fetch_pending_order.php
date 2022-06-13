@@ -1,14 +1,33 @@
 <?php
-    session_start();
+
+	/*********************************************************************************
+	* PROJECT: ZETA 1.0.0
+	* AUTHOR: ROSHAN ZAID AKA DAUNTE
+	* FILE FOR: SEND REQUESTED COLUMNS FROM APPROVE_ORDER.PHP
+	* 
+	* VARIABLES
+	* @PARAM	{STRING}	CONN								//DB CONNECT VARIABLE
+	* @PARAM	{STRING}	MESSAGE								//LOG MESSAGE
+	* @PARAM	{STRING}	LOGFILE								//LOG FILE PATH
+	*
+	* FUNCTIONS
+	* APP_LOG()													//LOG WRITING
+	/********************************************************************************/
+
+    //INCLUDE DIRECTORIES
     include "../base/db.php";
     include '../base/deliveryNoteDownload.php';
-
     $upload_dir = '../uploads/';
+
+    //KEEP TRACK ON SESSION VARIABLES
+    session_start();
 
     $request = $_REQUEST;
     $status = $_POST['status'];
 
-    //GET USER ROLE
+    /**
+     * GET USER ROLE AND NAME OF LOGGED IN USER
+     */
     if(isset($_SESSION['userName'])){
     $username = $_SESSION['userName'];
     $userDetail= "SELECT * FROM user WHERE username='".$username."'";
@@ -119,7 +138,8 @@
         $subdata[]=$row[13];
         $subdata[]='<img src="'.$upload_dir.$image.'" class="modal-effect" data-effect="effect-scale" id="tableImage" height="30" width="20" data-toggle="modal" data-target="#imagemodalone" data-id="'.$row[0].'"/>';
         $subdata[]=$comment;
-        $subdata[]='<div class="inner"><button id="confirmOrder" title="Approve Order" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-thumbs-ok"></i></button></div>';
+        $subdata[]='<div class="inner"><button id="confirmOrder" title="Approve Order" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-thumbs-ok"></i></button>
+                    <button id="editOrderApprove" type="button" title="Edit Order" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#editOrderApproveModal" data-id="'.$row[0].'"><i class="typcn typcn-pen"></i></button></div>';
         $subdata[]=$row[16];
         $data[]=$subdata;
         
@@ -131,5 +151,7 @@
         "recordsFiltered"   =>  intval($totalFilter),
         "data"              =>  $data
     );
+
     echo json_encode($json_data);
+
 ?>

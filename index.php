@@ -75,7 +75,7 @@
 			$_SESSION['expire'] = time();
 			//LOG
 			date_default_timezone_set('Asia/Dubai');
-			app_log("'".date('d-m-Y H:i:s')."' : Sales User '".$username."' Logged In Successfully");			
+			app_log("'".date('d-m-Y H:i:s')."' : Super Admin User '".$username."' Logged In Successfully");			
 			header('Location: base/superadmin.php');
 			die();
 		}
@@ -131,8 +131,8 @@
 			$_SESSION['expire'] = time();
 			//LOG
 			date_default_timezone_set('Asia/Dubai');
-			app_log("'".date('d-m-Y H:i:s')."' : Factory User '".$username."' Logged In Successfully");
-			header('Location: base/sales.php');
+			app_log("'".date('d-m-Y H:i:s')."' : Sales User '".$username."' Logged In Successfully");
+			header('Location: order/approve_order.php');
 			die();
 		}
 
@@ -183,7 +183,7 @@
 			$_SESSION['expire'] = time();
 			//LOG
 			date_default_timezone_set('Asia/Dubai');
-			app_log("'".date('d-m-Y H:i:s')."' : STAFF User '".$username."' Logged In Successfully");			
+			app_log("'".date('d-m-Y H:i:s')."' : Staff User '".$username."' Logged In Successfully");			
 			header('Location: base/staff.php');
 			die();
 		}
@@ -208,7 +208,7 @@
 			$_SESSION['expire'] = time();
 			//LOG
 			date_default_timezone_set('Asia/Dubai');
-			app_log("'".date('d-m-Y H:i:s')."' : DELIVERY User '".$username."' Logged In Successfully");			
+			app_log("'".date('d-m-Y H:i:s')."' : Delivery User '".$username."' Logged In Successfully");			
 			header('Location: base/staff.php');
 			die();
 		}	

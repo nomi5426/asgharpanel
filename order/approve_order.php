@@ -60,7 +60,7 @@
                                                     <th class="border-bottom-0">Consult</th>
                                                     <th class="border-bottom-0">Image</th>
                                                     <th class="border-bottom-0">Comment</th>
-                                                    <th class="border-bottom-0">Approve</th>
+                                                    <th class="border-bottom-0">Action</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -72,10 +72,17 @@
                 </div>
             </div>
 
-            <!-- Image Modal -->
+            <!-- IMAGE MODAL -->
             <div class="modal effect-scale show" id="imagemodalone">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div id="content-data"></div>
+                </div>
+            </div>
+
+            <!--EDIT ORDER MODAL-->
+            <div class="modal effect-scale show" id="editOrderApproveModal">
+                <div class="modal-dialog-edit-order" role="document">
+                    <div id="edit-order-approve-content-data"></div>
                 </div>
             </div>
 
@@ -90,6 +97,12 @@
         <a href="#top" id="back-to-top"><i class="ti-angle-double-up"></i></a>
         <!-- JQuery min js -->
         <script src="../assets/plugins/jquery/jquery.min.js"></script>
+		<!--Internal  Datepicker js -->
+		<script src="../assets/plugins/jquery-ui/ui/widgets/datepicker.js"></script>
+		<!--Internal  jquery-simple-datetimepicker js -->
+		<script src="../assets/plugins/amazeui-datetimepicker/js/amazeui.datetimepicker.min.js"></script>
+		<!-- Ionicons js -->
+		<script src="../assets/plugins/jquery-simple-datetimepicker/jquery.simple-dtpicker.js"></script>
         <!-- Bootstrap Bundle js -->
         <script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Internal Data tables -->
@@ -201,6 +214,24 @@
                         });
                     }
                 });
+
+				//EDIT ORDER
+				$(document).on('click','#editOrderApprove',function(event){
+					event.preventDefault();
+					var id=$(this).data('id');
+					$('#edit-order-approve-content-data').html('');
+					$.ajax({
+						type:'POST',
+						url:'../order/editOrderApprove.php',
+						data:'id='+id,
+						dataType:'html'
+					}).done(function(data){
+						$('#edit-order-approve-content-data').html('');
+						$('#edit-order-approve-content-data').html(data);
+					}).fail(function(){
+						$('#edit-order-approve-content-data').html('<p>Error</p>');
+					});
+				});
             
                 //SUCCESS - APPROVE SUCCESS AND RELOADS TABLE
                 function approvedSuccess(){
