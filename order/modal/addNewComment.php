@@ -64,13 +64,13 @@ function loadOrder(){
         </form>
     </div>
 </div>
-<!-- Internal Sumoselect js -->
-<script src="../assets/plugins/sumoselect/jquery.sumoselect.js"></script>
-<!-- Internal Select2 js -->
-<!-- <script src="../assets/js/select2.js"></script> -->
-<script src="../assets/plugins/select2/js/select2.min.js"></script>
+<!-- Sweet-alert js  -->
+<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
+<script src="../assets/js/sweet-alert.js"></script>
 <!-- Internal Form-elements js -->
 <script src="../assets/js/advanced-form-elements.js"></script>
+<!-- Internal form-elements js -->
+<script src="../assets/js/form-elements.js"></script>
 <!-- Internal Modal js-->
 <script src="../assets/js/modal.js"></script>
 <script type="text/javascript">

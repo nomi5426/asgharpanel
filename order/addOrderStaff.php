@@ -4,7 +4,12 @@ include "../base/db.php";
 function loadStaff(){
     global $conn;
     $staffOutput='';
-    $staffSqlQuery = "SELECT * FROM staff ORDER BY staff_name ASC";
+    $staffSqlQuery='';
+    if($_POST['prodStat'] == 'In Production'){
+        $staffSqlQuery = 'SELECT * FROM staff WHERE staff_type = "Production" ORDER BY staff_name ASC';
+    }else if($_POST['prodStat'] == 'Ready'){
+        $staffSqlQuery = 'SELECT * FROM staff WHERE staff_type = "Delivery" ORDER BY staff_name ASC';
+    }
     $result = mysqli_query($conn, $staffSqlQuery);
     $staffOutput .= '<option value = "Select Staff ID">Select Staff ID</option>';
     while($row = mysqli_fetch_array($result)){
@@ -21,13 +26,14 @@ if(isset($_REQUEST['id'])){
     while($row=mysqli_fetch_array($run_sql)){
         $id=$row['id'];
         $itemDet = $row['invoiceId'].' - '.$row['pname'];
+        $itemStat = $row['pstatus'];
     }
 ?>
     <div class="modal-content modal-content-demo">
         <div class="modal-header">
             <h5 class="modal-title">Add Who Made</h5>
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        </div>              
+        </div>
         <div class="modal-body">
             <form id="formNewOrderStaff" method="post" autocomplete="off" enctype="multipart/form-data">
                 <div class="row row-sm">
@@ -35,7 +41,7 @@ if(isset($_REQUEST['id'])){
                         <div>
                             <div class="input-group mb-3">
                                 <select disabled name="staffStatus" id="staffStatus" class="SlectBox form-control">
-                                    <option value="In Production">In Production</option>
+                                    <option value="<?php echo $itemStat;?>"><?php echo $itemStat ?></option>
                                 </select>
                             </div>
                         </div>

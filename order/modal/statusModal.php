@@ -110,6 +110,7 @@
         $("#filterInvoice").change(function(e){
             e.preventDefault();
             var id = $(this).find(':selected').attr('data-id');
+            var oldCom;
             $.ajax({
                 url:'../order/add_comment.php',
                 method: 'POST',
@@ -124,7 +125,8 @@
                     else{
                         $('#oldComment').fadeIn("slow");
                         $('#oldComment').show();
-                        $("#oldComment").html(data);
+                        oldCom = data.slice(0,-11);
+                        $("#oldComment").html(oldCom);
                         $('#newComment').fadeIn("slow");
                         $('#newComment').show();
                         $('#id').val(id);
@@ -155,7 +157,10 @@
                             _markMaterial();
                         }
                         else if(response.index == 3){
-                            _markStaff();
+                            _markProdStaff();
+                        }
+                        else if(response.index == 4){
+                            _markDelStaff();
                         }
                         else if(response.index == 0){
                             alert('Contact Support');
@@ -222,11 +227,21 @@
             });
         }
 
-        //ADD STAFF
-        function _markStaff(){
+        //ADD PRODUCT STAFF
+        function _markProdStaff(){
             swal({
                 title: 'Add Staff Before',
-                text: 'Any In Production order should be added staff before proceeding',
+                text: 'Any order should be added Production Staff before proceeding',
+                type: "warning",
+                confirmButtonClass: "btn btn-danger"
+            });
+        }
+
+        //ADD DELIVERY STAFF
+        function _markDelStaff(){
+            swal({
+                title: 'Add Staff Before',
+                text: 'Any order should be added Delivery Staff before proceeding',
                 type: "warning",
                 confirmButtonClass: "btn btn-danger"
             });

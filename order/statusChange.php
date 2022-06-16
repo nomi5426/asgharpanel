@@ -75,9 +75,9 @@ include "../base/db.php";
                 }
             }
             else if($orderStatus == "Ready"){
-                $statusChangeQuery = "update product set pstatus = 'Out for Delivery' where id=".$statusid;
-                $statusChangeMessage = "Order status has been changed to Out for Delivery";
-                $response['index'] = 1;
+                $statusChangeQuery = "update product set pstatus = 'Ready' where id=".$statusid;
+                $statusChangeMessage = "Delivery staff should be added, Order is at Ready, wasn't changed";
+                $response['index'] = 4;
             }
             else if($orderStatus == "Out for Delivery"){
                 $statusChangeQuery = "update product set pstatus = 'Delivered' where id=".$statusid;
@@ -85,20 +85,14 @@ include "../base/db.php";
                 $response['index'] = 1;
             }
             else if($orderStatus == "On Hold"){
-                $changeQuery = $conn->query("update product set pstatus = 'New Order', material = 'No' where id=".$statusid);
-                $statusChangeMessage = "Order status has been changed to New Order from On Hold";
-                if($changeQuery){
-                    $statusChangeQuery = "DELETE FROM order_staff WHERE order_id=".$statusid;
-                    $response['index'] = 1;
-                }
+                $statusChangeQuery = $conn->query("update product set pstatus = 'Ready' where id=".$statusid);
+                $statusChangeMessage = "Order status has been changed to Ready from On Hold";
+                $response['index'] = 1;
             }
             else if($orderStatus == "Cancelled"){
-                $changeQuery = $conn->query("update product set pstatus = 'New Order', material = 'No' where id=".$statusid);
-                $statusChangeMessage = "Order status has been changed to New Order from Cancelled";
-                if($changeQuery){
-                    $statusChangeQuery = "DELETE FROM order_staff WHERE order_id=".$statusid;
-                    $response['index'] = 1;
-                }
+                $statusChangeQuery = $conn->query("update product set pstatus = 'Ready' where id=".$statusid);
+                $statusChangeMessage = "Order status has been changed to Ready from Cancelled";
+                $response['index'] = 1;
             }
             $result = mysqli_query($conn,$statusChangeQuery);
             if($result){
@@ -116,6 +110,11 @@ include "../base/db.php";
             $currentStatus = $_POST['currentstatus'];
             $newStatus = $_POST['newstatus'];
 
+            //IN PRODUCTION SECTION
+            $mat_select = $conn->query("SELECT * FROM product WHERE id=".$id);
+            $row = mysqli_fetch_array($mat_select);
+            $matAvail = $row['material'];
+
             $currentDate = curdate();
             $all = $newcomment.' - '.$currentDate;
 
@@ -128,49 +127,80 @@ include "../base/db.php";
                     $response['index'] = 1;
                 }
             }
-            else{
+            else if($newStatus == "In Production"){
                 if($currentStatus == "New Order"){
-                    $mat_select = $conn->query("SELECT * FROM product WHERE id=".$id);
-                    $row = mysqli_fetch_array($mat_select);
-                    $matAvail = $row['material'];
                     if($matAvail == 'Yes'){
                         $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
                         $response['index'] = 1;
-                    }
-                    else{
+                    }else{
                         $response['index'] = 2;
                     }
-                }
-                else if($currentStatus == "In Production"){
-                    if(mysqli_num_rows($_staffAssociate) !== 0){
-                        $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
-                        if($commentUpdate){
-                            $response['index'] = 1;
-                        }
-                    }
-                    else{
-                        //QUERY SHOULD BE TESTED
-                        if($newStatus !== "New Order"){
-                            $response['index'] = 3;
-                        }else{
-                            $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus', material = 'No' WHERE id = '$id'");
-                            $response['index'] = 1;
-                        }
-                    }
-                }
-                else if($currentStatus == "On Hold" || $currentStatus == "Cancelled"){
-                    $updateQuery = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus', material='No' WHERE id = '$id'");
-                    $statusChangeMessage = "Order status has been changed to " .$newStatus;
-                    if($updateQuery){
-                        $statusChangeQuery = $conn->query("DELETE FROM order_staff WHERE order_id=".$id);
+                }else{
+                    $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
+                    if($commentUpdate){
+                        $delStat = $conn->query("DELETE FROM order_staff WHERE order_id=".$id);
                         $response['index'] = 1;
+                    }
+                }
+            }
+            else if($newStatus == "Ready"){
+                if($currentStatus == "New Order"){
+                    if($matAvail == 'Yes'){
+                        $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
+                        $response['index'] = 1;
+                    }else{
+                        $response['index'] = 2;
+                    }
+                }else if($currentStatus == "In Production"){
+                    if(mysqli_num_rows($_staffAssociate) != 0){
+                        $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
+                        $response['index'] = 1;
+                    }else{
+                        $response['index'] = 3;
                     }
                 }
                 else{
                     $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
                     if($commentUpdate){
+                        $delStat = $conn->query("UPDATE order_staff SET del_staff_id = 17 WHERE order_id =".$id);
                         $response['index'] = 1;
                     }
+                }
+            }else if($newStatus == "Out for Delivery"){
+                if($currentStatus == "New Order"){
+                    if($matAvail == 'Yes'){
+                        $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
+                        $response['index'] = 1;
+                    }else{
+                        $response['index'] = 2;
+                    }
+                }else if($currentStatus == "In Production"){
+                    if(mysqli_num_rows($_staffAssociate) != 0){
+                        $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
+                        $response['index'] = 1;
+                    }else{
+                        $response['index'] = 3;
+                    }
+                }else if($currentStatus == "Ready"){
+                    if(mysqli_num_rows($_staffAssociate) != 0){
+                        $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
+                        $response['index'] = 1;
+                    }else{
+                        $response['index'] = 4;
+                    }
+                }
+                else{
+                    $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
+                    if($commentUpdate){
+                        $delStat = $conn->query("UPDATE order_staff SET del_staff_id = 17 WHERE order_id =".$id);
+                        $response['index'] = 1;
+                    }
+                }              
+            }
+            else{
+                $commentUpdate = $conn->query("UPDATE product SET userComment = CONCAT(IFNULL(userComment,''),'$all'), pstatus = '$newStatus' WHERE id = '$id'");
+                if($commentUpdate){
+                    $response['index'] = 1;
                 }
             }
         }     
@@ -188,15 +218,13 @@ include "../base/db.php";
         $pendingStatusQuery="";
 
         if($pendingStatus == "Pending"){
-            $pendingStatusQuery = "update product set pstatus = 'New Order' where id=".$confirmOrder;
+            $pendingStatusQuery = $conn->query("update product set pstatus = 'New Order' where id=".$confirmOrder);
         }
-        $result = mysqli_query($conn, $pendingStatusQuery);
-        if($result){
-            $newQuery = "INSERT INTO order_approval(order_id, consultant_id, is_approved) VALUES('".$confirmOrder."','".$userId."','".$isApproved."')";
+        if($pendingStatusQuery){
+            $newQuery = $conn->query("INSERT INTO order_approval(order_id, consultant_id, is_approved) VALUES('".$confirmOrder."','".$userId."','".$isApproved."')");
         }
-        $insert_result = mysqli_query($conn, $newQuery);
-        if($insert_result){
-            $response['index'];
+        if($pendingStatusQuery){
+            $response['index'] = 2;
         }
     }
     echo json_encode($response);

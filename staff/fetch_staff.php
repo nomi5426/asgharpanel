@@ -36,7 +36,7 @@
     );
 
     //Search
-    $sql = "SELECT * from staff WHERE 1=1";
+    $sql = "SELECT * from staff WHERE is_Active = 1";
     $query=mysqli_query($conn,$sql);
 
 

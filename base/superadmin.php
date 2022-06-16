@@ -60,7 +60,7 @@
 								<button id="newOrderAdd" class="modal-effect btn btn-primary mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#newOrderModal" type="button"><i class="typcn typcn-document-add"></i>New Order</button>
 							</div>
 							<div class="pr-1 mb-3 mb-xl-0">
-							<button id="newZohoOrderAdd" class="modal-effect btn btn-primary mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#zohoModal" type="button"><i class="typcn typcn-document-add"></i>Zoho Order</button>
+								<button id="newZohoOrderAdd" class="modal-effect btn btn-primary mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#zohoModal" type="button"><i class="typcn typcn-document-add"></i>Zoho Order</button>
 							</div>
 							<div class="pr-1 mb-3 mb-xl-0">
 								<button id="orderEdit" class="modal-effect btn btn-teal mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#editOrderModal" type="button"><i class="typcn typcn-document-edit"></i>Edit Order</button>
@@ -967,6 +967,7 @@
 					if(confirm("Are you sure changing status?")){
 						event.preventDefault();
 						var statusid = $(this).attr('data-id');
+						var prodStat;
 						$.ajax({
 							url     : '../order/statusChange.php',
 							method  : 'POST',
@@ -994,7 +995,51 @@
 								}else if (response.index == 2){
 									_markMaterialAvailable();
 								}else if (response.index == 3){
-									_staffEntry();
+									swal({
+										title: "Add Production Staff",
+										text: "Please add staff before marking next",
+										type: "warning",
+										confirmButtonClass: "btn btn-danger",
+										allowOutsideClick: true
+									},
+									function(){
+										$('#orderStaffModal').modal('show');
+										$('#add-order-staff-content-data').html('');
+										prodStat = 'In Production';
+										$.ajax({
+											type:'POST',
+											data:{ id:statusid , prodStat:prodStat},
+											url:'../order/addOrderStaff.php'
+										}).done(function(data){
+											$('#add-order-staff-content-data').html('');
+											$('#add-order-staff-content-data').html(data);
+										}).fail(function(){
+											$('#add-order-staff-content-data').html('<p>Error</p>');
+										});
+									});
+								}else if (response.index == 4){
+									swal({
+										title: "Add Delivery Staff",
+										text: "Please add staff before marking next",
+										type: "warning",
+										confirmButtonClass: "btn btn-danger",
+										allowOutsideClick: true
+									},
+									function(){
+										$('#orderStaffModal').modal('show');
+										$('#add-order-staff-content-data').html('');
+										prodStat = 'Ready';
+										$.ajax({
+											type:'POST',
+											data:{ id:statusid , prodStat:prodStat},
+											url:'../order/addOrderStaff.php'
+										}).done(function(data){
+											$('#add-order-staff-content-data').html('');
+											$('#add-order-staff-content-data').html(data);
+										}).fail(function(){
+											$('#add-order-staff-content-data').html('<p>Error</p>');
+										});
+									});
 								}
 								else{
 									console.log('AUL AUL AUL');
@@ -1105,30 +1150,6 @@
 						$('#examplesix').DataTable().ajax.reload();
 						$('#exampleseven').DataTable().ajax.reload();
 						$('#exampleeight').DataTable().ajax.reload();
-					});
-				}
-
-				//WARNING ALERT
-				function _staffEntry(){
-					swal({
-						title: "Add Staff",
-						text: "Please add staff before marking next",
-						type: "warning",
-						confirmButtonClass: "btn btn-danger",
-						allowOutsideClick: true
-					},
-					function(){
-						$('#orderStaffModal').modal('show');
-						$('#add-order-staff-content-data').html('');
-						$.ajax({
-							type:'POST',
-							url:'../order/addOrderStaff.php'
-						}).done(function(data){
-							$('#add-order-staff-content-data').html('');
-							$('#add-order-staff-content-data').html(data);
-						}).fail(function(){
-							$('#add-order-staff-content-data').html('<p>Error</p>');
-						});
 					});
 				}
 
