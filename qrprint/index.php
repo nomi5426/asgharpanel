@@ -144,7 +144,7 @@
 						url  :"../qrprint/dueFetch.php",
 						type : "POST",
 						data : {
-							status : 'Pending'
+							status : 'Ready'
 						}
 					},
 					"drawCallback": function ( settings ) {
