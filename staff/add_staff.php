@@ -40,7 +40,7 @@
 		//DB ENTRY
 		$uploadStatus = 1; 
 		if($uploadStatus = 1){
-			$insert = $conn->query("INSERT INTO staff (staff_name,staff_department,staff_type) VALUES ('".$_staffName."','".$_staffCategory."','".$_staffType."')");
+			$insert = $conn->query("INSERT INTO staff (staff_name,staff_department,staff_type,is_Active) VALUES ('".$_staffName."','".$_staffCategory."','".$_staffType."',1)");
 			if($insert){ 
 				$response['status'] = 1;
 				$response['message'] = 'Form data submitted successfully!';
