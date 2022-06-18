@@ -40,7 +40,25 @@
     // $totalFilter=$totalData;
     // SEARCH
     if(!empty($status)){
-        $sql ="SELECT * FROM product WHERE 1=1 and pstatus='".$status."'";
+        if($status == 'Ready'){
+            $sql ="SELECT * FROM product AS prod 
+            JOIN order_staff AS ord_stf ON
+            prod.id = ord_stf.order_id
+            JOIN staff AS stf ON 
+            stf.id = ord_stf.staff_id WHERE 1=1 
+            AND prod.pstatus = 'Ready'";
+        }
+        else if($status == 'Out for Delivery'){
+            $sql ="SELECT * FROM product AS prod 
+            JOIN order_staff AS ord_stf ON
+            prod.id = ord_stf.order_id
+            JOIN staff AS stf ON 
+            stf.id = ord_stf.del_staff_id WHERE 1=1
+            AND prod.pstatus = 'Out for Delivery'";
+        }
+        else{
+            $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'";
+        }
     }else{
         $sql ="SELECT * FROM product WHERE 1=1";
     }
@@ -78,7 +96,7 @@
         }
 
         //IMAGE RETRIEVE
-        if($row[7]!==''){ 
+        if($row[7]!==''){
             if(strpos($upload_dir.$row[7],',') !== false){
                 $arr = explode(',', $row[7]);
                 $image = $arr[0];
@@ -110,7 +128,7 @@
         $material = $row[16];
         $materialAvailable = 'Yes';
 
-        //ADMIN
+        //SUPER ADMIN
         if($userrole == "superadmin"){
             $subdata[]=$deliveryNotePrint;
             $subdata[]=$row[15];
@@ -121,23 +139,34 @@
             $subdata[]=$row[9];
             $subdata[]=$row[10];
             $subdata[]=$row[12];
-            $subdata[]=$row[13];
             $subdata[]='<img src="'.$upload_dir.$image.'" class="modal-effect" data-effect="effect-scale" id="tableImage" height="30" width="20" data-toggle="modal" data-target="#imagemodalone" data-id="'.$row[0].'"/>';
             $subdata[]=$comment;
             if($status == "New Order"){
                 if ($material !== $materialAvailable){
+                    $subdata[]=$row[13];
                     $subdata[]='<div class="inner"><button id="_materialLpo" type="button" title="Confirm Material" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#materialLpoModal" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></div>';
                 }
             }
+            else if($status == "Ready"){
+                $subdata[]=$row[28];
+                $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
+            }
+            else if($status == "Out for Delivery"){
+                $subdata[]=$row[28];
+                $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
+            }
             else if($status == ''){
                 $subdata[]=$row[11];
-                $subdata[]= '<a type="button" title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-xs"><i class="typcn typcn-document-text"></i></a>';
+                $subdata[]=$row[13];
+                $subdata[]= '<div class="inner"><a title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-icon"><i class="typcn typcn-document-text"></i></a></div>';
             }else{
+                $subdata[]=$row[13];
                 $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
             }
             $subdata[]=$row[20];
         }
 
+        //ADMIN
         else if($userrole == "admin"){
             $subdata[]=$deliveryNotePrint;
             $subdata[]=$row[15];
@@ -148,18 +177,28 @@
             $subdata[]=$row[9];
             $subdata[]=$row[10];
             $subdata[]=$row[12];
-            $subdata[]=$row[13];
             $subdata[]='<img src="'.$upload_dir.$image.'" class="modal-effect" data-effect="effect-scale" id="tableImage" height="30" width="20" data-toggle="modal" data-target="#imagemodalone" data-id="'.$row[0].'"/>';
             $subdata[]=$comment;
             if($status == "New Order"){
                 if ($material !== $materialAvailable){
-                    $subdata[]='<div class="inner"><button id="materialConfirm" title="Material Confirm" class="btn btn-primary btn-icon" data-id="'.$row[0].'" disabled><i class="typcn typcn-tick"></i></button></div>';
+                    $subdata[]=$row[13];
+                    $subdata[]='<div class="inner"><button id="_materialLpo" type="button" title="Confirm Material" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#materialLpoModal" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></div>';
                 }
+            }
+            else if($status == "Ready"){
+                $subdata[]=$row[28];
+                $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
+            }
+            else if($status == "Out for Delivery"){
+                $subdata[]=$row[28];
+                $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
             }
             else if($status == ''){
                 $subdata[]=$row[11];
-                $subdata[]= '<a type="button" title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-xs"><i class="typcn typcn-document-text"></i></a>';
+                $subdata[]=$row[13];
+                $subdata[]= '<div class="inner"><a title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-icon"><i class="typcn typcn-document-text"></i></a></div>';
             }else{
+                $subdata[]=$row[13];
                 $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
             }
             $subdata[]=$row[20];
@@ -184,18 +223,18 @@
                     $subdata[]='<div class="inner"><button id="materialConfirm" title="Material Confirm" class="btn btn-primary btn-icon" data-id="'.$row[0].'" disabled><i class="typcn typcn-tick"></i></button></div>';
                 }
             }
-            else if($status == ''){
-                $subdata[]=$row[11];
-                $subdata[]= '<a type="button" title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-xs"><i class="typcn typcn-document-text"></i></a>';
-            }else{
-                $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
+            else if($status == "Ready"){
+                $subdata[]=$row[28];
             }
-            $subdata[]=$row[20];
+            else if($status == "Out for Delivery"){
+                $subdata[]=$row[28];
+            }
+            $subdata[]=$row[11];
         }
 
         //FACTORY
         else if($userrole == "factory"){
-            $subdata[]=$deliveryNotePrintqr;
+            $subdata[]=$deliveryNotePrint;
             $subdata[]=$row[15];
             $subdata[]=$dateAvailability;
             $subdata[]=$row[3];
@@ -212,15 +251,23 @@
                     $subdata[]='<div class="inner"><button id="_materialLpo" type="button" title="Confirm Material" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#materialLpoModal" data-id="'.$row[0].'"><i class="typcn typcn-tick"></i></button></div>';
                 }
             }
+            else if($status == "Ready"){
+                $subdata[]=$row[28];
+                $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
+            }
+            else if($status == "Out for Delivery"){
+                $subdata[]=$row[28];
+            }
             else if($status == ''){
                 $subdata[]=$row[11];
-                $subdata[]= '<a type="button" title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-xs"><i class="typcn typcn-document-text"></i></a>';
+                $subdata[]= '<div class="inner"><a title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-icon"><i class="typcn typcn-document-text"></i></a></div>';
             }else{
                 $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
             }
             $subdata[]=$row[20];
         }
 
+        //STAFF
         else if($userrole == "staff"){
             $subdata[]=$deliveryNotePrint;
             $subdata[]=$row[15];
@@ -241,7 +288,7 @@
             }
             else if($status == ''){
                 $subdata[]=$row[11];
-                $subdata[]= '<a type="button" title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-xs"><i class="typcn typcn-document-text"></i></a>';
+                $subdata[]= '<div class="inner"><a title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-icon"><i class="typcn typcn-document-text"></i></a></div>';
             }else{
                 $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-arrow-right"></i></button></div>';
             }
