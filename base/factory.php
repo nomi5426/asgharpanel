@@ -18,6 +18,13 @@
 	include "../base/db.php";
 	include '../base/deliveryNoteDownload.php';
 
+		//KEEP TRACK ON SESSION VARIABLES
+		if(!session_id()) session_start();
+		if(!isset($_SESSION['_factoryLogin'])){
+			date_default_timezone_set('Asia/Dubai'); 
+			app_log("'".date('d-m-Y H:i:s')."' : Session is not set, Login Attempt FACTORY User");
+			header('Location:../index.php');
+		}	
 	/**
 	 * MASTER METHOD FOR LOG TRACKING
 	 * @PARAM {STRING}	MESSAGE
@@ -28,14 +35,6 @@
 		file_put_contents($logfile, $message . "\n", FILE_APPEND);
 	}
 
-	//KEEP TRACK ON SESSION VARIABLES
-    if(!session_id()) session_start();
-	if(!isset($_SESSION['_factoryLogin'])){
-		date_default_timezone_set('Asia/Dubai'); 
-		app_log("'".date('d-m-Y H:i:s')."' : Session is not set, Login Attempt FACTORY User");
-		header('Location:../index.php');
-	}
-	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,6 +81,7 @@
 										</div>
 										<div class="panel-body tabs-menu-body main-content-body-right border-top-0 border">
 											<div class="tab-content">
+												<!--CRM TABLE-->
 												<div class="tab-pane active" id="crm">
 													<div class="table-responsive">
 														<table id="examplenine" class="testclass table key-buttons text-md-nowrap">
@@ -104,6 +104,7 @@
 														</table>
 													</div>
 												</div>
+												<!--NEW ORDER TABLE-->
 												<div class="tab-pane" id="neworder">
 													<div class="table-responsive">
 														<table id="exampleone" class="testclass table key-buttons text-md-nowrap">
@@ -127,6 +128,7 @@
 														</table>
 													</div>
 												</div>
+												<!--IN PRODUCTION TABLE-->
 												<div class="tab-pane" id="inproduction">
 													<div class="table-responsive">
 														<table id="exampletwo" class="testclass table key-buttons text-md-nowrap">
@@ -150,6 +152,7 @@
 														</table>
 													</div>
 												</div>
+												<!--READY TABLE-->
 												<div class="tab-pane" id="ready">
 													<div class="table-responsive">
 														<table id="examplethree" class="testclass table key-buttons text-md-nowrap">
@@ -167,12 +170,14 @@
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Made By</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
 													</div>
 												</div>
+												<!--OUT FOR DELIVERY TABLE-->
 												<div class="tab-pane" id="outfordelivery">
 													<div class="table-responsive">
 														<table id="examplefour" class="testclass table key-buttons text-md-nowrap">
@@ -190,11 +195,13 @@
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Delivery</th>
 																</tr>
 															</thead>
 														</table>
 													</div>
 												</div>
+												<!--DELIVERED TABLE-->
 												<div class="tab-pane" id="delivered">
 													<div class="table-responsive">
 														<table id="examplefive" class="testclass table key-buttons text-md-nowrap">
@@ -217,6 +224,7 @@
 														</table>
 													</div>
 												</div>
+												<!--ON HOLD TABLE-->
 												<div class="tab-pane" id="onhold">
 													<div class="table-responsive">
 														<table id="examplesix" class="testclass table key-buttons text-md-nowrap">
@@ -239,6 +247,7 @@
 														</table>
 													</div>
 												</div>
+												<!--CANCELLED TABLE-->
 												<div class="tab-pane" id="cancelled">
 													<div class="table-responsive">
 														<table id="exampleseven" class="testclass table key-buttons text-md-nowrap">
@@ -261,6 +270,7 @@
 														</table>
 													</div>
 												</div>
+												<!--ALL PRODUCTS TABLE-->
 												<div class="tab-pane" id="allproduct">
 													<div class="table-responsive">
 														<table id="exampleeight" class="testclass table key-buttons text-md-nowrap">
@@ -316,9 +326,9 @@
 			</div>
 			<?php include "../footer/footer.php"; ?>
 		</div>
-		<!-- End Page -->
+		<!-- END PAGE -->
 
-		<!-- Back-to-top -->
+		<!-- BACK TO TOP -->
 		<a href="#top" id="back-to-top"><i class="las la-angle-double-up"></i></a>
 		<!-- JQuery min js -->
 		<script src="../assets/plugins/jquery/jquery.min.js"></script>
@@ -434,14 +444,14 @@
 						{ "sWidth": "2%" }, 
 						{ "sWidth": "3%" },
 						{ "sWidth": "2%" },
-						{ "sWidth": "25%" },
+						{ "sWidth": "20%" },
 						{ "sWidth": "15%" },
 						{ "sWidth": "3%" },
-						{ "sWidth": "20%" },
+						{ "sWidth": "15%" },
 						{ "sWidth": "5%" },
 						{ "sWidth": "3%" },
-						{ "sWidth": "15%" },
-						{"sWidth":"15%"}
+						{ "sWidth": "30%" },
+						{"sWidth":"3%"}
 					]
 				} );
 
@@ -494,7 +504,21 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
+					"aoColumns": [
+						{ "sWidth": "5%" }, 
+						{ "sWidth": "5%" },
+						{ "sWidth": "2%" }, 
+						{ "sWidth": "3%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "20%" },
+						{ "sWidth": "15%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "15%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "30%" },
+						{"sWidth":"3%"},
+					]
 				} );
 
 				//INITIATING TABLE READY
@@ -518,7 +542,74 @@
 						type : "POST",
 						data : {
 							status : 'Ready',
-							nextStatus : 'Out For Delivery'
+							nextStatus : 'Out for Delivery'
+						}
+					},
+					"rowCallback": function( row, data, index ) {
+						if ( data[7] == "Sharaf DG" )
+						{
+							$('td', row).css('background-color', '#b5b5de');
+						}
+						else if ( data[7] != "Sharaf DG" )
+						{
+							$('td', row).css('background-color', 'white');
+						}
+					},
+					"drawCallback": function ( settings ) {
+						var api = this.api();
+						var rows = api.rows( {page:'current'} ).nodes();
+						var last=null; 
+						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
+							if ( last !== group ) {
+								$(rows).eq( i ).before(
+									'<tr class="group"><td class="delback"colspan="14">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+								);
+								last = group;
+							}
+						} );
+					},
+					"autoWidth": false,
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12,13 ] } ],
+					"aoColumns": [
+						{ "sWidth": "3%" }, 
+						{ "sWidth": "5%" },
+						{ "sWidth": "2%" }, 
+						{ "sWidth": "3%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "22%" },
+						{ "sWidth": "10%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "18%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "18%" },
+						{ "sWidth": "15%"},
+						{ "sWidth": "3%"}
+					]
+				} );
+
+				//INITIATING TABLE OUT FOR DELIVERY
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: OUT FOR DELIVERY TO FETCH ALL OUT FOR DELIVERY RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: DELIVERED TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
+				var tablefour = $('#examplefour').DataTable( {
+					"processing": 	true,
+					"serverSide": 	true,
+					"paging"	:	true,
+					"searching"	:	true,
+					"sDom": 'Brtip',
+					"buttons": [
+						
+					],
+					"iDisplayLength"	:	100,
+					"ajax": {
+						url  :"../order/fetch.php",
+						type : "POST",
+						data : {
+							status : 'Out for Delivery',
+							nextStatus : 'Delivered'
 						}
 					},
 					"rowCallback": function( row, data, index ) {
@@ -546,59 +637,21 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "25%" },{ "sWidth": "15%" },{ "sWidth": "3%" },{ "sWidth": "20%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{"sWidth":"15%"}]
-				} );
-
-				//INITIATING TABLE OUT FOR DELIVERY
-				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
-				//SENT TO FILE	- FETCH.PHP WITH STATUS: OUT FOR DELIVERY TO FETCH ALL OUT FOR DELIVERY RECORDS
-				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: DELIVERED TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
-				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
-				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
-				var tablefour = $('#examplefour').DataTable( {
-					"processing": 	true,
-					"serverSide": 	true,
-					"paging"	:	true,
-					"searching"	:	true,
-					"sDom": 'Brtip',
-					"buttons": [
-						
-					],
-					"iDisplayLength"	:	100,
-					"ajax": {
-						url  :"../order/fetch.php",
-						type : "POST",
-						data : {
-							status : 'Out For Delivery',
-							nextStatus : 'Delivered'
-						}
-					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
-						}
-					},
-					"drawCallback": function ( settings ) {
-						var api = this.api();
-						var rows = api.rows( {page:'current'} ).nodes();
-						var last=null; 
-						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
-							if ( last !== group ) {
-								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
-								);
-								last = group;
-							}
-						} );
-					},
-					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumns": [
+						{ "sWidth": "3%" }, 
+						{ "sWidth": "5%" },
+						{ "sWidth": "2%" }, 
+						{ "sWidth": "3%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "22%" },
+						{ "sWidth": "10%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "18%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "18%" },
+						{ "sWidth": "15%"}					
+					]
 				} );
 
 				//INITIATING TABLE DELIVERED
@@ -700,7 +753,20 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumns": [
+						{ "sWidth": "5%" }, 
+						{ "sWidth": "5%" },
+						{ "sWidth": "2%" }, 
+						{ "sWidth": "3%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "20%" },
+						{ "sWidth": "12%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "15%" },
+						{ "sWidth": "5%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "18%" }
+					]
 				} );
 
 				//INITIATING TABLE CANCELLED
@@ -751,7 +817,20 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumns": [
+						{ "sWidth": "5%" }, 
+						{ "sWidth": "5%" },
+						{ "sWidth": "2%" }, 
+						{ "sWidth": "3%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "20%" },
+						{ "sWidth": "12%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "15%" },
+						{ "sWidth": "5%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "18%" }
+					]
 				} );
 
 				//INITIATING TABLE ALL PRODUCTS
@@ -803,19 +882,20 @@
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12,13 ] } ],
 					"aoColumns": [
-						{ "sWidth": "5%" }, 
+						{ "sWidth": "3%" }, 
 						{ "sWidth": "5%" },
 						{ "sWidth": "2%" }, 
 						{ "sWidth": "3%" },
 						{ "sWidth": "2%" },
-						{ "sWidth": "20%" },
-						{ "sWidth": "12%" },
+						{ "sWidth": "22%" },
+						{ "sWidth": "10%" },
 						{ "sWidth": "3%" },
-						{ "sWidth": "15%" },
-						{ "sWidth": "5%" },
+						{ "sWidth": "18%" },
 						{ "sWidth": "3%" },
-						{ "sWidth": "15%" },
-						{ "sWidth": "5%" }
+						{ "sWidth": "3%" },
+						{ "sWidth": "18%" },
+						{ "sWidth": "15%"},
+						{ "sWidth": "3%"}
 					]
 				} );
 
@@ -918,6 +998,7 @@
 					if(confirm("Are you sure changing status?")){
 						event.preventDefault();
 						var statusid = $(this).attr('data-id');
+						var prodStat;
 						$.ajax({
 							url     : '../order/statusChange.php',
 							method  : 'POST',
@@ -945,7 +1026,51 @@
 								}else if (response.index == 2){
 									_markMaterialAvailable();
 								}else if (response.index == 3){
-									_staffEntry();
+									swal({
+										title: "Add Production Staff",
+										text: "Please add staff before marking next",
+										type: "warning",
+										confirmButtonClass: "btn btn-danger",
+										allowOutsideClick: true
+									},
+									function(){
+										$('#orderStaffModal').modal('show');
+										$('#add-order-staff-content-data').html('');
+										prodStat = 'In Production';
+										$.ajax({
+											type:'POST',
+											data:{ id:statusid , prodStat:prodStat},
+											url:'../order/addOrderStaff.php'
+										}).done(function(data){
+											$('#add-order-staff-content-data').html('');
+											$('#add-order-staff-content-data').html(data);
+										}).fail(function(){
+											$('#add-order-staff-content-data').html('<p>Error</p>');
+										});
+									});
+								}else if (response.index == 4){
+									swal({
+										title: "Add Delivery Staff",
+										text: "Please add staff before marking next",
+										type: "warning",
+										confirmButtonClass: "btn btn-danger",
+										allowOutsideClick: true
+									},
+									function(){
+										$('#orderStaffModal').modal('show');
+										$('#add-order-staff-content-data').html('');
+										prodStat = 'Ready';
+										$.ajax({
+											type:'POST',
+											data:{ id:statusid , prodStat:prodStat},
+											url:'../order/addOrderStaff.php'
+										}).done(function(data){
+											$('#add-order-staff-content-data').html('');
+											$('#add-order-staff-content-data').html(data);
+										}).fail(function(){
+											$('#add-order-staff-content-data').html('<p>Error</p>');
+										});
+									});
 								}
 								else{
 									console.log('AUL AUL AUL');
@@ -957,6 +1082,7 @@
 						return false;
 					}
 				});
+
 
 				//MATERIAL MARK		-	ONCLICKEVENT
 				//A MODAL OPEN FOR MARKING MATERIAL LPO OF AN ORDER
@@ -1012,31 +1138,6 @@
 					});
 				}
 
-				//WARNING SWAL - STATUS CHANGED
-				//WARNING ON MISSING STAFF DURING IN PRODUCTION
-				//ONCE THE WARNING IS CLOSED ADD STAFF PER ORDER WILL BE SHOWN
-				function _staffEntry(){
-					swal({
-						title: "Add Staff",
-						text: "Please add staff before marking next",
-						type: "warning",
-						confirmButtonClass: "btn btn-danger",
-						allowOutsideClick: true
-					},
-					function(){
-						$('#orderStaffModal').modal('show');
-						$('#add-order-staff-content-data').html('');
-						$.ajax({
-							type:'POST',
-							url:'../order/addOrderStaff.php'
-						}).done(function(data){
-							$('#add-order-staff-content-data').html('');
-							$('#add-order-staff-content-data').html(data);
-						}).fail(function(){
-							$('#add-order-staff-content-data').html('<p>Error</p>');
-						});
-					});
-				}
 
 				//TOGGLE TAB WILL GET THE TOGGLE ELEMENT AND WILL SAVE THE LAST ACTIVE TOGGLE TABLE BEFORE REFRESH ON LOCAL STORAGE
 				//AND SET THE SAVED TOGGLE AS ACTIVE TAB
@@ -1048,6 +1149,32 @@
 					$('#myTab a[href="' + activeTab + '"]').tab('show');
 				}
 			});
+
+				// //WARNING SWAL - STATUS CHANGED
+				// //WARNING ON MISSING STAFF DURING IN PRODUCTION
+				// //ONCE THE WARNING IS CLOSED ADD STAFF PER ORDER WILL BE SHOWN
+				// function _staffEntry(){
+				// 	swal({
+				// 		title: "Add Staff",
+				// 		text: "Please add staff before marking next",
+				// 		type: "warning",
+				// 		confirmButtonClass: "btn btn-danger",
+				// 		allowOutsideClick: true
+				// 	},
+				// 	function(){
+				// 		$('#orderStaffModal').modal('show');
+				// 		$('#add-order-staff-content-data').html('');
+				// 		$.ajax({
+				// 			type:'POST',
+				// 			url:'../order/addOrderStaff.php'
+				// 		}).done(function(data){
+				// 			$('#add-order-staff-content-data').html('');
+				// 			$('#add-order-staff-content-data').html(data);
+				// 		}).fail(function(){
+				// 			$('#add-order-staff-content-data').html('<p>Error</p>');
+				// 		});
+				// 	});
+				// }
 		</script>
 	</body>
 </html>

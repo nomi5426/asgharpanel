@@ -114,9 +114,9 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
@@ -138,9 +138,9 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
@@ -162,9 +162,9 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
@@ -186,9 +186,9 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Made By</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
@@ -210,9 +210,9 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Delivery</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
@@ -234,9 +234,9 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Consult</th>
 																</tr>
 															</thead>
 														</table>
@@ -257,9 +257,9 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
@@ -281,9 +281,9 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
@@ -305,10 +305,10 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
 																	<th class="border-bottom-0">Status</th>
+																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
@@ -488,7 +488,7 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 
 				//INITIATING TABLE IN PRODUCTION
@@ -540,7 +540,7 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 
 				//INITIATING TABLE READY
@@ -564,7 +564,7 @@
 						type : "POST",
 						data : {
 							status : 'Ready',
-							nextStatus : 'Out For Delivery'
+							nextStatus : 'Out for Delivery'
 						}
 					},
 					"rowCallback": function( row, data, index ) {
@@ -592,7 +592,7 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 
 				//INITIATING TABLE OUT FOR DELIVERY
@@ -615,7 +615,7 @@
 						url  :"../order/fetch.php",
 						type : "POST",
 						data : {
-							status : 'Out For Delivery',
+							status : 'Out for Delivery',
 							nextStatus : 'Delivered'
 						}
 					},
@@ -644,7 +644,7 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 
 				//INITIATING TABLE DELIVERED
@@ -747,7 +747,7 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 
 				//INITIATING TABLE CANCELLED
@@ -799,7 +799,7 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 
 				//INITIATING TABLE ALL PRODUCTS
@@ -851,19 +851,20 @@
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12,13 ] } ],
 					"aoColumns": [
-						{ "sWidth": "5%" }, 
+						{ "sWidth": "3%" }, 
 						{ "sWidth": "5%" },
 						{ "sWidth": "2%" }, 
 						{ "sWidth": "3%" },
 						{ "sWidth": "2%" },
 						{ "sWidth": "20%" },
 						{ "sWidth": "12%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "20%" },
 						{ "sWidth": "3%" },
-						{ "sWidth": "15%" },
-						{ "sWidth": "5%" },
-						{ "sWidth": "3%" },
-						{ "sWidth": "15%" },
-						{ "sWidth": "5%" }
+						{ "sWidth": "20%" },
+						{ "sWidth": "4%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "2%" }
 					]
 				} );
 
@@ -915,7 +916,7 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 				
 				//@ORDERSEARCHTEXT IS THE TEXT FIELD WHERE THE INVOICES WILL BE SEARCHED
@@ -1036,6 +1037,7 @@
 					if(confirm("Are you sure changing status?")){
 						event.preventDefault();
 						var statusid = $(this).attr('data-id');
+						var prodStat;
 						$.ajax({
 							url     : '../order/statusChange.php',
 							method  : 'POST',
@@ -1063,7 +1065,51 @@
 								}else if (response.index == 2){
 									_markMaterialAvailable();
 								}else if (response.index == 3){
-									_staffEntry();
+									swal({
+										title: "Add Production Staff",
+										text: "Please add staff before marking next",
+										type: "warning",
+										confirmButtonClass: "btn btn-danger",
+										allowOutsideClick: true
+									},
+									function(){
+										$('#orderStaffModal').modal('show');
+										$('#add-order-staff-content-data').html('');
+										prodStat = 'In Production';
+										$.ajax({
+											type:'POST',
+											data:{ id:statusid , prodStat:prodStat},
+											url:'../order/addOrderStaff.php'
+										}).done(function(data){
+											$('#add-order-staff-content-data').html('');
+											$('#add-order-staff-content-data').html(data);
+										}).fail(function(){
+											$('#add-order-staff-content-data').html('<p>Error</p>');
+										});
+									});
+								}else if (response.index == 4){
+									swal({
+										title: "Add Delivery Staff",
+										text: "Please add staff before marking next",
+										type: "warning",
+										confirmButtonClass: "btn btn-danger",
+										allowOutsideClick: true
+									},
+									function(){
+										$('#orderStaffModal').modal('show');
+										$('#add-order-staff-content-data').html('');
+										prodStat = 'Ready';
+										$.ajax({
+											type:'POST',
+											data:{ id:statusid , prodStat:prodStat},
+											url:'../order/addOrderStaff.php'
+										}).done(function(data){
+											$('#add-order-staff-content-data').html('');
+											$('#add-order-staff-content-data').html(data);
+										}).fail(function(){
+											$('#add-order-staff-content-data').html('<p>Error</p>');
+										});
+									});
 								}
 								else{
 									console.log('AUL AUL AUL');
@@ -1147,32 +1193,6 @@
 					});
 				}
 
-				//WARNING SWAL - STATUS CHANGED
-				//WARNING ON MISSING STAFF DURING IN PRODUCTION
-				//ONCE THE WARNING IS CLOSED ADD STAFF PER ORDER WILL BE SHOWN
-				function _staffEntry(){
-					swal({
-						title: "Add Staff",
-						text: "Please add staff before marking next",
-						type: "warning",
-						confirmButtonClass: "btn btn-danger",
-						allowOutsideClick: true
-					},
-					function(){
-						$('#orderStaffModal').modal('show');
-						$('#add-order-staff-content-data').html('');
-						$.ajax({
-							type:'POST',
-							url:'../order/addOrderStaff.php'
-						}).done(function(data){
-							$('#add-order-staff-content-data').html('');
-							$('#add-order-staff-content-data').html(data);
-						}).fail(function(){
-							$('#add-order-staff-content-data').html('<p>Error</p>');
-						});
-					});
-				}
-
 				//TOGGLE TAB WILL GET THE TOGGLE ELEMENT AND WILL SAVE THE LAST ACTIVE TOGGLE TABLE BEFORE REFRESH ON LOCAL STORAGE
 				//AND SET THE SAVED TOGGLE AS ACTIVE TAB
 				$('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
@@ -1183,7 +1203,50 @@
 					$('#myTab a[href="' + activeTab + '"]').tab('show');
 				}
 
-				//CHANGE STATUS - PREVIOUS
+.				// //ORDER MADE STAFF
+				// $(document).on('click','#addStaff',function(event){
+				// 	event.preventDefault();
+				// 	$('#add-order-staff-content-data').html('');
+				// 	$.ajax({
+				// 		type:'POST',
+				// 		url:'../order/addOrderStaff.php'
+				// 	}).done(function(data){
+				// 		$('#add-order-staff-content-data').html('');
+				// 		$('#add-order-staff-content-data').html(data);
+				// 	}).fail(function(){
+				// 		$('#add-order-staff-content-data').html('<p>Error</p>');
+				// 	});
+				// });
+
+				// //WARNING ALERT
+				// function _staffEntry(){
+				// 	swal({
+				// 		title: "Add Staff",
+				// 		text: "Please add staff before marking next",
+				// 		type: "warning",
+				// 		confirmButtonClass: "btn btn-danger",
+				// 		allowOutsideClick: true
+				// 	},
+				// 	function(){
+				// 		$('#orderStaffModal').modal('show');
+				// 		$('#add-order-staff-content-data').html('');
+				// 		var id=$(this).data('id');
+				// 		$.ajax({
+				// 			type:'POST',
+				// 			data:'id='+id,
+				// 			url:'../order/addOrderStaff.php'
+				// 		}).done(function(data){
+				// 			$('#add-order-staff-content-data').html('');
+				// 			$('#add-order-staff-content-data').html(data);
+				// 		}).fail(function(){
+				// 			$('#add-order-staff-content-data').html('<p>Error</p>');
+				// 		});
+				// 	});
+				// }
+
+				// //WARNING SWAL - STATUS CHANGED
+				// //WARNING ON MISSING STAFF DURING IN PRODUCTION
+				// //ONCE THE WARNING IS CLOSED ADD STAFF PER ORDER WILL BE SHOWN
 				// $(document).on('click','#statusChangePrev',function(event){
 				// 	if(confirm("Are you sure changing status?")){
 				// 		event.preventDefault();

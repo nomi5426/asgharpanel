@@ -25,7 +25,7 @@
 		app_log("'".date('d-m-Y H:i:s')."' : Session is not set, Login Attempt SALES User");
 		header('Location:../index.php');
 	}
-	
+
 	/**
 	 * MASTER METHOD FOR LOG TRACKING
 	 * @PARAM {STRING}	MESSAGE
@@ -100,7 +100,6 @@
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
-																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
@@ -171,6 +170,7 @@
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Made By</th>
 																</tr>
 															</thead>
 														</table>
@@ -194,6 +194,7 @@
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Del By</th>
 																</tr>
 															</thead>
 														</table>
@@ -287,7 +288,6 @@
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
 																	<th class="border-bottom-0">Status</th>
-																	<th class="border-bottom-0">Action</th>																	
 																</tr>
 															</thead>
 														</table>
@@ -478,7 +478,7 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "10%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "4%" },{ "sWidth": "17%" }]
 				} );
 
 				//INITIATING TABLE READY
@@ -501,7 +501,7 @@
 						type : "POST",
 						data : {
 							status : 'Ready',
-							nextStatus : 'Out For Delivery'
+							nextStatus : 'Out for Delivery'
 						}
 					},
 					"rowCallback": function( row, data, index ) {
@@ -528,8 +528,8 @@
 						} );
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "10%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "4%" },{ "sWidth": "17%" },{ "sWidth": "7%" }]
 				} );
 
 				//INITIATING TABLE OUT FOR DELIVERY
@@ -551,7 +551,7 @@
 						url  :"../order/fetch.php",
 						type : "POST",
 						data : {
-							status : 'Out For Delivery',
+							status : 'Out for Delivery',
 							nextStatus : 'Delivered'
 						}
 					},
@@ -572,15 +572,15 @@
 						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
 							if ( last !== group ) {
 								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
 								);
 								last = group;
 							}
 						} );
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "10%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "4%" },{ "sWidth": "17%" },{ "sWidth": "7%" }]
 				} );
 
 				//INITIATING TABLE DELIVERED
@@ -746,11 +746,11 @@
 					"serverSide": 	true,
 					"paging"	:	true,
 					"searching"	:	true,
-					"iDisplayLength"	:	100,
 					"sDom": 'Brtip',
 					"buttons": [
 						
 					],
+					"iDisplayLength"	:	100,
 					"ajax": {
 						url  :"../order/fetch.php",
 						type : "POST",
@@ -776,15 +776,15 @@
 						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
 							if ( last !== group ) {
 								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="14">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
 								);
 								last = group;
 							}
 						} );
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12,13] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "10%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "4%" },{ "sWidth": "17%" },{ "sWidth": "7%" }]
 				} );
 
 				//INITIATING TABLE CRM
@@ -827,14 +827,14 @@
 						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
 							if ( last !== group ) {
 								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
 								);
 								last = group;
 							}
 						} );
 					},
 					"autoWidth": false,
-					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 								
@@ -873,8 +873,18 @@
 					});
 				});
 
-			} );
+				//TOGGLE TAB WILL GET THE TOGGLE ELEMENT AND WILL SAVE THE LAST ACTIVE TOGGLE TABLE BEFORE REFRESH ON LOCAL STORAGE
+				//AND SET THE SAVED TOGGLE AS ACTIVE TAB
+				$('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+                	localStorage.setItem('activeTab', $(e.target).attr('href'));
+				});
+				var activeTab = localStorage.getItem('activeTab');
+				if(activeTab){
+					$('#myTab a[href="' + activeTab + '"]').tab('show');
+				}
 
+
+			} );
 		</script>
 	</body>
 </html>

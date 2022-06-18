@@ -35,6 +35,7 @@
 		$logfile = 'log/log_'.date('d-M-Y').'.log';
 		file_put_contents($logfile, $message . "\n", FILE_APPEND);
 	}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,6 +99,7 @@
 										</div>
 										<div class="panel-body tabs-menu-body main-content-body-right border-top-0 border">
 											<div class="tab-content">
+												<!--CRM TABLE-->
 												<div class="tab-pane active" id="crm">
 													<div class="table-responsive">
 														<table id="examplenine" class="testclass table key-buttons text-md-nowrap">
@@ -112,15 +114,16 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
 													</div>
 												</div>
+												<!--NEW ORDER TABLE-->
 												<div class="tab-pane" id="neworder">
 													<div class="table-responsive">
 														<table id="exampleone" class="testclass table key-buttons text-md-nowrap">
@@ -135,15 +138,16 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
 													</div>
 												</div>
+												<!--IN PRODUCTION TABLE-->
 												<div class="tab-pane" id="inproduction">
 													<div class="table-responsive">
 														<table id="exampletwo" class="testclass table key-buttons text-md-nowrap">
@@ -158,15 +162,16 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
 													</div>
 												</div>
+												<!--READY TABLE-->
 												<div class="tab-pane" id="ready">
 													<div class="table-responsive">
 														<table id="examplethree" class="testclass table key-buttons text-md-nowrap">
@@ -181,15 +186,16 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Made By</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
 													</div>
 												</div>
+												<!--OUT FOR DELIVERY TABLE-->
 												<div class="tab-pane" id="outfordelivery">
 													<div class="table-responsive">
 														<table id="examplefour" class="testclass table key-buttons text-md-nowrap">
@@ -204,15 +210,16 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Delivery</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
 													</div>
 												</div>
+												<!--DELIVERED TABLE-->
 												<div class="tab-pane" id="delivered">
 													<div class="table-responsive">
 														<table id="examplefive" class="testclass table key-buttons text-md-nowrap">
@@ -227,14 +234,15 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Consult</th>
 																</tr>
 															</thead>
 														</table>
 													</div>
 												</div>
+												<!--ON HOLD TABLE-->
 												<div class="tab-pane" id="onhold">
 													<div class="table-responsive">
 														<table id="examplesix" class="testclass table key-buttons text-md-nowrap">
@@ -249,15 +257,16 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
 													</div>
 												</div>
+												<!--CANCELLED TABLE-->
 												<div class="tab-pane" id="cancelled">
 													<div class="table-responsive">
 														<table id="exampleseven" class="testclass table key-buttons text-md-nowrap">
@@ -272,15 +281,16 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
 														</table>
 													</div>
 												</div>
+												<!--ALL PRODUCTS TABLE-->
 												<div class="tab-pane" id="allproduct">
 													<div class="table-responsive">
 														<table id="exampleeight" class="testclass table key-buttons text-md-nowrap">
@@ -295,10 +305,10 @@
 																	<th class="border-bottom-0">Color</th>
 																	<th class="border-bottom-0">QTY</th>
 																	<th class="border-bottom-0">Note</th>
-																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
 																	<th class="border-bottom-0">Status</th>
+																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Action</th>
 																</tr>
 															</thead>
@@ -313,7 +323,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- Container closed -->
 				<!-- MODALS OPEN -->
 				<!-- NEW ORDER -->
 				<div class="modal effect-scale show" id="newOrderModal">
@@ -368,9 +377,9 @@
 			<!-- main-content closed -->
 			<?php include "../footer/footer.php"; ?>
 		</div>
-		<!-- End Page -->
+		<!-- END PAGE -->
 
-		<!-- Back-to-top -->
+		<!-- BACK TO TOP -->
 		<a href="#top" id="back-to-top"><i class="las la-angle-double-up"></i></a>
 		<!-- JQuery min js -->
 		<script src="../assets/plugins/jquery/jquery.min.js"></script>
@@ -429,7 +438,14 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 
-				//NEW ORDER
+				//DATATABLE IMPLEMENTATION
+
+				//INITIATING TABLE NEW ORDER
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: NEW ORDER TO FETCH ALL NEW ORDER RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: IN PRODUCTION TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tableone = $('#exampleone').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -476,10 +492,15 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 
-				//IN PRODUCTION
+				//INITIATING TABLE IN PRODUCTION
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: IN PRODUCTION TO FETCH ALL IN PRODUCTION RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: READY TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tabletwo = $('#exampletwo').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -523,10 +544,15 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 
-				//READY
+				//INITIATING TABLE READY
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: READY TO FETCH ALL READY RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: OUT FOR DELIVERY TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablethree = $('#examplethree').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -542,7 +568,7 @@
 						type : "POST",
 						data : {
 							status : 'Ready',
-							nextStatus : 'Out For Delivery'
+							nextStatus : 'Out for Delivery'
 						}
 					},
 					"rowCallback": function( row, data, index ) {
@@ -570,10 +596,15 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 
-				//OUT FOR DELIVERY
+				//INITIATING TABLE OUT FOR DELIVERY
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: OUT FOR DELIVERY TO FETCH ALL OUT FOR DELIVERY RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: DELIVERED TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablefour = $('#examplefour').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -588,7 +619,7 @@
 						url  :"../order/fetch.php",
 						type : "POST",
 						data : {
-							status : 'Out For Delivery',
+							status : 'Out for Delivery',
 							nextStatus : 'Delivered'
 						}
 					},
@@ -617,10 +648,14 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 
-				//DELIVERED
+				//INITIATING TABLE DELIVERED
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: DELIVERED TO FETCH ALL DELIVERED RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablefive = $('#examplefive').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -667,7 +702,12 @@
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
-				//ON HOLD
+				//INITIATING TABLE ON HOLD
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: ON HOLD TO FETCH ALL ON HOLD RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: NEW ORDER TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablesix = $('#examplesix').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -711,10 +751,15 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 
-				//CANCELLED
+				//INITIATING TABLE CANCELLED
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: CANCELLED TO FETCH ALL CANCELLED RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: NEW ORDER TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tableseven = $('#exampleseven').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -758,10 +803,14 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 
-				//ALL PRODUCTS
+				//INITIATING TABLE ALL PRODUCTS
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- EMPTY STATUS - ALL RECORDS WILL BE FETCHED
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tableeight = $('#exampleeight').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -806,23 +855,28 @@
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12,13 ] } ],
 					"aoColumns": [
-						{ "sWidth": "5%" }, 
+						{ "sWidth": "3%" }, 
 						{ "sWidth": "5%" },
 						{ "sWidth": "2%" }, 
 						{ "sWidth": "3%" },
 						{ "sWidth": "2%" },
 						{ "sWidth": "20%" },
 						{ "sWidth": "12%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "20%" },
 						{ "sWidth": "3%" },
-						{ "sWidth": "15%" },
-						{ "sWidth": "5%" },
-						{ "sWidth": "3%" },
-						{ "sWidth": "15%" },
-						{ "sWidth": "5%" }
+						{ "sWidth": "20%" },
+						{ "sWidth": "4%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "2%" }
 					]
 				} );
 
-				//CRM
+				//INITIATING TABLE CRM
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: CRM TO FETCH ALL CRM RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
 				var tablenine = $('#examplenine').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
@@ -866,10 +920,11 @@
 					},
 					"autoWidth": false,
 					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
-					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
 				} );
 
-				//SEARCH FUNCTION
+				//@ORDERSEARCHTEXT IS THE TEXT FIELD WHERE THE INVOICES WILL BE SEARCHED
+				//TABLES WILL BE REDRAWN AS PER THE INSERT VALUE
 				$('#orderSearchText').keyup(function(){
 					tableone.search($(this).val()).column(0).draw() ;
 					tabletwo.search($(this).val()).column(0).draw() ;
@@ -882,7 +937,10 @@
 					tablenine.search($(this).val()).column(0).draw() ;
 				});
 
-				//IMAGE FETCH
+				//IMAGE FETCH			-	ONCLICKEVENT
+				//A MODAL OPEN FOR THUMBNAIL IMAGE CLICK
+				//IMAGE WILL BE IDENTIFIED WITH THE ORDER ROW ID AND BE PASSED TO ORDERIMAGE.PHP TO VIEW FULL VIEW IMAGE IN MODAL
+				//DATA WILL BE PASSED AND RETREIVED AS HTML
 				$(document).on('click','#tableImage',function(event){
 					event.preventDefault();
 					var per_id=$(this).data('id');
@@ -900,7 +958,9 @@
 					});
 				});
 
-				//NEW ORDER
+				//MANUAL - NEW ORDER	-	ONCLICKEVENT
+				//A MODAL OPEN FOR ADDING NEW ORDER IN THE MANUAL WAY
+				//DATA WILL BE PASSED AND RETREIVED AS HTML
 				$(document).on('click','#newOrderAdd',function(event){
 					event.preventDefault();
 					$('#add-order-content-data').html('');
@@ -917,7 +977,9 @@
 					});
 				});
 
-				//EDIT
+				//EDIT ORDER			-	ONCLICKEVENT
+				//A MODAL OPEN FOR EDITING EXISTING ORDERS
+				//DATA WILL BE PASSED AND RETREIVED AS HTML
 				$(document).on('click','#orderEdit',function(event){
 					event.preventDefault();
 					$('#edit-order-content-data').html('');
@@ -931,8 +993,10 @@
 						$('#edit-order-content-data').html('<p>Error</p>');
 					});
 				});
-
-				//ZOHO ORDER
+				
+				//ZOHO - NEW ORDER		-	ONCLICKEVENT
+				//A MODAL OPEN FOR ADDING NEW ORDER THROUGH ZOHO INVOICE SELECTORS
+				//DATA WILL BE PASSED AND RETREIVED AS HTML
 				$(document).on('click','#newZohoOrderAdd',function(event){
 					event.preventDefault();
 					$('#add-zoho-order-content-data').html('');
@@ -946,8 +1010,10 @@
 						$('#add-zoho-order-content-data').html('<p>Error</p>');
 					});
 				});
-
-				//ADD COMMENT
+				
+				//ADD NEW COMMENT		-	ONCLICKEVENT
+				//A MODAL OPEN FOR EDITING EXISTING ORDERS
+				//DATA WILL BE PASSED AND RETREIVED AS HTML
 				$(document).on('click','#newCommentAdd',function(event){
 					event.preventDefault();
 					$('#add-comment-content-data').html('');
@@ -962,7 +1028,15 @@
 					});
 				});
 
-				//CHANGE STATUS - NEXT
+				//STATUSCHANGENEXT		-	ONCLICKEVENT
+				//CURRENT STATUS OF AN ORDER WILL BE CHANGED TO NEXT STATUS
+				//STATUSID - THE ROW ID SENT TO STATUSCHANGE.PHP AND CHANGE THE NEXT STATUS THAT WAS SENT FROM EACH TABLE
+				//CONDITION - IF STATUS: NEW ORDER = CANT CHANGE TO NEXT UNLESS MATERIAL IS MARKED AVAILABLE
+				//CONDITION - IF STATUS: IN PRODUCTION = CANT CHANGE STATUS TO NEXT UNLESS THE STAFF WHO MADE IS MARKED
+				//CONDITION - IF BOTH ARE CLEAR, STATUS WILL BE CHANGED AND USER GETS SUCCESS MESSAGE
+				//CONDITION - IF ANY FAILS TO MEET CONDITION, USER WILL GET CUSTOM WARNING
+				//ALERTS WILL BE DECIDED ON THE INDEXES THAT IS RECEIVED FROM STATUSCHANGE.PHP
+				//DATA WILL BE PASSED AND RETREIVED AS JSON
 				$(document).on('click','#statusChangeNext',function(event){
 					if(confirm("Are you sure changing status?")){
 						event.preventDefault();
@@ -1052,43 +1126,9 @@
 					}
 				});
 
-				//CHANGE STATUS - PREVIOUS
-				$(document).on('click','#statusChangePrev',function(event){
-					if(confirm("Are you sure changing status?")){
-						event.preventDefault();
-						var statusPrev = $(this).attr('data-id');
-						$.ajax({
-							url     : '../order/statusChange.php',
-							method  : 'POST',
-							dataType: 'json',
-							data    : {statusPrev : statusPrev},
-							success : function(response){
-								if (response.index == 1){
-									swal({
-										title: 'Status Changed',
-										text: 'Order Status is Changed Succesfully',
-										type: 'success',
-										confirmButtonColor: '#57a94f',
-										allowOutsideClick: true
-									});
-									$('#exampleone').DataTable().ajax.reload();
-									$('#exampletwo').DataTable().ajax.reload();
-									$('#examplethree').DataTable().ajax.reload();
-									$('#examplefour').DataTable().ajax.reload();
-									$('#examplefive').DataTable().ajax.reload();
-									$('#examplesix').DataTable().ajax.reload();
-									$('#exampleseven').DataTable().ajax.reload();
-									$('#exampleeight').DataTable().ajax.reload();
-								}
-							}
-						});
-					}
-					else{
-						return false;
-					}
-				});
-
-				//MATERIAL LPO CONFIRMATION
+				//MATERIAL MARK		-	ONCLICKEVENT
+				//A MODAL OPEN FOR MARKING MATERIAL LPO OF AN ORDER
+				//DATA WILL BE PASSED AND RETREIVED AS HTML
 				$(document).on('click','#_materialLpo',function(event){
 					event.preventDefault();
 					var id=$(this).data('id');
@@ -1106,7 +1146,9 @@
 					});
 				});
 
-				//CHANGE STATUS - BUTTON
+				//STATUS CHANGE		-	ONCLICKEVENT
+				//A MODAL OPEN FOR CHANGING TO ANY STATUS FROM ANY STATUS
+				//DATA WILL BE PASSED AND RETREIVED AS HTML
 				$(document).on('click','#changeStatus',function(event){
 					event.preventDefault();
 					$('#status-change-content-data').html('');
@@ -1121,7 +1163,8 @@
 					});
 				});
 
-				//WARNING ALERT
+				//SUCCESS SWAL - MATERIAL
+				//CONFIRMATION OF MATERIAL AVAILABILITY
 				function _markMaterialAvailable(){
 					swal({
 						title: "Mark Material",
@@ -1131,7 +1174,8 @@
 					});
 				}
 
-				//SUCCESS ALERT
+				//SUCCESS SWAL - STATUS CHANGED
+				//CONFIRMATION OF STATUS CHANGED TO ANY STATUS
 				function _statusChanged(){
 					swal({
 						title: 'Status Changed',
@@ -1153,6 +1197,9 @@
 					});
 				}
 
+
+				//TOGGLE TAB WILL GET THE TOGGLE ELEMENT AND WILL SAVE THE LAST ACTIVE TOGGLE TABLE BEFORE REFRESH ON LOCAL STORAGE
+				//AND SET THE SAVED TOGGLE AS ACTIVE TAB
 				$('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
                 	localStorage.setItem('activeTab', $(e.target).attr('href'));
 				});
@@ -1160,6 +1207,8 @@
 				if(activeTab){
 					$('#myTab a[href="' + activeTab + '"]').tab('show');
 				}
+
+
 			});
 		</script>
 	</body>
