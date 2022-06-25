@@ -84,8 +84,8 @@ while($row=mysqli_fetch_array($query)){
     $oneRow = "$row[6]<br><strong> Size - $row[8]</strong> | Color - $row[9]";
     //$deliveryNotePrint = "<a href=deliveryNoteDownload.php?file_id=$row[0]>$row[4]";
 
-    $subdata[]=$row[14];
     $subdata[]=$row[4];
+    $subdata[]=$row[15];
     $subdata[]=$dateAvailability;
     $subdata[]=$row[11];
     $subdata[]=$interval;
