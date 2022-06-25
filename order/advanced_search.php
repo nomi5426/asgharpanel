@@ -1,72 +1,71 @@
 <?php
-session_start();
-if((!isset($_SESSION['_superAdminLogin'])) && (!isset($_SESSION['_adminLogin'])) && (!isset($_SESSION['_salesLogin']))&& (!isset($_SESSION['_factoryLogin'])))
-{
-	header("Location:../index.php");
-}
-include "../base/db.php";
-include '../base/deliveryNoteDownload.php';
-
-function loadBranch(){
-    global $conn;
-    $branchOutput='';   
-    $branchSqlQuery = "SELECT * FROM branch ORDER BY branch_name";
-    $result = mysqli_query($conn, $branchSqlQuery);
-    while($row = mysqli_fetch_array($result)){
-        $branchOutput .= '<option value = "'.$row["branch_name"].'">'.$row["branch_name"].'</option>';
+    session_start();
+    if((!isset($_SESSION['_superAdminLogin'])) && (!isset($_SESSION['_adminLogin'])) && (!isset($_SESSION['_salesLogin']))&& (!isset($_SESSION['_factoryLogin'])))
+    {
+        header("Location:../index.php");
     }
-    return $branchOutput;
-}
+    include "../base/db.php";
+    include '../base/deliveryNoteDownload.php';
 
-function loadOrderStatus(){
-    global $conn;
-    $statusOutput='';   
-    $statusSqlQuery = "SELECT * FROM order_status";
-    $result = mysqli_query($conn, $statusSqlQuery);
-    while($row = mysqli_fetch_array($result)){
-        $statusOutput .= '<option value = "'.$row["status_name"].'">'.$row["status_name"].'</option>';
+    function loadBranch(){
+        global $conn;
+        $branchOutput='';   
+        $branchSqlQuery = "SELECT * FROM branch ORDER BY branch_name";
+        $result = mysqli_query($conn, $branchSqlQuery);
+        $branchOutput .= '<option value="">Choose Branch</option>';
+        while($row = mysqli_fetch_array($result)){
+            $branchOutput .= '<option value = "'.$row["branch_name"].'">'.$row["branch_name"].'</option>';
+        }
+        return $branchOutput;
     }
-    return $statusOutput;
-}
 
-function loadDeliveryLocation(){
-    global $conn;
-    $cityOutput='';   
-    $citySqlQuery = "SELECT * FROM delivery_city";
-    $result = mysqli_query($conn, $citySqlQuery);
-    while($row = mysqli_fetch_array($result)){
-        $cityOutput .= '<option value = "'.$row["city_name"].'">'.$row["city_name"].'</option>';
+    function loadOrderStatus(){
+        global $conn;
+        $statusOutput='';   
+        $statusSqlQuery = "SELECT * FROM order_status";
+        $result = mysqli_query($conn, $statusSqlQuery);
+        $statusOutput .= '<option value="">Choose Status</option>';
+        while($row = mysqli_fetch_array($result)){
+            $statusOutput .= '<option value = "'.$row["status_name"].'">'.$row["status_name"].'</option>';
+        }
+        return $statusOutput;
     }
-    return $cityOutput;
-}
 
-function loadSalesPerson(){
-    global $conn;
-    $salesPersonOutput='';
-	$salesPersonSqlQuery = "SELECT firstname FROM user
-							WHERE sales_col = 1
-							AND active_status = 1
-							ORDER BY firstname ASC";
-    $result = mysqli_query($conn, $salesPersonSqlQuery);
-    while($row = mysqli_fetch_array($result)){
-        $salesPersonOutput .= '<option value = "'.$row["firstname"].'">'.$row["firstname"].'</option>';
+    function loadDeliveryLocation(){
+        global $conn;
+        $cityOutput='';   
+        $citySqlQuery = "SELECT * FROM delivery_city";
+        $result = mysqli_query($conn, $citySqlQuery);
+        $cityOutput .= '<option value="">Choose Delivery City</option>';
+        while($row = mysqli_fetch_array($result)){
+            $cityOutput .= '<option value = "'.$row["city_name"].'">'.$row["city_name"].'</option>';
+        }
+        return $cityOutput;
     }
-    return $salesPersonOutput;
-}
 
+    function loadSalesPerson(){
+        global $conn;
+        $salesPersonOutput='';
+        $salesPersonSqlQuery = "SELECT firstname FROM user
+                                WHERE sales_col = 1
+                                AND active_status = 1
+                                ORDER BY firstname ASC";
+        $result = mysqli_query($conn, $salesPersonSqlQuery);
+        $salesPersonOutput .= '<option value="">Choose Sales Consultant</option>';
+        while($row = mysqli_fetch_array($result)){
+            $salesPersonOutput .= '<option value = "'.$row["firstname"].'">'.$row["firstname"].'</option>';
+        }
+        return $salesPersonOutput;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 	<?php include "../header/header_css.php"; ?>
 	<?php include "../header/header.php"; ?>
 	<body class="main-body">
-		<!-- Page -->
 		<div class="page">
-			<!-- main-content opened -->
 			<div class="main-content horizontal-content">
-				<!-- container opened -->
 				<div class="container">
-					<!-- breadcrumb -->
 					<div class="breadcrumb-header justify-content-between">
 						<div class="my-auto">
 							<div class="d-flex">
@@ -74,8 +73,6 @@ function loadSalesPerson(){
 							</div>
 						</div>
 					</div>
-					<!-- breadcrumb -->
-					<!-- row opened -->
 					<div class="row row-sm justify-content-center">
 						<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
 							<div class="input-group mb-3">
@@ -83,11 +80,11 @@ function loadSalesPerson(){
 									<div class="input-group-text">
 										Branch / Company
 									</div>
-								</div><!-- input-group-prepend -->
+								</div>
 								<select value='Order From' name="branchFrom" id="branchFrom" class="SlectBox form-control">
 									<?php echo loadBranch(); ?>
 								</select>
-							</div><!-- input-group -->
+							</div>
 						</div>
 						<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
 							<div class="input-group mb-3">
@@ -95,11 +92,11 @@ function loadSalesPerson(){
 									<div class="input-group-text">
 										Order Status
 									</div>
-								</div><!-- input-group-prepend -->
+								</div>
 								<select value='Order Status' name="orderStatus" id="orderStatus" class="SlectBox form-control">
 									<?php echo loadOrderStatus(); ?>
 								</select>
-							</div><!-- input-group -->
+							</div>
 						</div>
 					</div>
 					<div class="row justify-content-center">
@@ -109,11 +106,11 @@ function loadSalesPerson(){
 									<div class="input-group-text">
 										Sales Consultant
 									</div>
-								</div><!-- input-group-prepend -->
+								</div>
 								<select value="Sales Consultant" name="salesconsultant" id="salesconsultant" class="SlectBox form-control">
 									<?php echo loadSalesPerson(); ?>
 								</select>
-							</div><!-- input-group -->
+							</div>
 						</div>
 						<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
 							<div class="input-group mb-3">
@@ -121,11 +118,11 @@ function loadSalesPerson(){
 									<div class="input-group-text">
 										Delivery City
 									</div>
-								</div><!-- input-group-prepend -->
+								</div>
 								<select value='Deliver To' name="deliverylocation" id="deliverylocation" class="SlectBox form-control">
 									<?php echo loadDeliveryLocation(); ?>
 								</select>
-							</div><!-- input-group -->
+							</div>
 						</div>
 					</div>
 					<div class="row justify-content-center">
@@ -135,9 +132,9 @@ function loadSalesPerson(){
 									<div class="input-group-text">
 										Date From
 									</div>
-								</div><!-- input-group-prepend -->
+								</div>
 									<input class="form-control fc-datepicker" name="search_fromdate" id="search_fromdate" placeholder="Delivery Date" type="text">
-							</div><!-- input-group -->
+							</div>
 						</div>
 						<div class="col-md-4 col-xl-4 col-xs-4 col-sm-4">
 							<div class="input-group mb-3">
@@ -157,7 +154,6 @@ function loadSalesPerson(){
 							</div>
 						</div>
 					</div>						  
-					<!-- row opened -->
 					<div class="row row-sm">
 						<div class="col-xl-12">
 							<div class="card">
@@ -188,9 +184,7 @@ function loadSalesPerson(){
 						</div>
 					</div>
 				</div>
-				<!-- Container closed -->
 			</div>
-			<!-- main-content closed -->
 
 			<!-- Image Modal -->
 			<div class="modal effect-scale show" id="imagemodalone">
@@ -209,16 +203,12 @@ function loadSalesPerson(){
 
 		<script type="text/javascript">
 
-			// var status = $("#orderStatus option:selected").text();
-			// var from = $("#branchFrom option:selected").text();
-			// var salesConsultant = $("#salesconsultant option:selected").text();
-			// var deliveryCity = $("#deliverylocation option:selected").text();
 			$(document).ready(function() {
 				var tableone = $('#exampleone').DataTable( {
 					"processing": 	true,
 					"serverSide": 	true,
 					"paging"	:	true,
-					"searching"	:	true,
+					"searching"	:	false,
 					"dom": 'Bfrtip',
 					"buttons": [
 						'copy', 'csv', 'pdf', 'print'
@@ -242,19 +232,13 @@ function loadSalesPerson(){
 							data.deliverylocation = deliveryCity;
 							data.searchByFromdate = from_date;
 							data.searchByTodate = to_date;
-
-							// console.log(from);
-							// console.log(salesConsultant);
-							// console.log(deliveryCity);
 						}
 					},
 					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
+						if ( data[7] == "Sharaf DG" ){
 							$('td', row).css('background-color', '#b5b5de');
 						}
-						else if ( data[7] != "Sharaf DG" )
-						{
+						else if ( data[7] == "NooN" ){
 							$('td', row).css('background-color', 'white');
 						}
 					},
@@ -276,73 +260,13 @@ function loadSalesPerson(){
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "30%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "7%" },{ "sWidth": "3%" },{ "sWidth": "20%" },{"sWidth":"12%"}]				 
 				} );
 
-
-				// $('#orderSearchText').keyup(function(){
-				// 	tableone.search($(this).val()).column(0).draw() ;
-				// });
-
-				// $('#orderStatus').change(function(){
-				// 	tableone.draw();
-				// });
-				// $('#branchFrom').change(function(){
-				// 	tableone.draw();
-				// });
-				// $('#salesconsultant').change(function(){
-				// 	tableone.draw();
-				// });
-				// $('#deliverylocation').change(function(){
-				// 	tableone.draw();
-				// });
-
-				// $('#search_fromdate').change(function(){
-				// 	tableone.draw();
-				// });
-
-				// $('#search_todate').change(function(){
-				// 	tableone.draw();
-				// });
-
-				  // Search button
-				  $('#btn_search').click(function(){
-				     tableone.draw();
-				  });
-
-
-				// $("#orderStatus").on('change', function() {
-				// 	var drpStats = $(this).val();
-				// 	alert(drpStats);
-				// 	$.ajax({
-				// 		url  :"fetch_advanced_order.php",
-				// 		type : "POST",
-				// 		data : {
-				// 			status : drpStats,
-				// 			from : $("#branchFrom option:selected").text(),
-				// 			salesConsultant : $("#salesconsultant option:selected").text(),
-				// 			deliveryCity : $("#deliverylocation option:selected").text()
-				// 		},
-				// 		success: function (data) {
-				// 			$('#exampleone').DataTable().ajax.reload();
-				// 		}
-				// 	});
-				// });
-
-				// $("#orderStatus").on('change', function() {
-				// var changeStat = $(this).val(); 
-				// 	$.ajax({
-				// 		url  :"filter_advanced_order.php",
-				// 		type : "POST",
-				// 		data : {
-				// 			changeStat : changeStat
-				// 			//from : _from
-				// 		},
-				// 		success: function (data) {
-				// 			$('#exampleone').DataTable().ajax.reload();
-				// 		}
-				// 	});
-				// });
+				//SEARCH BUTTON
+				$('#btn_search').click(function(){
+					tableone.draw();
+				});
 			} );
 
-			//Image Modal
+			//IMAGE
 			$(document).on('click','#tableImage',function(event){
 				event.preventDefault();
 				var per_id=$(this).data('id');
@@ -410,41 +334,10 @@ function loadSalesPerson(){
 		<script src="../assets/js/custom.js"></script>
 		<script src="../assets/plugins/jquery-ui/ui/widgets/datepicker.js"></script>
 		<script type="text/javascript">
-	  	// $( function() { $( "#search_fromdate" ).datepicker({ dateFormat: 'dd/mm/yy' }); } );
-		// Datapicker 
 		$( ".fc-datepicker" ).datepicker({
 			"dateFormat": "yy-mm-dd",
 			"changeYear": true
 		});
-	  	// $( function() { $( "#search_todate" ).datepicker({ dateFormat: 'dd/mm/yy' }); } );
  		</script>
-		<!--   <script type="text/javascript">
-		
-		$(document).ready(function(){
-			$.fn.dataTable.ext.search.push(
-			function (settings, data, dataIndex) {
-				var min = $('#minimumdate').datepicker("getDate");
-				var max = $('#maximumdate').datepicker("getDate");
-				var startDate = new Date(data[1]);
-				if (min == null && max == null) { return true; }
-				if (min == null && startDate <= max) { return true;}
-				if(max == null && startDate >= min) {return true;}
-				if (startDate <= max && startDate >= min) { return true; }
-				return false;
-			}
-			);
-
-		
-				$("#minimumdate").datepicker({ onSelect: function () { tableone.draw(); }, changeMonth: true, changeYear: true });
-				$("#maximumdate").datepicker({ onSelect: function () { tableone.draw(); }, changeMonth: true, changeYear: true });
-				var table = $('#exampleone').DataTable();
-
-				// Event listener to the two range filtering inputs to redraw on input
-				$('#minimumdate, #maximumdate').change(function () {
-					tableone.draw();
-				});
-			});
-
-	</script> -->
 	</body>
 </html>
