@@ -464,13 +464,14 @@
 						}
 					},
 					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
+						if ( data[11] == "Sharaf DG" ){
+							$('td', row).css('background-color', '#fcf9c7');
 						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
+						if ( data[11] == "NooN" ){
+							$('td', row).css('background-color', '#fcf9c7');
+						}
+						if(data[13] != null){
+							$('td', row).css('background-color', '#cbcbf5');
 						}
 					},
 					"drawCallback": function ( settings ) {
@@ -515,16 +516,6 @@
 							nextStatus : 'Ready'
 						}
 					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
-						}
-					},
 					"drawCallback": function ( settings ) {
 						var api = this.api();
 						var rows = api.rows( {page:'current'} ).nodes();
@@ -565,16 +556,6 @@
 						data : {
 							status : 'Ready',
 							nextStatus : 'Out for Delivery'
-						}
-					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
 						}
 					},
 					"drawCallback": function ( settings ) {
@@ -619,16 +600,6 @@
 							nextStatus : 'Delivered'
 						}
 					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
-						}
-					},
 					"drawCallback": function ( settings ) {
 						var api = this.api();
 						var rows = api.rows( {page:'current'} ).nodes();
@@ -668,16 +639,6 @@
 						data : {
 							status : 'Delivered',
 							nextStatus : ''
-						}
-					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
 						}
 					},
 					"drawCallback": function ( settings ) {
@@ -722,16 +683,6 @@
 							nextStatus : 'New Order'
 						}
 					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
-						}
-					},
 					"drawCallback": function ( settings ) {
 						var api = this.api();
 						var rows = api.rows( {page:'current'} ).nodes();
@@ -772,16 +723,6 @@
 						data : {
 							status : 'Cancelled',
 							nextStatus : 'New Order'
-						}
-					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
 						}
 					},
 					"drawCallback": function ( settings ) {
@@ -826,13 +767,14 @@
 						}
 					},
 					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
+						if ( data[12] == "Sharaf DG" ){
+							$('td', row).css('background-color', '#fcf9c7');
 						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
+						else if ( data[12] == "NooN" ){
+							$('td', row).css('background-color', '#fcf9c7');
+						}
+						if(data[14] != null){
+							$('td', row).css('background-color', '#cbcbf5');
 						}
 					},
 					"drawCallback": function ( settings ) {
@@ -889,16 +831,6 @@
 						data : {
 							status : 'CRM',
 							nextStatus : ''
-						}
-					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
 						}
 					},
 					"drawCallback": function ( settings ) {
@@ -1202,85 +1134,6 @@
 				if(activeTab){
 					$('#myTab a[href="' + activeTab + '"]').tab('show');
 				}
-
-.				// //ORDER MADE STAFF
-				// $(document).on('click','#addStaff',function(event){
-				// 	event.preventDefault();
-				// 	$('#add-order-staff-content-data').html('');
-				// 	$.ajax({
-				// 		type:'POST',
-				// 		url:'../order/addOrderStaff.php'
-				// 	}).done(function(data){
-				// 		$('#add-order-staff-content-data').html('');
-				// 		$('#add-order-staff-content-data').html(data);
-				// 	}).fail(function(){
-				// 		$('#add-order-staff-content-data').html('<p>Error</p>');
-				// 	});
-				// });
-
-				// //WARNING ALERT
-				// function _staffEntry(){
-				// 	swal({
-				// 		title: "Add Staff",
-				// 		text: "Please add staff before marking next",
-				// 		type: "warning",
-				// 		confirmButtonClass: "btn btn-danger",
-				// 		allowOutsideClick: true
-				// 	},
-				// 	function(){
-				// 		$('#orderStaffModal').modal('show');
-				// 		$('#add-order-staff-content-data').html('');
-				// 		var id=$(this).data('id');
-				// 		$.ajax({
-				// 			type:'POST',
-				// 			data:'id='+id,
-				// 			url:'../order/addOrderStaff.php'
-				// 		}).done(function(data){
-				// 			$('#add-order-staff-content-data').html('');
-				// 			$('#add-order-staff-content-data').html(data);
-				// 		}).fail(function(){
-				// 			$('#add-order-staff-content-data').html('<p>Error</p>');
-				// 		});
-				// 	});
-				// }
-
-				// //WARNING SWAL - STATUS CHANGED
-				// //WARNING ON MISSING STAFF DURING IN PRODUCTION
-				// //ONCE THE WARNING IS CLOSED ADD STAFF PER ORDER WILL BE SHOWN
-				// $(document).on('click','#statusChangePrev',function(event){
-				// 	if(confirm("Are you sure changing status?")){
-				// 		event.preventDefault();
-				// 		var statusPrev = $(this).attr('data-id');
-				// 		$.ajax({
-				// 			url     : '../order/statusChange.php',
-				// 			method  : 'POST',
-				// 			dataType: 'json',
-				// 			data    : {statusPrev : statusPrev},
-				// 			success : function(response){
-				// 				if (response.index == 1){
-				// 					swal({
-				// 						title: 'Status Changed',
-				// 						text: 'Order Status is Changed Succesfully',
-				// 						type: 'success',
-				// 						confirmButtonColor: '#57a94f',
-				// 						allowOutsideClick: true
-				// 					});
-				// 					$('#exampleone').DataTable().ajax.reload();
-				// 					$('#exampletwo').DataTable().ajax.reload();
-				// 					$('#examplethree').DataTable().ajax.reload();
-				// 					$('#examplefour').DataTable().ajax.reload();
-				// 					$('#examplefive').DataTable().ajax.reload();
-				// 					$('#examplesix').DataTable().ajax.reload();
-				// 					$('#exampleseven').DataTable().ajax.reload();
-				// 					$('#exampleeight').DataTable().ajax.reload();
-				// 				}
-				// 			}
-				// 		});
-				// 	}
-				// 	else{
-				// 		return false;
-				// 	}
-				// });
 			} );
 		</script>
 	</body>

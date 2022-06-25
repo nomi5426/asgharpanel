@@ -193,8 +193,8 @@
 																	<th class="border-bottom-0">Note</th>
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
-																	<th class="border-bottom-0">Comment</th>
-																	<th class="border-bottom-0">Del By</th>
+																	<th class="border-bottom-0">Comment</th>.
+																	<th class="border-bottom-0">Delivery</th>
 																</tr>
 															</thead>
 														</table>
@@ -403,13 +403,14 @@
 						}
 					},
 					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
+						if ( data[9] == "Sharaf DG" ){
+							$('td', row).css('background-color', '#fcf9c7');
 						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
+						else if ( data[9] == "NooN" ){
+							$('td', row).css('background-color', '#fcf9c7');
+						}
+						if(data[13] != null){
+							$('td', row).css('background-color', '#cbcbf5');
 						}
 					},
 					"drawCallback": function ( settings ) {
@@ -453,16 +454,6 @@
 							nextStatus : 'Ready'
 						}
 					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
-						}
-					},
 					"drawCallback": function ( settings ) {
 						var api = this.api();
 						var rows = api.rows( {page:'current'} ).nodes();
@@ -504,16 +495,6 @@
 							nextStatus : 'Out for Delivery'
 						}
 					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
-						}
-					},
 					"drawCallback": function ( settings ) {
 						var api = this.api();
 						var rows = api.rows( {page:'current'} ).nodes();
@@ -521,7 +502,7 @@
 						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
 							if ( last !== group ) {
 								$(rows).eq( i ).before(
-									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
 								);
 								last = group;
 							}
@@ -553,16 +534,6 @@
 						data : {
 							status : 'Out for Delivery',
 							nextStatus : 'Delivered'
-						}
-					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
 						}
 					},
 					"drawCallback": function ( settings ) {
@@ -606,16 +577,6 @@
 							nextStatus : ''
 						}
 					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
-						}
-					},
 					"drawCallback": function ( settings ) {
 						var api = this.api();
 						var rows = api.rows( {page:'current'} ).nodes();
@@ -657,16 +618,6 @@
 							nextStatus : 'New Order'
 						}
 					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
-						}
-					},
 					"drawCallback": function ( settings ) {
 						var api = this.api();
 						var rows = api.rows( {page:'current'} ).nodes();
@@ -706,16 +657,6 @@
 						data : {
 							status : 'Cancelled',
 							nextStatus : 'New Order'
-						}
-					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
 						}
 					},
 					"drawCallback": function ( settings ) {
@@ -760,13 +701,14 @@
 						}
 					},
 					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
+						if ( data[9] == "Sharaf DG" ){
+							$('td', row).css('background-color', '#fcf9c7');
 						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
+						else if ( data[9] == "NooN" ){
+							$('td', row).css('background-color', '#fcf9c7');
+						}
+						if(data[13] != null){
+							$('td', row).css('background-color', '#cbcbf5');
 						}
 					},
 					"drawCallback": function ( settings ) {
@@ -808,16 +750,6 @@
 						data : {
 							status : 'CRM',
 							nextStatus : ''
-						}
-					},
-					"rowCallback": function( row, data, index ) {
-						if ( data[7] == "Sharaf DG" )
-						{
-							$('td', row).css('background-color', '#b5b5de');
-						}
-						else if ( data[7] != "Sharaf DG" )
-						{
-							$('td', row).css('background-color', 'white');
 						}
 					},
 					"drawCallback": function ( settings ) {
