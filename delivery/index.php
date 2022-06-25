@@ -69,8 +69,8 @@ if( (!isset($_SESSION['_superAdminLogin'])) && (!isset($_SESSION['_adminLogin'])
 														<table id="exampleone" class="testclass table key-buttons text-md-nowrap">
 															<thead>
 																<tr>
-																	<th class="border-bottom-0">Del/Date</th>
 																	<th class="border-bottom-0">Invoice ID</th>
+																	<th class="border-bottom-0">Del/Date</th>
 																	<th class="border-bottom-0">D/G</th>
 																	<th class="border-bottom-0">Status</th>
 																	<th class="border-bottom-0">D/L</th>
@@ -234,16 +234,12 @@ if( (!isset($_SESSION['_superAdminLogin'])) && (!isset($_SESSION['_adminLogin'])
 						</div>
 					</div>
 				</div>
-				<!-- Container closed -->
 			</div>
-			<!-- main-content closed -->
-
 			<?php "../footer/footer.php";?>
-
 		</div>
 		<!-- End Page -->
 
-		<script>
+		<script type="text/javascript">
 			$(document).ready(function() {
 				var tableone = $('#exampleone').DataTable( {
 					"processing": 	true,
