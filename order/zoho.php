@@ -31,7 +31,7 @@
     }
 
     //FETCH BRANCHES
-    function loadBranch(){
+    function _zloadBranch(){
         global $conn;
         $branchOutput='';
         $branchSqlQuery = "SELECT * FROM branch ORDER BY branch_name ASC";
@@ -44,7 +44,7 @@
     }
 
     //FETCH DELIVERY LOCATION
-    function loadDeliveryLocation(){
+    function _zloadDeliveryLocation(){
         global $conn;
         $cityOutput='';
         $citySqlQuery = "SELECT * FROM delivery_city ORDER BY city_name ASC";
@@ -57,7 +57,7 @@
     }
 
     //FETCH PRODUCT CATEGORY
-    function loadCat(){
+    function _zloadCat(){
         global $conn;
         $CatOutput='';
         $CatSqlQuery = "SELECT * FROM category ORDER BY category_name ASC";
@@ -70,7 +70,7 @@
     }
 
     //FETCH SALESCONSULTANTS
-    function loadSalesPerson(){
+    function _zloadSalesPerson(){
         global $conn;
         $salesPersonOutput='';
         $salesPersonSqlQuery = "SELECT firstname FROM user
@@ -86,21 +86,17 @@
     }
 ?>
 <div class="modal-content modal-content-demo">
-    <!--MODAL HEADER-->
     <div class="modal-header">
         <h4 class="modal-title">New Order - Zoho</h4>
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
     </div>
-    <!--MODAL BODY-->              
     <div class="modal-body">
-        <!--FORM - EDIT ORDER BEINGS-->
         <form id="formZohoOrder" method="post" autocomplete="off" enctype="multipart/form-data">
             <h5 class="modal-title">Zoho Input</h5>
             <div class="row row-sm">
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-lg-6">
-                            <!--INVOICE FIELD-->
                             <div class="input-group mb-3">
                                 <select value="Select Zoho Invoice" name="_zohoInvoice" id="_zohoInvoice" class="SlectBox form-control">
                                     <?php echo _loadZohoInvoice(); ?>
@@ -152,7 +148,7 @@
                             <!--SALES CONSULTANT-->
                             <div class="input-group mb-3">
                                 <select value="Sales Consultant" name="_zSalesConsultant" id="_zSalesConsultant" class="SlectBox form-control">
-                                    <?php echo loadSalesPerson(); ?>
+                                    <?php echo _zloadSalesPerson(); ?>
                                 </select>
                             </div>
                             <!--SALES CONSULTANT CLOSED-->
@@ -194,13 +190,13 @@
                         <div class="col-lg-6">
                             <div class="input-group mb-3">
                                 <select value='Order From' name="_zItemFrom" id="_zItemFrom" class="SlectBox form-control">
-                                <?php echo loadBranch(); ?>
+                                    <?php echo _zloadBranch(); ?>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <select value='Deliver To' name="_zItemTo" id="_zItemTo" class="SlectBox form-control">
-                                <?php echo loadDeliveryLocation(); ?>
+                                <?php echo _zloadDeliveryLocation(); ?>
                             </select>
                         </div>
                     </div>
@@ -226,7 +222,7 @@
                     <div>
                         <div class="input-group mb-3">
                             <select value="Select Category" name="_zCategory" id="_zCategory" class="SlectBox form-control">
-                                <?php echo loadCat(); ?>
+                                <?php echo _zloadCat(); ?>
                             </select>
                         </div>
                         <div class="row row-sm">
@@ -239,7 +235,7 @@
                                         </span>
                                     </label>
                                 </div>
-                                <div id="_zpreview" name="_zpreview">
+                                <div id="zpreview" name="zpreview">
                                 </div>
                             </div>
                         </div>
@@ -361,7 +357,10 @@
                         $('.statusMsg').html('');
                         if(response.status == 1){
                             postOrderSave();
-                        }else{
+                        }else if(response.status == 2){
+                            orderExists();
+                        }
+                        else{
                             $('.statusMsg').html(alert(response.message));
                         }
                         $('#formZohoOrder').css("opacity","");
@@ -487,6 +486,16 @@
             });
         }
 
+        //WARNING ALERT
+        function orderExists(){
+            swal({
+                title: 'Order Exists',
+                text: 'Order Exists Under Same Invoice and Same Product',
+                type: "warning",
+                confirmButtonClass: "btn btn-danger"
+            });
+        }
+
         //FIELD HANDLING - IF INVOICE CHANGES
         function _invoiceChangeEmpty(){
             //FIELDS
@@ -497,16 +506,13 @@
             $('#_zProductName').val('');
             //SELECTORS
             $('#_zOrderStatus').html('<option value="Pending">Pending</option>');
-            $('#_zSalesConsultant').html('<?php echo loadSalesPerson();?>');
-            $('#_zCategory').html('<?php echo loadCat();?>');;
-            $('#_zItemFrom').html('<?php echo loadBranch();?>');
-            $('#_zItemTo').html('<?php echo loadDeliveryLocation();?>');
             $('select.SlectBox')[1].sumo.reload();
             $('select.SlectBox')[2].sumo.reload();
             $('select.SlectBox')[3].sumo.reload();
             $('select.SlectBox')[4].sumo.reload();
             $('select.SlectBox')[5].sumo.reload();
             $('select.SlectBox')[6].sumo.reload();
+            // $('select.SlectBox')[7].sumo.reload();
             $("#_zOrderNote").val('');
             //FILE
             $('#_zOrderImage').val('');
