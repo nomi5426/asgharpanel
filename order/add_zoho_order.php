@@ -198,49 +198,59 @@
 		 * AND GENERATED QR CODE
 		 */
 		try{
-			if(!empty ($imageName)){
-				$insert = $conn->query("INSERT INTO product(
-					insertDate,
-					branchId,
-					city,
-					invoiceId,
-					deliveryNote,
-					pname,
-					pimage,
-					size,
-					color,
-					quantity,
-					pstatus,
-					ordernote,
-					salesperson,
-					cat_id,
-					productlink,
-					dateAvailability,
-					createdBy,
-					qrcode)
-				VALUES 
-				('".$insertDate."',
-				'".$from."',
-				'".$deliverylocation."',
-				'".$invoice."',
-				'".$_pdfDN."',
-				'".$itemname."',
-				'".$imageName."',
-				'".$size."',
-				'".$color."',
-				'".$quantity."',
-				'".$status."',
-				'".$ordernote."',
-				'".$salesconsultant."',
-				'".$cat_id."',
-				'".$deliveryDate."',
-				'".$dateAvailability."',
-				'".$userid."',
-				'".$codeFile."')");
-				if($insert){
-					$response['status'] = 1;
-					$response['message'] = 'Form data submitted successfully!';
-					$response['success'] = 'true';
+
+			$_orderAssociate = $conn->query("SELECT * FROM product WHERE invoiceId = '".$invoice."' AND pname = '".$itemname."'");
+			if(mysqli_num_rows($_orderAssociate)!=0){
+				$response['status'] = 2;
+				$response['message'] = 'Order Exist Already';
+				$response['success'] = 'true';
+			}
+			else{
+				if(mysqli_num_rows($_orderAssociate)==0){
+				// if(!empty ($imageName)){
+					$insert = $conn->query("INSERT INTO product(
+						insertDate,
+						branchId,
+						city,
+						invoiceId,
+						deliveryNote,
+						pname,
+						pimage,
+						size,
+						color,
+						quantity,
+						pstatus,
+						ordernote,
+						salesperson,
+						cat_id,
+						productlink,
+						dateAvailability,
+						createdBy,
+						qrcode)
+					VALUES 
+					('".$insertDate."',
+					'".$from."',
+					'".$deliverylocation."',
+					'".$invoice."',
+					'".$_pdfDN."',
+					'".$itemname."',
+					'".$imageName."',
+					'".$size."',
+					'".$color."',
+					'".$quantity."',
+					'".$status."',
+					'".$ordernote."',
+					'".$salesconsultant."',
+					'".$cat_id."',
+					'".$deliveryDate."',
+					'".$dateAvailability."',
+					'".$userid."',
+					'".$codeFile."')");
+					if($insert){
+						$response['status'] = 1;
+						$response['message'] = 'Form data submitted successfully!';
+						$response['success'] = 'true';
+					}
 				}
 			}
 		}catch(Exception $error){
