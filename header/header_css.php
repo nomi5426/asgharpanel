@@ -27,6 +27,9 @@
 	<!---Internal Owl Carousel css-->
 	<link href="../assets/plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
 
+	<!--Internal Notify -->
+	<link href="../assets/plugins/notify/css/notifIt.css" rel="stylesheet"/>
+
 	<!--- Internal Sweet-Alert css-->
 	<link href="../assets/plugins/sweet-alert/sweetalert.css" rel="stylesheet">
 
