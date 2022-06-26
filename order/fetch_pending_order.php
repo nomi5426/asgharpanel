@@ -29,15 +29,15 @@
      * GET USER ROLE AND NAME OF LOGGED IN USER
      */
     if(isset($_SESSION['userName'])){
-    $username = $_SESSION['userName'];
-    $userDetail= "SELECT * FROM user WHERE username='".$username."'";
-    $queryInject = mysqli_query($conn, $userDetail);
-    if(mysqli_num_rows($queryInject)){
-        while($row = mysqli_fetch_assoc($queryInject)) {
-            $firstName = $row['firstname'];
-            $userrole = $row['userrole'];
+        $username = $_SESSION['userName'];
+        $userDetail= "SELECT * FROM user WHERE username='".$username."'";
+        $queryInject = mysqli_query($conn, $userDetail);
+        if(mysqli_num_rows($queryInject)){
+            while($row = mysqli_fetch_assoc($queryInject)) {
+                $firstName = $row['firstname'];
+                $userrole = $row['userrole'];
+            }
         }
-    }
     }
 
     $col =array(
