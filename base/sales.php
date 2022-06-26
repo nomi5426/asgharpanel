@@ -36,6 +36,22 @@
 		file_put_contents($logfile, $message . "\n", FILE_APPEND);
 	}
 
+	/**
+	 * GET LOGGED IN USER TO FETCH THE PENDING ORDERS TO BE APPROVED BY THE USER
+	 */
+	if(isset($_SESSION['userName'])){
+		$username = $_SESSION['userName'];
+		$userDetail= $conn->query("SELECT * FROM user WHERE username='".$username."'");
+		if(mysqli_num_rows($userDetail)){
+			while($row = mysqli_fetch_assoc($userDetail)) {
+				$firstName = $row['firstname'];
+				$userrole = $row['userrole'];
+			}
+		}
+		$findPendingOrder = $conn->query("SELECT * FROM product WHERE pstatus = 'Pending' AND salesperson='".$firstName."'");
+		$pendingOrderCount = mysqli_num_rows($findPendingOrder);
+	}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -373,9 +389,22 @@
 		<!-- Sweet-alert js  -->
 		<script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
 		<script src="../assets/js/sweet-alert.js"></script>
+				<!-- Notification Alert js  -->
+				<script src="../assets/plugins/notify/js/notifIt.js"></script>
+		<script src="../assets/plugins/notify/js/notifit-custom.js"></script>
 
 		<script type="text/javascript">
 			$(document).ready(function() {
+
+				//PENDING APPROVAL COUNT
+				setInterval( function () {
+					notif({
+						type: "error",
+						msg: "<b>Pending Approval: </b>You have <?php echo $pendingOrderCount;?> orders to be approved.",
+						position: "right",
+						autohide: false
+					});
+				}, 900000);
 
 				//DATATABLE IMPLEMENTATION
 
