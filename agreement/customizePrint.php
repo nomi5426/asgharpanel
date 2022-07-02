@@ -20,7 +20,7 @@
     include "fpdf.php";
     include "../base/db.php";
     $upload_dir = '../uploads/';
-	$swatch_upload_dir = '../swatchUploads/';
+	// $swatch_upload_dir = '../swatchUploads/';
 
     /**
      * GET LOGGED IN USER ID
@@ -61,7 +61,7 @@
             $color = $rows['color'];
             $size = $rows['size'];
             $quantity = $rows['quantity'];
-            $swatch_image = $swatch_upload_dir.$rows['swatch'];
+            // $swatch_image = $swatch_upload_dir.$rows['swatch'];
             $payment_terms = $rows['payment_term'];
             $conditon = $rows['order_condition'];
 
@@ -234,7 +234,7 @@
       
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(6,35,'',0,0,'L');
-        $pdf->Image($swatch_image, 17, 138, 19, 19);
+        // $pdf->Image($swatch_image, 17, 138, 19, 19);
         // $pdf->Cell(20,20,'',1,1,'L');
 
         $pdf->Ln(40);
