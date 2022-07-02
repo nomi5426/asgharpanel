@@ -19,7 +19,7 @@
 	
 	//INCLUDE DIRECTORIES
     include "../base/db.php";
-    $upload_dir = 'uploads/';
+    $upload_dir = '../uploads/';
 ?>
 
 
