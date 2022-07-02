@@ -44,7 +44,7 @@
     }
     else if(($_GET['action'] == 'select') && isset($_GET['id'])) 
     {
-        $prodId = $_GET['id'];
+        $prodId = $_GET['id'];        
         $prodQuery = $conn->query("SELECT * FROM product 
                                 LEFT JOIN sales_agreement ON 
                                 product.id = sales_agreement.order_id
