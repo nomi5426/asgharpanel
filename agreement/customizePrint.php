@@ -82,10 +82,10 @@
                     $image = $rows['pimage'];
                 }
             }
-            else{
-                $noImage = 'No Image.jpg';
-                $image = $noImage;
-            }
+            // else{
+            //     $noImage = 'No Image.jpg';
+            //     $image = $noImage;
+            // }
             $image = $upload_dir.$image;
             
         }
