@@ -14,7 +14,7 @@
 	* APP_LOG()													//LOG WRITING
 	/********************************************************************************/
 
-    session_start();
+    // session_start();
 
     //INCLUDE DIRECTORIES
     include "fpdf.php";
