@@ -44,13 +44,13 @@
     }
     else if(($_GET['action'] == 'select') && isset($_GET['id'])) 
     {
-        $prodId = $_GET['id'];        
+        $id = $_GET['id'];        
         $prodQuery = $conn->query("SELECT * FROM product 
                                 LEFT JOIN sales_agreement ON 
                                 product.id = sales_agreement.order_id
                                 LEFT JOIN customer on
                                 product.id = customer.order_id
-                                WHERE product.id = '$prodId'");
+                                WHERE product.id = '$id'");
         $logoURL = "pdflogo.png";
         while($rows = mysqli_fetch_array($prodQuery))
         {
@@ -61,7 +61,7 @@
             $color = $rows['color'];
             $size = $rows['size'];
             $quantity = $rows['quantity'];
-            // $swatch_image = $swatch_upload_dir.$rows['swatch'];
+            $swatch_image = $swatch_upload_dir.$rows['swatch'];
             $payment_terms = $rows['payment_term'];
             $conditon = $rows['order_condition'];
 
@@ -87,7 +87,6 @@
                 $image = $noImage;
             }
             $image = $upload_dir.$image;
-            $swatch_image = $upload_dir.$image;
             
         }
 
