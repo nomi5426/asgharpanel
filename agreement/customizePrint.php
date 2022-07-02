@@ -61,7 +61,7 @@
             $color = $rows['color'];
             $size = $rows['size'];
             $quantity = $rows['quantity'];
-            $swatch_image = $swatch_upload_dir.$rows['swatch'];
+            // $swatch_image = $swatch_upload_dir.$rows['swatch'];
             $payment_terms = $rows['payment_term'];
             $conditon = $rows['order_condition'];
 
@@ -82,11 +82,12 @@
                     $image = $rows['pimage'];
                 }
             }
-            // else{
-            //     $noImage = 'No Image.jpg';
-            //     $image = $noImage;
-            // }
+            else{
+                $noImage = 'No Image.jpg';
+                $image = $noImage;
+            }
             $image = $upload_dir.$image;
+            $swatch_image = $upload_dir.$image;
             
         }
 
