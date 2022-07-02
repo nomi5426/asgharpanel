@@ -39,11 +39,16 @@
     /**
      * GETS THE INVOICE JOB ORDER WITH ID AND BUILD USING FPDF CLASS
      */
+
+    var_dump($_GET);
+
+
     if(!isset($_GET['id'])){
         echo 'PAGE NOT FOUND!';
     }
     else if(($_GET['action'] == 'select') && isset($_GET['id'])) 
     {
+
         $prodId = $_GET['id'];        
         $prodQuery = $conn->query("SELECT * FROM product 
                                 LEFT JOIN sales_agreement ON 
