@@ -89,10 +89,8 @@
                 $image = $noImage;
             }
             $image = $upload_dir.$image;
-            
-        }
-
-        $pdf=new FPDF();
+        
+            $pdf=new FPDF();
         //NEW PAGE
         $pdf->AddPage();
         $pdf->AliasNbPages();
@@ -306,5 +304,7 @@
         $pdf->SetY(-1);
         $pdf->SetFont('Arial','',12);
         $pdf->Output();
+
+        }
     }
 ?>
