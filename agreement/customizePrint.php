@@ -20,7 +20,7 @@
     include "fpdf.php";
     include "../base/db.php";
     $upload_dir = '../uploads/';
-	$swatch_upload_dir = '../swatchUploads/';
+	// $swatch_upload_dir = '../swatchUploads/';
 
     /**
      * GET LOGGED IN USER ID
@@ -88,11 +88,11 @@
             }
             $image = $upload_dir.$image;
             
-            if(empty($swatchImageName)){
-                $swatch_image = $swatch_upload_dir.'No Swatch.png';
-            }else{
-                $swatch_image = $swatch_upload_dir.$swatchImageName;
-            }
+            // if(empty($swatchImageName)){
+            //     $swatch_image = $swatch_upload_dir.'No Swatch.png';
+            // }else{
+            //     $swatch_image = $swatch_upload_dir.$swatchImageName;
+            // }
             
         }
 
@@ -240,7 +240,7 @@
       
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(6,35,'',0,0,'L');
-        $pdf->Image($swatch_image, 17, 138, 19, 19);
+        $pdf->Image($image, 17, 138, 19, 19);
         // $pdf->Cell(20,20,'',1,1,'L');
 
         $pdf->Ln(40);
