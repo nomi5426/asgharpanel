@@ -14,27 +14,27 @@
 	* APP_LOG()													//LOG WRITING
 	/********************************************************************************/
 
-    // session_start();
+    session_start();
 
     //INCLUDE DIRECTORIES
     include "fpdf.php";
     include "../base/db.php";
     $upload_dir = '../uploads/';
-	// $swatch_upload_dir = '../swatchUploads/';
+	$swatch_upload_dir = '../swatchUploads/';
 
     /**
      * GET LOGGED IN USER ID
      */
-    // $firstName ='';
-    // if(isset($_SESSION['userName'])){
-    //     $username = $_SESSION['userName'];
-    //     $userDetail= $conn->query("SELECT * FROM user WHERE username='".$username."'");
-    //     while($row = mysqli_fetch_assoc($userDetail)) {
-    //         $firstName = $row['firstname'];
-    //         $userrole = $row['userrole'];
-    //     }
-    // }
-    // $userName = strtoupper($firstName);
+    $firstName ='';
+    if(isset($_SESSION['userName'])){
+        $username = $_SESSION['userName'];
+        $userDetail= $conn->query("SELECT * FROM user WHERE username='".$username."'");
+        while($row = mysqli_fetch_assoc($userDetail)) {
+            $firstName = $row['firstname'];
+            $userrole = $row['userrole'];
+        }
+    }
+    $userName = strtoupper($firstName);
 
     /**
      * GETS THE INVOICE JOB ORDER WITH ID AND BUILD USING FPDF CLASS
@@ -42,7 +42,7 @@
     if(!isset($_GET['id'])){
         echo 'PAGE NOT FOUND!';
     }
-    else if(($_GET['action'] == 'select') && isset($_GET['id'])) 
+    else if(isset($_GET['id']))
     {
         $prodId = $_GET['id'];        
         $prodQuery = $conn->query("SELECT * FROM product 
@@ -61,7 +61,7 @@
             $color = $rows['color'];
             $size = $rows['size'];
             $quantity = $rows['quantity'];
-            $swatchImageName = $rows['swatch'];
+            $swatch_image = $swatch_upload_dir.$rows['swatch'];
             $payment_terms = $rows['payment_term'];
             $conditon = $rows['order_condition'];
 
@@ -87,12 +87,6 @@
                 $image = $noImage;
             }
             $image = $upload_dir.$image;
-            
-            // if(empty($swatchImageName)){
-            //     $swatch_image = $swatch_upload_dir.'No Swatch.png';
-            // }else{
-            //     $swatch_image = $swatch_upload_dir.$swatchImageName;
-            // }
             
         }
 
@@ -240,7 +234,7 @@
       
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(6,35,'',0,0,'L');
-        $pdf->Image($image, 17, 138, 19, 19);
+        $pdf->Image($swatch_image, 17, 138, 19, 19);
         // $pdf->Cell(20,20,'',1,1,'L');
 
         $pdf->Ln(40);
@@ -293,7 +287,7 @@
          */
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(120,0,'',0,0,'L');
-        // $pdf->Cell(80,0,$userName,0,0,'C');
+        $pdf->Cell(80,0,$userName,0,0,'C');
         $pdf->Ln(5);
 
         $pdf->Cell(95,0,'------------------------------------------------',0,0,'L');
