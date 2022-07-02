@@ -25,16 +25,16 @@
     /**
      * GET LOGGED IN USER ID
      */
-    $firstName ='';
-    if(isset($_SESSION['userName'])){
-        $username = $_SESSION['userName'];
-        $userDetail= $conn->query("SELECT * FROM user WHERE username='".$username."'");
-        while($row = mysqli_fetch_assoc($userDetail)) {
-            $firstName = $row['firstname'];
-            $userrole = $row['userrole'];
-        }
-    }
-    $userName = strtoupper($firstName);
+    // $firstName ='';
+    // if(isset($_SESSION['userName'])){
+    //     $username = $_SESSION['userName'];
+    //     $userDetail= $conn->query("SELECT * FROM user WHERE username='".$username."'");
+    //     while($row = mysqli_fetch_assoc($userDetail)) {
+    //         $firstName = $row['firstname'];
+    //         $userrole = $row['userrole'];
+    //     }
+    // }
+    // $userName = strtoupper($firstName);
 
     /**
      * GETS THE INVOICE JOB ORDER WITH ID AND BUILD USING FPDF CLASS
@@ -293,7 +293,7 @@
          */
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(120,0,'',0,0,'L');
-        $pdf->Cell(80,0,$userName,0,0,'C');
+        // $pdf->Cell(80,0,$userName,0,0,'C');
         $pdf->Ln(5);
 
         $pdf->Cell(95,0,'------------------------------------------------',0,0,'L');
