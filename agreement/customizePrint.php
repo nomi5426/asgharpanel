@@ -40,9 +40,6 @@
      * GETS THE INVOICE JOB ORDER WITH ID AND BUILD USING FPDF CLASS
      */
 
-    var_dump($_GET);
-
-
     if(!isset($_GET['id'])){
         echo 'PAGE NOT FOUND!';
     }
