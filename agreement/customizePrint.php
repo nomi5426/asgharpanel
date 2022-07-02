@@ -42,7 +42,7 @@
     if(!isset($_GET['id'])){
         echo 'PAGE NOT FOUND!';
     }
-    else if(isset($_GET['id']))
+    else if(($_GET['action'] == 'select') && isset($_GET['id'])) 
     {
         $prodId = $_GET['id'];        
         $prodQuery = $conn->query("SELECT * FROM product 
