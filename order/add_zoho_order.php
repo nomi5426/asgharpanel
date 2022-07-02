@@ -60,6 +60,7 @@
 	$codesDir = "../qrcodes/";	
 	$image_upload_dir = '../uploads/';
 	$pdf_upload_dir = '../pdfUploads/';
+	$swatch_upload_dir = '../swatchUploads/';
 
 	/**
 	 * SAVES QR WITH ITS FILE NAME IF POST RECEIVES, 
@@ -140,6 +141,12 @@
 		$ordernote = $_POST['_zOrderNote'];
 		$salesconsultant = $_POST['_zSalesConsultant'];
 		$cat_id = $_POST['_zCategory'];
+		$paymentTerms = $_POST['_zPaymentTerms'];
+		$condition = $_POST['_zCondition'];
+		$customerName = $_POST['_zCustomerName'];
+		$customerAddress = $_POST['_zCustomerAddress'];
+		$customerPhone = $_POST['_zCustomerPhone'];
+		$customerEmail = $_POST['_zCustomerEmail'];
 
 		//GET CURRENT DATE AND USER
 		$insertDate=curdate();
@@ -181,6 +188,22 @@
 		}
 
 		/**
+		 * SAVE SWATCH IMAGE
+		 */
+		$swatchName = '';
+		$swatchImage = '';
+		if(!empty($_FILES['_zSwatchImage']['tmp_name']))
+		{
+			$swatchTmpName = $_FILES['_zSwatchImage']['tmp_name'];
+			$swatchName = $_FILES['_zSwatchImage']['name'];
+			$swatchName = $invoice.' - '.$itemname.' - '.$swatchName;
+			$result = move_uploaded_file($swatchTmpName,$swatch_upload_dir.$swatchName);
+		}
+		else{
+			$swatchName = '';
+		}
+
+		/**
 		 * DELIVERY NOTE UPLOAD - PDF
 		 */		
 		$_pdfDN = '';
@@ -207,7 +230,6 @@
 			}
 			else{
 				if(mysqli_num_rows($_orderAssociate)==0){
-				// if(!empty ($imageName)){
 					$insert = $conn->query("INSERT INTO product(
 						insertDate,
 						branchId,
@@ -247,16 +269,52 @@
 					'".$userid."',
 					'".$codeFile."')");
 					if($insert){
-						$response['status'] = 1;
-						$response['message'] = 'Form data submitted successfully!';
-						$response['success'] = 'true';
+
+						$last_id = $conn->insert_id;
+
+						$salesQuery = $conn->query("INSERT INTO sales_agreement (
+							order_id,
+							del_date,
+							swatch,
+							payment_term,
+							order_condition,
+							sales_consultant,
+							sales_agreement_path
+						) VALUES (
+							'".$last_id."',
+							'".$deliveryDate."',
+							'".$swatchName."',
+							'".$paymentTerms."',
+							'".$condition."',
+							'".$salesconsultant."',
+							'Not Exists'
+						)");
+						if($salesQuery){
+							$customerQuery = $conn->query("INSERT INTO customer (
+								order_id,
+								customer_name,
+								customer_address,
+								customer_phone,
+								customer_email
+							) VALUES(
+								'".$last_id."',
+								'".$customerName."',
+								'".$customerAddress."',
+								'".$customerPhone."',
+								'".$customerEmail."'
+							)");
+							if($customerQuery){
+								$response['status'] = 1;
+								$response['message'] = 'Form data submitted successfully!';
+								$response['success'] = 'true';
+							}
+						}
 					}
 				}
 			}
 		}catch(Exception $error){
 			echo 'RZ|DAUNTE EXCEPTION: ',  $error->getMessage(), "\n";
 		}
-
 	}
 
 	echo json_encode($response);

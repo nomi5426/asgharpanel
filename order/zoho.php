@@ -182,7 +182,7 @@
                         <div class="col-lg-6">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon2">Quantity</span> 
-                                <input aria-label="Color" id="_zQuantity" name="_zQuantity" class="form-control" type="text">
+                                <input aria-label="quantity" id="_zQuantity" name="_zQuantity" class="form-control" type="text">
                             </div>
                         </div>
                     </div>
@@ -203,7 +203,9 @@
                     <div class="row row-sm">
                         <div class="col-lg-6">
                             <div class="input-group mb-3">
-                                <textarea value="Order Note" id="_zOrderNote" name="_zOrderNote" class="form-control" placeholder="Order Note" rows="6"></textarea>
+                                <select value="Select Category" name="_zCategory" id="_zCategory" class="SlectBox form-control">
+                                    <?php echo _zloadCat(); ?>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -217,13 +219,34 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row row-sm">
+                        <div class="col-lg-6">
+                            <div>
+                                <div class="input-group file-browser">
+                                    <input id="_zSwatchLabel" type="text" class="form-control browse-file" placeholder="Select Swatch Image" readonly>
+                                    <label class="input-group-btn">
+                                        <span class="btn btn-default">
+                                            Select <input class="file-input" type="file" name="_zSwatchImage" id="_zSwatchImage" style="display: none;" multiple>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="zSwatchPreview"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="input-group mb-3">
+                                <textarea value="Conditions Here" id="_zCondition" name="_zCondition" class="form-control" placeholder="Conditions Here" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-4">
                     <div>
                         <div class="input-group mb-3">
-                            <select value="Select Category" name="_zCategory" id="_zCategory" class="SlectBox form-control">
-                                <?php echo _zloadCat(); ?>
-                            </select>
+                            <textarea value="Order Note" id="_zOrderNote" name="_zOrderNote" class="form-control" placeholder="Order Note" rows="2"></textarea>
+                        </div>
+                        <div class="input-group mb-3">
+                            <textarea value="Enter Payment Terms" id="_zPaymentTerms" name="_zPaymentTerms" class="form-control" placeholder="Enter Payment Terms" rows="2"></textarea>
                         </div>
                         <div class="row row-sm">
                             <div class="input-group mb-3">
@@ -287,9 +310,15 @@
         minDate: new Date(_minDate),
     });
     $('#_zDeliveryDate').datepicker('setDate', 'today');
-    
 
     $(document).ready(function(){
+
+        var customerDetail;
+        var customerName;
+        var customerAddress;
+        var customerPhone;
+        var customerEmail;
+
         //ORDER INVOICE SECOND DROPDOWN CHANGES
         $('#_zohoInvoice').change(function(e){
             e.preventDefault();
@@ -302,6 +331,7 @@
             var itemQuantity;
             var divider;
             var _zid = document.getElementById("_zohoInvoice").value;
+
             $.ajax({
                 url:'../order/zoho_try_out.php',
                 method: 'POST',
@@ -315,12 +345,20 @@
                         $('#_zProductName')[0].sumo.add(item_list.description);
                         selectedItem = $('#_zProductName').val();
                     });
+
+                    customerName = data.customer_name;
+                    customerAddress = data.shipping_address.address;
+                    customerPhone = data.shipping_address.phone;
+                    customerEmail = data.email;
+
                     $('#_zProductName').change(function(e){
                         selectedProd = $('#_zProductName').val();
                         divider = selectedProd.split('\n');
                         itemName = divider[0];
-                        itemColor = divider[2];
-                        itemSize = divider[1];
+                        var itemColorBefore = divider[2];
+                        itemColor = itemColorBefore.replace('Color: ','');
+                        var itemSizeBefore = divider[1];
+                        itemSize = itemSizeBefore.replace('Size: ','');
                         if(selectedProd.includes('\n')){
                             $('#_zItemName').val(itemName);
                             $('#_zItemColor').val(itemColor);
@@ -343,10 +381,15 @@
         $("#formZohoOrder").on('submit', function(e){
             e.preventDefault();
             if(errorHandling()){
+                var formData = new FormData($("#formZohoOrder")[0]);
+                formData.append('_zCustomerName', customerName);
+                formData.append('_zCustomerAddress', customerAddress);
+                formData.append('_zCustomerPhone', customerPhone);
+                formData.append('_zCustomerEmail', customerEmail);
                 $.ajax({
                     type: 'POST',
                     url: '../order/add_zoho_order.php',
-                    data: new FormData(this),
+                    data: formData,
                     dataType: 'json',
                     contentType: false,
                     cache: false,
@@ -378,7 +421,7 @@
             var _invoiceId = $("#_zInvoiceId").val();
             var _deliveryDate = $("#_zDeliveryDate").val();
             var _itemName = $("#_zItemName").val();
-            var _itemColor = $("_zItemColor").val();
+            var _itemColor = $("#_zItemColor").val();
             var _itemSize = $("#_zItemSize").val();
             var _branchFrom = $("#_zItemFrom").val();
             var _deliveryTo = $("#_zItemTo").val();
@@ -389,6 +432,9 @@
             var _salesConsultant = $("#_zSalesConsultant").val();
             var _images = $("#_zOrderImage").val();
             var _categoryId = $("#_zCategory").val();
+            var _swatchImage = $("#_zSwatchImage").val();
+            var _paymentTerms = $("#_zPaymentTerms").val();
+            var _condition = $("#_zCondition").val();
 
             if(_invoiceId == ''){
                 _warningMessage = "Invoice ID is Left Empty";
@@ -435,8 +481,18 @@
                 emptyFieldAlert(_warningMessage, _warningText);
                 flag = false
             }
-            else if(_orderNote == 'Choose Order Note'){
+            else if(_orderNote == ''){
                 _warningMessage = "Order Note Must be Filled";
+                emptyFieldAlert(_warningMessage, _warningText);
+                flag = false
+            }
+            else if(_paymentTerms == ''){
+                _warningMessage = "Add Order Payment Terms";
+                emptyFieldAlert(_warningMessage, _warningText);
+                flag = false
+            }
+            else if(_condition == ''){
+                _warningMessage = "Mention Order Conditions";
                 emptyFieldAlert(_warningMessage, _warningText);
                 flag = false
             }
@@ -452,6 +508,11 @@
             }
             else if(_images == ''){
                 _warningMessage = "Item Images are Missing";
+                emptyFieldAlert(_warningMessage, _warningText);
+                flag = false
+            }
+            else if(_swatchImage == ''){
+                _warningMessage = "Swatch Image is Missing";
                 emptyFieldAlert(_warningMessage, _warningText);
                 flag = false
             }
@@ -512,19 +573,27 @@
             $('select.SlectBox')[4].sumo.reload();
             $('select.SlectBox')[5].sumo.reload();
             $('select.SlectBox')[6].sumo.reload();
-            // $('select.SlectBox')[7].sumo.reload();
             $("#_zOrderNote").val('');
+            $("#_zPaymentTerms").val('');
+            $("#_zCondition").val('');
+            $("#_zQuantity").val('');
+
             //FILE
             $('#_zOrderImage').val('');
             $('#_zDeliveryNoteFile').val('');
+            $('#_zSwatchImage').val('');
             //FILE LABELS
             //MAKE IMAGE EMPTY
             var orderImageLabel = document.getElementById ("_zImageLabel");
             orderImageLabel.placeholder = "Select Order Image";
-            $( 'div._zpreview' ).empty();
+            $( 'div.zpreview' ).empty();
             //MAKE DELIVERY NOTE EMPTY
             var _dnLabel = document.getElementById ("_zDNLabel");
             _dnLabel.placeholder = "Select Delivery Note";
+            //MAKE SWATCH IMAGE EMPTY
+            var _swatchLabel = document.getElementById ("_zSwatchLabel");
+            _swatchLabel.placeholder = "Select Swatch Image";
+            $( 'div.zSwatchPreview' ).empty();
 
         }
 
@@ -533,16 +602,22 @@
             //MAKE IMAGE EMPTY
             var orderImageLabel = document.getElementById ("_zImageLabel");
             orderImageLabel.placeholder = "Select Order Image";
-            $( 'div._zpreview' ).empty();
+            $( 'div.zpreview' ).empty();
             //MAKE DELIVERY NOTE EMPTY
             var _dnLabel = document.getElementById ("_zDNLabel");
             _dnLabel.placeholder = "Select Delivery Note";
+            //MAKE SWATCH IMAGE EMPTY
+            var _swatchLabel = document.getElementById ("_zSwatchLabel");
+            _swatchLabel.placeholder = "Select Swatch Image";
+            $( 'div.zSwatchPreview' ).empty();
             
             $('#_zItemName').val('');
             $('#_zItemColor').val('');
             $('#_zItemSize').val('');
             $('#_zOrderImage').val('');
             $('#_zDeliveryNoteFile').val('');
+            $("#_zQuantity").val('');
+
         }
 
         //ORDER IMAGE FUNCTION
@@ -561,8 +636,12 @@
                 }
             };
             $('#_zOrderImage').on('change', function() {
-                imagesPreview(this, 'div._zpreview');
-                $( 'div._zpreview' ).empty();
+                imagesPreview(this, 'div.zpreview');
+                $( 'div.zpreview' ).empty();
+            });
+            $('#_zSwatchImage').on('change', function() {
+                imagesPreview(this, 'div.zSwatchPreview');
+                $( 'div.zSwatchPreview' ).empty();
             });
         });
 
@@ -603,6 +682,26 @@
                     input.placeholder = "Delivery Note Attached";
                 }else{
                     input.placeholder = "Select Delivery Note";
+                }
+            }
+        });
+
+        //SWATCH IMAGE LABEL CHANGE
+        $('#_zSwatchImage').on("change", function(){
+            var input = document.getElementById ("_zSwatchLabel");
+            var swatchCount = $(this)[0].files.length;
+            var _swatchFileSize = this.files[0].size/1024;
+            var _swatchFileSizeLimit = 100;
+            if(_swatchFileSize > _swatchFileSizeLimit){
+                $("#_zSwatchImage").val(null);
+                var _warningSizeTitle = "Check File Size";
+                var _warningSizeText = "Total File Size is Limited to 100 KB";
+                emptyFieldAlert(_warningSizeTitle, _warningSizeText);
+            }else{
+                if(swatchCount > 0){
+                    input.placeholder = swatchCount+" Swatch Image Attached";
+                }else{
+                    input.placeholder = "Select Swatch Image";
                 }
             }
         });

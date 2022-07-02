@@ -210,6 +210,9 @@
                                 if(response.index == 2){
                                     approvedSuccess();
                                 }
+                                else if(response.index == 3){
+                                    addSalesAgreement();
+                                }
                             }
                         });
                     }
@@ -244,7 +247,18 @@
                     function(){
                         $('#pendingTable').DataTable().ajax.reload();
                     });
-                }   
+                }
+
+                //WARNING - SALES AGREEMENT IS MISSING
+                function addSalesAgreement(){
+                    swal({
+                        title: "Sales Agreement is Missing",
+                        text: "Please edit for adding Sales Agreement",
+                        type: "warning",
+                        confirmButtonClass: "btn btn-danger",
+                        allowOutsideClick: true
+                    });
+                }
 
                 //IMAGE MODAL
                 $(document).on('click','#tableImage',function(event){

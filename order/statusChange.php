@@ -8,7 +8,7 @@ include "../base/db.php";
     //CURRENT TIMESTAMP
 	function curdate() {
 		date_default_timezone_set('Asia/Dubai'); 
-		return date('Y-m-d');
+		return date('Y-m-d H:i');
 	}
 
     $userId=1;
@@ -116,7 +116,7 @@ include "../base/db.php";
             $matAvail = $row['material'];
 
             $currentDate = curdate();
-            $all = $newcomment.' - '.$currentDate;
+            $all = $newcomment.' - '.$currentDate."</br>";
 
             $_staffAssociate = $conn->query("SELECT * FROM order_staff WHERE order_id = ".$id);
 
@@ -210,21 +210,30 @@ include "../base/db.php";
 
     if(isset($_POST['confirmOrder'])){
         $confirmOrder = $_POST['confirmOrder'];
-        $sql = "SELECT * FROM product WHERE id='".$confirmOrder."'";
-        $query=mysqli_query($conn,$sql);
-        $row = mysqli_fetch_array($query);
+        $orderConfirmationQuery = $conn->query("SELECT * FROM product WHERE id='".$confirmOrder."'");
+        $row = mysqli_fetch_array($orderConfirmationQuery);
 
         $pendingStatus = $row['pstatus'];
         $pendingStatusQuery="";
 
-        if($pendingStatus == "Pending"){
-            $pendingStatusQuery = $conn->query("update product set pstatus = 'New Order' where id=".$confirmOrder);
+        $agreementPath='';
+        $checkAgrementEmpty = $conn->query("SELECT * FROM sales_agreement WHERE order_id = '".$confirmOrder."'");
+        while ($pathRow = mysqli_fetch_array($checkAgrementEmpty)){
+            $agreementPath = $pathRow['sales_agreement_path'];
         }
-        if($pendingStatusQuery){
-            $newQuery = $conn->query("INSERT INTO order_approval(order_id, consultant_id, is_approved) VALUES('".$confirmOrder."','".$userId."','".$isApproved."')");
-        }
-        if($pendingStatusQuery){
-            $response['index'] = 2;
+
+        if($agreementPath !== 'Not Exists'){
+            if($pendingStatus == "Pending"){
+                $pendingStatusQuery = $conn->query("UPDATE product SET pstatus = 'New Order' WHERE id=".$confirmOrder);
+                if($pendingStatusQuery){
+                    $newQuery = $conn->query("INSERT INTO order_approval(order_id, consultant_id, is_approved) VALUES('".$confirmOrder."','".$userId."','".$isApproved."')");
+                    if($pendingStatusQuery){
+                        $response['index'] = 2;
+                    }
+                }
+            }
+        }else{
+            $response['index'] = 3;
         }
     }
     echo json_encode($response);

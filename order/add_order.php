@@ -60,6 +60,7 @@
 	$codesDir = "../qrcodes/";	
 	$image_upload_dir = '../uploads/';
 	$pdf_upload_dir = '../pdfUploads/';
+	$swatch_upload_dir = '../swatchUploads/';
 
 	/**
 	 * SAVES QR WITH ITS FILE NAME IF POST RECEIVES, 
@@ -128,7 +129,7 @@
 	 * RETREIVES USER ENTRY FROM ADDNEWORDER.PHP AND STORES IT 
 	 * IN LOCAL VARIABLES
 	 */
-	if (isset($_POST['_newInvoiceId']) || isset($_POST['_newDeliveryDate']) || isset($_POST['_newItemName']) || isset($_POST['_newItemColor']) || isset($_POST['_newItemSize']) || isset($_POST['_newItemFrom']) || isset($_POST['_newDeliveryLocation']) || isset($_POST['_newStatus']) || isset($_POST['_newQuantity']) || isset($_POST['_newOrderNote']) || isset($_FILES['_newDeliveryNoteFile']) || isset($_POST['_newSalesConsultant']) || isset($_FILES['_newOrderImage']) || isset($_POST['_newCat_Id'])){
+	if (isset($_POST['_newInvoiceId']) || isset($_POST['_newDeliveryDate']) || isset($_POST['_newItemName']) || isset($_POST['_newItemColor']) || isset($_POST['_newItemSize']) || isset($_POST['_newItemFrom']) || isset($_POST['_newDeliveryLocation']) || isset($_POST['_newStatus']) || isset($_POST['_newQuantity']) || isset($_POST['_newOrderNote']) || isset($_FILES['_newDeliveryNoteFile']) || isset($_POST['_newSalesConsultant']) || isset($_FILES['_newOrderImage']) || isset($_POST['_newCat_Id']) || isset($_POST['_newPaymentTerms']) || isset($_POST['_newCondition']) || isset($_FILES['_newSwatchImage'])){
 		$invoice = $_POST['_newInvoiceId'];
 		$dd = $_POST['_newDeliveryDate'];
 		$itemname = $_POST['_newItemName'];
@@ -141,6 +142,8 @@
 		$ordernote = $_POST['_newOrderNote'];
 		$salesconsultant = $_POST['_newSalesConsultant'];
 		$cat_id = $_POST['_newCat_Id'];
+		$paymentTerms = $_POST['_newPaymentTerms'];
+		$condition = $_POST['_newCondition'];
 
 		//DELIVERY DATE CONVERT
 		$deliveryDate = date('Y-m-d',strtotime($dd));
@@ -179,6 +182,22 @@
 			else{
 				$imageName = '';
 			}
+		}
+
+		/**
+		 * SAVE SWATCH IMAGE
+		 */
+		$swatchName = '';
+		$swatchImage = '';
+		if(!empty($_FILES['_newSwatchImage']['tmp_name']))
+		{
+			$swatchTmpName = $_FILES['_newSwatchImage']['tmp_name'];
+			$swatchName = $_FILES['_newSwatchImage']['name'];
+			$swatchName = $invoice.' - '.$itemname.' - '.$swatchName;
+			$result = move_uploaded_file($swatchTmpName,$swatch_upload_dir.$swatchName);
+		}
+		else{
+			$swatchName = '';
 		}
 
 		/**
@@ -239,9 +258,27 @@
 				'".$userid."',
 				'".$codeFile."')");
 				if($insert){
-					$response['status'] = 1;
-					$response['message'] = 'Form data submitted successfully!';
-					$response['success'] = 'true';
+					$last_id = $conn->insert_id;
+					$salesQuery = $conn->query("INSERT INTO sales_agreement (
+						order_id,
+						del_date,
+						swatch,
+						payment_term,
+						order_condition,
+						sales_consultant
+					) VALUES (
+						'".$last_id."',
+						'".$deliveryDate."',
+						'".$swatchName."',
+						'".$paymentTerms."',
+						'".$condition."',
+						'".$salesconsultant."'
+					)");
+					if($salesQuery){
+						$response['status'] = 1;
+						$response['message'] = 'Form data submitted successfully!';
+						$response['success'] = 'true';
+					}
 				}
 			}
 		}catch(Exception $error){
@@ -250,5 +287,4 @@
 
 	}
 	echo json_encode($response);
-
 ?>

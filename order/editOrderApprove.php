@@ -1,6 +1,9 @@
 <?php
     include "../base/db.php";
     $upload_dir = "../uploads/";
+    $pdf_upload_dir = "../pdfUploads/";
+	$agreement_upload_dir = '../salesAgreementUpload/';
+
 
     function loadBranch(){
         global $conn;
@@ -38,21 +41,6 @@
         return $statusOutput;
     }
 
-    // function loadSalesPerson(){
-    //     global $conn;
-    //     $salesPersonOutput='';
-    //     $salesPersonSqlQuery = "SELECT firstname FROM user
-    //                             WHERE sales_col = 1
-    //                             AND active_status = 1
-    //                             ORDER BY firstname ASC";
-    //     $result = mysqli_query($conn, $salesPersonSqlQuery);
-    //     $salesPersonOutput .= '<option value = "Select Sales Consultant">Select Sales Consultant</option>';
-    //     while($row = mysqli_fetch_array($result)){
-    //         $salesPersonOutput .= '<option value = "'.$row["firstname"].'">'.$row["firstname"].'</option>';
-    //     }
-    //     return $salesPersonOutput;
-    // }
-
     function loadMasterCat(){
         global $conn;
         $CatOutput='';
@@ -67,7 +55,12 @@
     //GET PARTICULAR STAFF FROM DB FOR TO EDIT AND FIND EXISTING VALUE OF THE STAFF
     if(isset($_REQUEST['id'])){
         $id=intval($_REQUEST['id']);
-        $sql="select * from product WHERE id=$id";
+        $sql="SELECT * FROM product 
+        LEFT JOIN sales_agreement ON 
+        product.id = sales_agreement.order_id
+        LEFT JOIN customer on
+        product.id = customer.order_id
+        WHERE product.id = '$id'";
         $run_sql=mysqli_query($conn,$sql);
         while($row=mysqli_fetch_array($run_sql)){
             $id=$row['id'];
@@ -171,6 +164,14 @@
                                             </span>
                                         </label>
                                     </div>
+                                    <div class="input-group file-browser">
+                                        <input id="_salesAgreementLabel" type="text" class="form-control browse-file" placeholder="Select Sales Agreement" readonly>
+                                        <label class="input-group-btn">
+                                            <span class="btn btn-default">
+                                                Select <input type="file" name="_salesAgreement" id="_salesAgreement" style="display: none;">
+                                            </span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -241,19 +242,6 @@
         $('#_editAppDeliveryDate').datepicker('setDate', 'today');
 
         $(document).ready(function(){
-            //ORDER STATUS FIRST DROPDOWN CHANGES
-            $("#orderstatusfilter").change(function(e){
-                e.preventDefault();
-                var selectedstat = $(this).val();
-                $.ajax({
-                    url:'../order/fetch_order_detail.php',
-                    method: 'POST',
-                    data: {selectedstat:selectedstat},
-                    success:function(data){
-                        $("#editinvoice").html(data);
-                    }
-                });
-            });
             
             //ORDER INVOICE SECOND DROPDOWN CHANGES
             var inp = $('#_editAppInvoiceId');
@@ -286,6 +274,11 @@
                         var dn_DB = data[0].deliveryNote;
                         var dn_upload_dir = "../pdfUploads/";
                         var _dnInput = document.getElementById ("_editAppDNLabel");
+
+                        //DELIVERY NOTE
+                        var salesAgreement_DB = data[0].sales_agreement_path;
+                        var sales_agreement_dir = "../salesAgreementUpload/";
+                        var _salesAgreementInput = document.getElementById ("_salesAgreementLabel");
 
                         //IF IMAGE COLUMN HAS A VALUE || IMAGE
                         if(image_DB !== '')
@@ -324,6 +317,12 @@
                         }
                         else{
                             _dnInput.placeholder = "Select Delivery Note";
+                        }
+                        if(salesAgreement_DB !== 'Not Exists'){
+                            _salesAgreementInput.placeholder = "Sales Agreement Attached";
+                        }
+                        else{
+                            _salesAgreementInput.placeholder = "Select Sales Agreement";
                         }
                     }
                 });
@@ -434,7 +433,7 @@
                     _warningMessage = "Category Left Empty";
                     emptyFieldAlert(_warningMessage, _warningText);
                     flag = false
-                }      
+                }
                 else{
                     _succesEdit();
                 }
@@ -502,6 +501,17 @@
                     }else{
                         input.placeholder = "Select Delivery Note";
                     }
+                }
+            });
+
+            //SALES AGREEMENT LABEL CHANGE
+            $('#_salesAgreement').on("change", function(){
+                var input = document.getElementById ("_salesAgreementLabel");
+                var _salesAgreementCount = $(this)[0].files.length;
+                if(_salesAgreementCount > 0){
+                    input.placeholder = "Sales Agreement Attached";
+                }else{
+                    input.placeholder = "Select Sales Agreement";
                 }
             });
         });

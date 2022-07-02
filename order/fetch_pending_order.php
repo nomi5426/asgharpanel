@@ -55,15 +55,15 @@
 
     //Search
     if(!empty($status)){
-    if($userrole=="superadmin"){
-        $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'";
-    }
-    else if($userrole=="admin"){
-        $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'";
-    }
-    else if($userrole=="sales"){
-        $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."' AND salesperson='".$firstName."'";
-    }
+        if($userrole=="superadmin"){
+            $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'";
+        }
+        else if($userrole=="admin"){
+            $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'";
+        }
+        else if($userrole=="sales"){
+            $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."' AND salesperson='".$firstName."'";
+        }
     }else{
         $sql ="SELECT * FROM product WHERE 1=1";
     }
@@ -139,6 +139,7 @@
         $subdata[]='<img src="'.$upload_dir.$image.'" class="modal-effect" data-effect="effect-scale" id="tableImage" height="30" width="20" data-toggle="modal" data-target="#imagemodalone" data-id="'.$row[0].'"/>';
         $subdata[]=$comment;
         $subdata[]='<div class="inner"><button id="confirmOrder" title="Approve Order" class="btn btn-primary btn-icon" data-id="'.$row[0].'"><i class="typcn typcn-thumbs-ok"></i></button>
+                    <a title="Print" href="../agreement/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-icon"><i class="typcn typcn-document-text"></i></a>
                     <button id="editOrderApprove" type="button" title="Edit Order" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#editOrderApproveModal" data-id="'.$row[0].'"><i class="typcn typcn-pen"></i></button></div>';
         $subdata[]=$row[16];
         $data[]=$subdata;

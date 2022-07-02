@@ -3,6 +3,7 @@
     include "../base/db.php";
     $image_upload_dir = '../uploads/';
     $pdf_upload_dir = '../pdfUploads/';
+	$agreement_upload_dir = '../salesAgreementUpload/';
 
     //DEFAULT RESPONSES
     $response['status'] = 0;
@@ -22,10 +23,9 @@
     isset($_POST['_editAppQuantity']) ||
     isset($_POST['_editAppCat_Id']) || 
     isset($_POST['_editAppOrderNote'])||
-    isset($_POST['_editAppOrderImage']))
-    //isset($_FILES['_editDeliveryNoteFile']))
+    isset($_POST['_editAppOrderImage'])||
+    isset($_POST['_salesAgreement']))
     {
-        // if (isset($_POST['_newInvoiceId']) || isset($_FILES['_newDeliveryNoteFile'])){
         $_eid = $_POST['dat_id'];
         $_editAppInvoiceId = $_POST['_editAppInvoiceId'];
         $_eAppdd = $_POST['_editAppDeliveryDate'];
@@ -37,7 +37,6 @@
         $_editAppStatus = $_POST['_editAppStatus'];
         $_editAppQuantity = $_POST['_editAppQuantity'];
         $_editAppOrderNote = $_POST['_editAppOrderNote'];
-        // $_editAppSalesConsultant = $_POST['_editAppSalesConsultant'];
         $_editAppCat_Id = $_POST['_editAppCat_Id'];
 
 		//DELIVERY DATE CONVERT
@@ -78,28 +77,37 @@
         else{
             $_dnName = '';
         }
-        
+
+        //SALES AGREEMENT
+        if(!empty($_FILES['_salesAgreement']['name'])){
+            $sgTMP = $_FILES['_salesAgreement']['tmp_name'];
+            $_saName = $_FILES['_salesAgreement']['name'];
+            $result = move_uploaded_file($sgTMP,$agreement_upload_dir.$_saName);
+        }
+        else{
+            $_saName = '';
+        }
+
         if(!empty($_eid))
         {
             if((!empty($_imageName)) && (empty($_dnName)))
             {
                 $statement = "UPDATE product SET 
-                    invoiceId = '$_editAppInvoiceId',
-                    productlink = '$_editAppDeliveryDate',
-                    pname = '$_editAppItemName',
-                    color = '$_editAppItemColor',
-                    size = '$_editAppItemSize',
-                    branchId = '$_editAppBranch',
-                    city = '$_editAppDeliveryLocation',
-                    pstatus = '$_editAppStatus',
-                    quantity = '$_editAppQuantity',
-                    -- salesperson = '$_editAppSalesConsultant',
-                    cat_id = '$_editAppCat_Id',
-                    ordernote = '$_editAppOrderNote',
-                    pimage = '$_imageName'
-                    WHERE id = '$_eid'";
+                invoiceId = '$_editAppInvoiceId',
+                productlink = '$_editAppDeliveryDate',
+                pname = '$_editAppItemName',
+                color = '$_editAppItemColor',
+                size = '$_editAppItemSize',
+                branchId = '$_editAppBranch',
+                city = '$_editAppDeliveryLocation',
+                pstatus = '$_editAppStatus',
+                quantity = '$_editAppQuantity',
+                cat_id = '$_editAppCat_Id',
+                ordernote = '$_editAppOrderNote',
+                pimage = '$_imageName',
+                WHERE id = '$_eid'";
 
-                    $response['status'] = 1;
+                $response['status'] = 1;
             }
             else if((empty($_imageName)) && (!empty($_dnName)))
             {
@@ -113,7 +121,6 @@
                     city = '$_editAppDeliveryLocation',
                     pstatus = '$_editAppStatus',
                     quantity = '$_editAppQuantity',
-                    -- salesperson = '$_editAppSalesConsultant',
                     cat_id = '$_editAppCat_Id',
                     ordernote = '$_editAppOrderNote',
                     deliveryNote = '$_dnName'
@@ -133,7 +140,6 @@
                     city = '$_editAppDeliveryLocation',
                     pstatus = '$_editAppStatus',
                     quantity = '$_editAppQuantity',
-                    -- salesperson = '$_editAppSalesConsultant',
                     cat_id = '$_editAppCat_Id',
                     ordernote = '$_editAppOrderNote',
                     pimage = '$_imageName',
@@ -154,7 +160,6 @@
                     city = '$_editAppDeliveryLocation',
                     pstatus = '$_editAppStatus',
                     quantity = '$_editAppQuantity',
-                    -- salesperson = '$_editAppSalesConsultant',
                     cat_id = '$_editAppCat_Id',
                     ordernote = '$_editAppOrderNote'
                     WHERE id = '$_eid'";
@@ -163,7 +168,13 @@
             }
             $result = mysqli_query($conn, $statement);
             if($result){
-                $response['status'] = 1;
+                if(!empty($_saName)){
+                    $agreementQuery = $conn->query("UPDATE sales_agreement SET sales_agreement_path = '$_saName' WHERE order_id = '$_eid'");
+                    $response['status'] = 1;
+                }else{
+                    $agreementQuery = $conn->query("UPDATE sales_agreement SET sales_agreement_path = 'Not Exists' WHERE order_id = '$_eid");
+                    $response['status'] = 1;
+                }
                 $response['message'] = 'UPDATED';
                 $response['success'] = 'true';
             }
