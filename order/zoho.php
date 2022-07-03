@@ -650,7 +650,7 @@
             var input = document.getElementById ("_zImageLabel");
             var imageCount = $(this)[0].files.length;
             var _imgFileSize = this.files[0].size/1024;
-            var _imgFileSizeLimit = 100;
+            var _imgFileSizeLimit = 500;
             if(_imgFileSize > _imgFileSizeLimit){
                 $("#_zOrderImage").val(null);
                 var _warningSizeTitle = "Check File Size";
@@ -670,7 +670,7 @@
             var input = document.getElementById ("_zDNLabel");
             var _dnCount = $(this)[0].files.length;
             var _pdfFileSize = this.files[0].size/1024;
-            var _pdfFileSizeLimit = 50;
+            var _pdfFileSizeLimit = 250;
 
             if(_pdfFileSize > _pdfFileSizeLimit){
                 $('#_zDeliveryNoteFile').val(null);
@@ -691,7 +691,7 @@
             var input = document.getElementById ("_zSwatchLabel");
             var swatchCount = $(this)[0].files.length;
             var _swatchFileSize = this.files[0].size/1024;
-            var _swatchFileSizeLimit = 100;
+            var _swatchFileSizeLimit = 500;
             if(_swatchFileSize > _swatchFileSizeLimit){
                 $("#_zSwatchImage").val(null);
                 var _warningSizeTitle = "Check File Size";

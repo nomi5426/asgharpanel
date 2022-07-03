@@ -452,7 +452,7 @@ function loadCat(){
         var input = document.getElementById ("_newImageLabel");
         var imageCount = $(this)[0].files.length;
         var _imgFileSize = this.files[0].size/1024;
-        var _imgFileSizeLimit = 100;
+        var _imgFileSizeLimit = 500;
         if(_imgFileSize > _imgFileSizeLimit){
             $("#_newOrderImage").val(null);
             var _warningSizeTitle = "Check File Size";
@@ -472,7 +472,7 @@ function loadCat(){
         var input = document.getElementById ("_newDNLabel");
         var _dnCount = $(this)[0].files.length;
         var _pdfFileSize = this.files[0].size/1024;
-        var _pdfFileSizeLimit = 50;
+        var _pdfFileSizeLimit = 250;
 
         if(_pdfFileSize > _pdfFileSizeLimit){
             $('#_newDeliveryNoteFile').val(null);

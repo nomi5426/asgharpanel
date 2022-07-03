@@ -57,9 +57,9 @@
 							<div class="pr-1 mb-3 mb-xl-0">
 								<button id="newCommentAdd" class="modal-effect btn btn-warning mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#newCommentModal" type="button"><i class="typcn typcn-message-typing"></i>New Comment</button>
 							</div>
-							<div class="pr-1 mb-3 mb-xl-0">
+							<!-- <div class="pr-1 mb-3 mb-xl-0">
 								<button id="newOrderAdd" class="modal-effect btn btn-primary mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#newOrderModal" type="button"><i class="typcn typcn-document-add"></i>New Order</button>
-							</div>
+							</div> -->
 							<div class="pr-1 mb-3 mb-xl-0">
 								<button id="newZohoOrderAdd" class="modal-effect btn btn-primary mr-2 btn-with-icon" data-effect="effect-scale" data-toggle="modal" data-target="#zohoModal" type="button"><i class="typcn typcn-document-add"></i>Zoho</button>
 							</div>
