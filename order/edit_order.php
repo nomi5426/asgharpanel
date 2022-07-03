@@ -163,11 +163,15 @@
             }
             $result = mysqli_query($conn, $statement);
             if($result){
-                $response['status'] = 1;
-                $response['message'] = 'UPDATED';
-                $response['success'] = 'true';
+                $updateSalesFromAgreement = $conn->query("UPDATE sales_agreement SET sales_consultant = '".$_editSalesConsultant."', del_date = '".$_editDeliveryDate."'");
+                if($updateSalesFromAgreement){
+                    $response['status'] = 1;
+                    $response['message'] = 'UPDATED';
+                    $response['success'] = 'true';
+                }
             }
         }
     }
     echo json_encode($response);
 ?>
+
