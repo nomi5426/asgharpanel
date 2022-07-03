@@ -40,7 +40,7 @@
         $_editCat_Id = $_POST['_editCat_Id'];
 
 		//DELIVERY DATE CONVERT
-		$deliveryDate = date('Y-m-d',strtotime($_edd));
+		$_editDeliveryDate = date('Y-m-d',strtotime($_edd));
         //IMAGE UPLOAD
         $uploadStatus = 1;
         //$_imageName = '';
