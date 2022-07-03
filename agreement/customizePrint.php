@@ -4,6 +4,8 @@
     ini_set('display_errors',1);
     error_reporting(-1);
 
+    session_start();
+
 	/*********************************************************************************
 	* PROJECT: ZETA 1.0.0
 	* AUTHOR: ROSHAN ZAID AKA DAUNTE
