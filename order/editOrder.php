@@ -455,6 +455,9 @@
                     text: 'Check Edited Orders in Tables',
                     type: 'success',
                     confirmButtonColor: '#57a94f'
+                },
+                function loadPage(){
+                    location.reload();
                 });
             }
 
