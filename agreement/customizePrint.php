@@ -72,6 +72,7 @@
             $swatch_image = $swatch_upload_dir.$rows['swatch'];
             $payment_terms = $rows['payment_term'];
             $conditon = $rows['order_condition'];
+            $salesName = $rows['salesperson'];
 
             //CUSTOMER DETAILS
             $customerName = $rows['customer_name'];
@@ -293,7 +294,7 @@
          */
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(120,0,'',0,0,'L');
-        $pdf->Cell(80,0,$userName,0,0,'C');
+        $pdf->Cell(80,0,$salesName,0,0,'C');
         $pdf->Ln(5);
 
         $pdf->Cell(95,0,'------------------------------------------------',0,0,'L');
