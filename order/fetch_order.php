@@ -78,7 +78,7 @@
         }
         //FETCH ITEM NAME AND SIZE
         $oneRow = "$row[6] | <strong>Color: $row[9]</strong><br><strong> Size - $row[8]</strong>";
-        $deliveryNotePrint = "<a href=../deliveryNoteDownload.php?file_id=$row[0]>$row[4]";
+        $deliveryNotePrint = "<a href=../base/deliveryNoteDownload.php?file_id=$row[0]>$row[4]";
         //MATERIAL AVAILABILITY
         $material = $row[16];
         $materialAvailable = 'Yes';
@@ -94,7 +94,7 @@
         $subdata[]=$row[13];
         $subdata[]='<img src="'.$upload_dir.$image.'" class="modal-effect" data-effect="effect-scale" id="tableImage" height="30" width="20" data-toggle="modal" data-target="#imagemodalone" data-id="'.$row[0].'"/>';
         $subdata[]=$comment;
-        $subdata[]= '<a type="button" title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-xs"><i class="typcn typcn-document-text"></i></a>';
+        $subdata[]= '<a type="button" title="Print" href="../print/customizePrint.php?action=select&id='.$row[0].'" target="_blank" class="btn btn-primary btn-icon"><i class="typcn typcn-document-text"></i></a>';
         $data[]=$subdata;
         
     }
