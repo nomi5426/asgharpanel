@@ -253,7 +253,7 @@
                     dataType: 'json',
                     data: {id:id},
                     success:function(data){
-                        $('#_eid').val(data[0].id);
+                        $('#dat_id').val(data[0].id);
                         $('#_editAppInvoiceId').val(data[0].invoiceId);
                         $('#_editAppDeliveryDate').val(data[0].productlink);
                         $('#_editAppItemName').val(data[0].pname);

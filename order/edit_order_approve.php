@@ -104,7 +104,7 @@
                 quantity = '$_editAppQuantity',
                 cat_id = '$_editAppCat_Id',
                 ordernote = '$_editAppOrderNote',
-                pimage = '$_imageName',
+                pimage = '$_imageName'
                 WHERE id = '$_eid'";
 
                 $response['status'] = 1;
