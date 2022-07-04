@@ -169,10 +169,10 @@
             $result = mysqli_query($conn, $statement);
             if($result){
                 if(!empty($_saName)){
-                    $agreementQuery = $conn->query("UPDATE sales_agreement SET sales_consultant = '".$_editSalesConsultant."', del_date = '".$_editDeliveryDate."' sales_agreement_path = '$_saName' WHERE order_id = '$_eid'");
+                    $agreementQuery = $conn->query("UPDATE sales_agreement SET sales_consultant = '".$_editSalesConsultant."', del_date = '".$_editDeliveryDate."', sales_agreement_path = '$_saName' WHERE order_id = '$_eid'");
                     $response['status'] = 1;
                 }else{
-                    $agreementQuery = $conn->query("UPDATE sales_agreement SET sales_consultant = '".$_editSalesConsultant."', del_date = '".$_editDeliveryDate."' sales_agreement_path = 'Not Exists' WHERE order_id = '$_eid");
+                    $agreementQuery = $conn->query("UPDATE sales_agreement SET sales_consultant = '".$_editSalesConsultant."', del_date = '".$_editDeliveryDate."', sales_agreement_path = 'Not Exists' WHERE order_id = '$_eid");
                     $response['status'] = 1;
                 }
                 $response['message'] = 'UPDATED';
