@@ -227,7 +227,7 @@
                                     <input id="_zSwatchLabel" type="text" class="form-control browse-file" placeholder="Select Swatch Image" readonly>
                                     <label class="input-group-btn">
                                         <span class="btn btn-default">
-                                            Select <input class="file-input" type="file" name="_zSwatchImage" id="_zSwatchImage" style="display: none;" multiple>
+                                            Select <input class="file-input" type="file" name="_zSwatchImage" id="_zSwatchImage" accept="image/png, image/jpeg" style="display: none;" multiple>
                                         </span>
                                     </label>
                                 </div>
@@ -255,7 +255,7 @@
                                     <input id="_zImageLabel" type="text" class="form-control browse-file" placeholder="Select Order Image" readonly>
                                     <label class="input-group-btn">
                                         <span class="btn btn-default">
-                                            Browse <input type="file" name="_zOrderImage[]" id="_zOrderImage" value="" multiple="true">
+                                            Browse <input type="file" name="_zOrderImage[]" id="_zOrderImage" value="" accept="image/png, image/jpeg" multiple="true">
                                         </span>
                                     </label>
                                 </div>
