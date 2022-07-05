@@ -23,9 +23,9 @@
      * GETS THE INVOICE JOB ORDER WITH ID AND BUILD USING FPDF CLASS
      */
     if(!isset($_GET['id'])){
-    echo 'PAGE NOT FOUND!';
+        echo 'PAGE NOT FOUND!';
     }
-    else if(($_GET['action'] == 'select') && isset($_GET['id'])) 
+    else if(($_GET['action'] == 'select') && isset($_GET['id']))
     {
         $id = $_GET['id'];
         $sql = "Select * FROM product WHERE id = '$id'";
@@ -39,7 +39,7 @@
             $pdf->AliasNbPages();
             $pdf->Image($logoURL,11,5);
             $pdf->SetFont('Arial','B',20);
-            $pdf->Cell(0,5,'SALES AGREEMENT',0,0,'R');
+            $pdf->Cell(0,5,'JOB ORDER',0,0,'R');
             $pdf->Ln();
             $pdf->SetFont('Arial','',10);
             $pdf->Cell(118,35,'Prime Business Centre - Office #1005 - B',0,0,'L');
