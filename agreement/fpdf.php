@@ -878,6 +878,8 @@ function Image($file, $x=null, $y=null, $w=0, $h=0, $type='', $link='')
 		$type = strtolower($type);
 		if($type=='jpeg')
 			$type = 'jpg';
+		if($type=='jfif')
+		$type = 'jpg';	
 		$mtd = '_parse'.$type;
 		if(!method_exists($this,$mtd))
 			$this->Error('Unsupported image type: '.$type);
