@@ -71,7 +71,6 @@
             $edAppItemSize = $row['size'];
             $editAppQuantity = $row['quantity'];
             $edAppOrderNote = $row['ordernote'];
-            $editAppSalesConsultant = $row['salesperson'];
         }
         ?>      
         <div id="mod_open" class="modal-content modal-content-demo">
@@ -176,12 +175,6 @@
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <!-- <div>
-                                <div class="input-group mb-3">
-                                    <select readonly name="_editAppSalesConsultant" id="_editAppSalesConsultant" class="SlectBox form-control">
-                                    </select>
-                                </div>
-                            </div> -->
                             <div class="input-group mb-3">
                                 <select value="Select Category" name="_editAppCat_Id" id="_editAppCat_Id" class="SlectBox form-control">
                                     <?php echo loadMasterCat(); ?>
@@ -371,7 +364,6 @@
                 var _orderStatus = $("#_editAppStatus").val();
                 var _itemQuantity = $("#_editAppQuantity").val();
                 var _orderNote = $("#_editAppOrderNote").val();
-                // var _salesConsultant = $("#_editAppSalesConsultant").val();
                 var _categoryId = $("#_editAppCat_Id").val();
 
                 if(_invoiceId == ''){
@@ -424,11 +416,6 @@
                     emptyFieldAlert(_warningMessage, _warningText);
                     flag = false
                 }
-                // else if(_salesConsultant == 'Select Sales Consultant'){
-                //     _warningMessage = "Sales Consultant Left Empty";
-                //     emptyFieldAlert(_warningMessage, _warningText);
-                //     flag = false
-                // }
                 else if(_categoryId == 'Select Category'){
                     _warningMessage = "Category Left Empty";
                     emptyFieldAlert(_warningMessage, _warningText);
