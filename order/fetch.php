@@ -270,7 +270,7 @@
 
         //STAFF
         else if($userrole == "staff"){
-            $subdata[]=$deliveryNotePrint;
+            $subdata[]=$row[4];
             $subdata[]=$row[15];
             $subdata[]=$dateAvailability;
             $subdata[]=$row[3];

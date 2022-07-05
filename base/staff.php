@@ -72,6 +72,7 @@
 												<ul class="nav panel-tabs main-nav-line nav-justified">
 													<li class="nav-item"><a href="#neworder" class="nav-link active" data-toggle="tab">New Order</a></li>
 													<li class="nav-item"><a href="#inproduction" class="nav-link" data-toggle="tab">In Production</a></li>
+													<li class="nav-item"><a href="#ready" class="nav-link" data-toggle="tab">Ready</a></li>
 												</ul>
 											</div>
 										</div>
@@ -102,6 +103,28 @@
 												<div class="tab-pane" id="inproduction">
 													<div class="table-responsive">
 														<table id="exampletwo" class="testclass table key-buttons text-md-nowrap">
+															<thead>
+																<tr>
+																	<th class="border-bottom-0">IID</th>
+																	<th class="border-bottom-0">DEL/Date</th>
+																	<th class="border-bottom-0">D/G</th>
+																	<th class="border-bottom-0">City</th>
+																	<th class="border-bottom-0">D/L</th>
+																	<th class="border-bottom-0">Item</th>
+																	<th class="border-bottom-0">Color</th>
+																	<th class="border-bottom-0">QTY</th>
+																	<th class="border-bottom-0">Note</th>
+																	<th class="border-bottom-0">Consult</th>
+																	<th class="border-bottom-0">Image</th>
+																	<th class="border-bottom-0">Comment</th>
+																</tr>
+															</thead>
+														</table>
+													</div>
+												</div>
+												<div class="tab-pane" id="ready">
+													<div class="table-responsive">
+														<table id="examplethree" class="testclass table key-buttons text-md-nowrap">
 															<thead>
 																<tr>
 																	<th class="border-bottom-0">IID</th>
@@ -305,18 +328,63 @@
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
+				//INITIATING TABLE READY
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: TO FETCH ALL READY RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
+				var tablethree = $('#examplethree').DataTable( {
+					"processing": 	true,
+					"serverSide": 	true,
+					"paging"	:	true,
+					"searching"	:	true,
+					"sDom": 'Brtip',
+					"buttons": [
+						
+					],
+					"iDisplayLength"	:	100,
+					"ajax": {
+						url  :"../order/fetch.php",
+						type : "POST",
+						data : {
+							status : 'Ready',
+							nextStatus : 'Out for Delivery'
+						}
+					},
+					"rowCallback": function( row, data, index ) {
+						if ( data[7] == "Sharaf DG" )
+						{
+							$('td', row).css('background-color', '#b5b5de');
+						}
+						else if ( data[7] != "Sharaf DG" )
+						{
+							$('td', row).css('background-color', 'white');
+						}
+					},
+					"drawCallback": function ( settings ) {
+						var api = this.api();
+						var rows = api.rows( {page:'current'} ).nodes();
+						var last=null; 
+						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
+							if ( last !== group ) {
+								$(rows).eq( i ).before(
+									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+								);
+								last = group;
+							}
+						} );
+					},
+					"autoWidth": false,
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+				} );
+
 				//@ORDERSEARCHTEXT IS THE TEXT FIELD WHERE THE INVOICES WILL BE SEARCHED
 				//TABLES WILL BE REDRAWN AS PER THE INSERT VALUE
 				$('#orderSearchText').keyup(function(){
 					tableone.search($(this).val()).column(0).draw() ;
 					tabletwo.search($(this).val()).column(0).draw() ;
 					tablethree.search($(this).val()).column(0).draw() ;
-					tablefour.search($(this).val()).column(0).draw() ;
-					tablefive.search($(this).val()).column(0).draw() ;
-					tablesix.search($(this).val()).column(0).draw() ;
-					tableseven.search($(this).val()).column(0).draw() ;
-					tableeight.search($(this).val()).column(0).draw() ;
-					tablenine.search($(this).val()).column(0).draw() ;
 				});
 
 
