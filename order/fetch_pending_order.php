@@ -59,7 +59,7 @@
             $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'";
         }
         else if($userrole=="admin"){
-            $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'";
+            $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."' AND salesperson='".$firstName."'";
         }
         else if($userrole=="sales"){
             $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."' AND salesperson='".$firstName."'";
