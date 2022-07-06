@@ -98,7 +98,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="input-group mb-3">
-                                <select value="Select Zoho Invoice" name="_zohoInvoice" id="_zohoInvoice" class="SlectBox form-control">
+                                <select value="Select Zoho Invoice" name="_zohoInvoice" id="_zohoInvoice" class="form-control select2-show-search">
                                     <?php echo _loadZohoInvoice(); ?>
                                     <input hidden id="_zInvoiceId" name="_zInvoiceId" class="form-control"type="text">
                                 </select>
@@ -573,7 +573,6 @@
             $('select.SlectBox')[3].sumo.reload();
             $('select.SlectBox')[4].sumo.reload();
             $('select.SlectBox')[5].sumo.reload();
-            $('select.SlectBox')[6].sumo.reload();
             $("#_zOrderNote").val('');
             $("#_zPaymentTerms").val('');
             $("#_zCondition").val('');
