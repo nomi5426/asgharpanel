@@ -88,16 +88,21 @@
             $pdf->SetFont('Arial','',10);
             $pdf->Cell(0,0,$rows['ordernote'],0,0,'L');
             $pdf->Ln(8);
+            $pdf->SetFont('Arial','B',10);
+            $pdf->Cell(28,0,'COMMENT : ',0,0,'L');
+            $pdf->SetFont('Arial','',10);
+            $pdf->Cell(0,0,$rows['userComment'],0,0,'L');
+            $pdf->Ln(8);
 
             //GET IMAGE
             if($rows['pimage']!==''){ 
-            if(strpos($upload_dir.$rows['pimage'],',') !== false){
-                $arr = explode(',', $rows['pimage']);
-                $image = $arr[0];
-            }
-            else{
-                $image = $rows['pimage'];
-            }
+                if(strpos($upload_dir.$rows['pimage'],',') !== false){
+                    $arr = explode(',', $rows['pimage']);
+                    $image = $arr[0];
+                }
+                else{
+                    $image = $rows['pimage'];
+                }
             }
             else{
             $noImage = 'No Image.jpg';
