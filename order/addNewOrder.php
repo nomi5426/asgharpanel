@@ -212,12 +212,6 @@
             <div class="row row-sm">
                 <div class="col-lg-12">
                     <div class="row row-sm">
-                        <!-- <div class="col-lg-4">
-                            <select value="Select Existing Customer" name="_customerFilter" id="_customerFilter" class="form-control select2-show-search select2-dropdown">
-                                <?php echo loadCustomer();?>
-                                <input hidden id="_customerId" name="_customerId" class="form-control"type="text">
-                            </select>
-                        </div> -->
                         <div class="col-lg-6">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon2">Name</span> 
