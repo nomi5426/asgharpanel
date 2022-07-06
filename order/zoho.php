@@ -405,7 +405,7 @@
                             orderExists();
                         }
                         else{
-                            $('.statusMsg').html(alert(response.message));
+                            console.log(response.message);
                         }
                         $('#formZohoOrder').css("opacity","");
                         $(".submit").removeAttr("disabled");
