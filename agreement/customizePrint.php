@@ -1,11 +1,5 @@
 <?php
 
-    ini_set('display_startup_errors',1);
-    ini_set('display_errors',1);
-    error_reporting(-1);
-
-    session_start();
-
 	/*********************************************************************************
 	* PROJECT: ZETA 1.0.0
 	* AUTHOR: ROSHAN ZAID AKA DAUNTE
@@ -20,7 +14,7 @@
 	* APP_LOG()													//LOG WRITING
 	/********************************************************************************/
 
-    // session_start();
+    session_start();
 
     //INCLUDE DIRECTORIES
     include "fpdf.php";
@@ -45,13 +39,11 @@
     /**
      * GETS THE INVOICE JOB ORDER WITH ID AND BUILD USING FPDF CLASS
      */
-
     if(!isset($_GET['id'])){
         echo 'PAGE NOT FOUND!';
     }
     else if(($_GET['action'] == 'select') && isset($_GET['id'])) 
     {
-
         $prodId = $_GET['id'];        
         $prodQuery = $conn->query("SELECT * FROM product 
                                 LEFT JOIN sales_agreement ON 
@@ -69,7 +61,7 @@
             $color = $rows['color'];
             $size = $rows['size'];
             $quantity = $rows['quantity'];
-            $swatch_image = $swatch_upload_dir.$rows['swatch'];
+            $swatchImageName = $rows['swatch'];
             $payment_terms = $rows['payment_term'];
             $conditon = $rows['order_condition'];
             $salesName = $rows['salesperson'];
@@ -96,8 +88,15 @@
                 $image = $noImage;
             }
             $image = $upload_dir.$image;
-        
-            $pdf=new FPDF();
+            
+            if(empty($swatchImageName)){
+                $swatch_image = $swatch_upload_dir.'No Swatch.png';
+            }else{
+                $swatch_image = $swatch_upload_dir.$swatchImageName;
+            }
+        }
+
+        $pdf=new FPDF();
         //NEW PAGE
         $pdf->AddPage();
         $pdf->AliasNbPages();
@@ -119,18 +118,22 @@
          */
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(118,35,'Prime Business Centre - Office #1005 - B',0,0,'L');
-
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(40,12,'AGREEMENT ID',0,0,'R');
-
         $pdf->SetFont('Arial','',11);
         $pdf->Cell(0,12,$agreement_id,0,0,'R');
-
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(-32,28,'INV / NO',0,0,'R');
-
         $pdf->SetFont('Arial','',11);
         $pdf->Cell(0,28,$invoice,0,0,'R');
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(-32,45,'DELIVERY DATE',0,0,'R');
+        $pdf->SetFont('Arial','',11);
+        $pdf->Cell(0,45,$deliveryDate,0,0,'R');
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(-32,62,'SALES SOURCE',0,0,'R');
+        $pdf->SetFont('Arial','',11);
+        $pdf->Cell(0,62,$salesName,0,0,'R');
 
         $pdf->Ln(40);
         /**
@@ -141,10 +144,7 @@
          */
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(118,-35,'Jumeira Village Circle, Dubai - UAE',0,0,'L');
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(40,-35,'DELIVERY DATE',0,0,'R');
-        $pdf->SetFont('Arial','',11);
-        $pdf->Cell(0,-35,$deliveryDate,0,0,'R');
+
         $pdf->Ln(-10);
         /**
          * *************************************************************************************************
@@ -294,7 +294,7 @@
          */
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(120,0,'',0,0,'L');
-        $pdf->Cell(80,0,$salesName,0,0,'C');
+        $pdf->Cell(80,0,$userName,0,0,'C');
         $pdf->Ln(5);
 
         $pdf->Cell(95,0,'------------------------------------------------',0,0,'L');
@@ -305,13 +305,11 @@
         $pdf->Cell(60,0,'CUSTOMER SIGNATURE',0,0,'C');
 
         $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(200,0,'SALES SIGNATURE',0,0,'C');
+        $pdf->Cell(200,0,'ADMIN AUTHORITY',0,0,'C');
 
 
         $pdf->SetY(-1);
         $pdf->SetFont('Arial','',12);
         $pdf->Output();
-
-        }
     }
 ?>
