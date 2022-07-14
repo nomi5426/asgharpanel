@@ -296,7 +296,7 @@
             $subdata[]=$row[20];
         }        
         else if($userrole == "delivery"){
-            $subdata[]=$qrcodeinvoicefordelivery;
+            $subdata[]=$deliveryNotePrintqr;
             $subdata[]=$row[15];
             $subdata[]=$dateAvailability;
             $subdata[]=$row[3];
