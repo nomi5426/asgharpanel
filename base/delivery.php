@@ -1,9 +1,26 @@
 <?php
-//if (!session_id()) session_start();
-session_start();
-include "../base/db.php";
-include '../base/deliveryNoteDownload.php';
-if(!isset($_SESSION['_deliveryLogin'])){header('Location:../index.php');}
+
+	//INCLUDE DIRECTORIES
+	include "../base/db.php";
+	include '../base/deliveryNoteDownload.php';
+
+	//KEEP TRACK ON SESSION VARIABLES
+    if(!session_id()) session_start();
+	if(!isset($_SESSION['_deliveryLogin'])){
+		date_default_timezone_set('Asia/Dubai'); 
+		app_log("'".date('d-m-Y H:i:s')."' : Session is not set, Login Attempt SUPER ADMIN User");
+		header('Location:../index.php');
+	}
+
+	/**
+	 * MASTER METHOD FOR LOG TRACKING
+	 * @PARAM {STRING}	MESSAGE
+	 */
+	function app_log($message){
+		date_default_timezone_set('Asia/Dubai');
+		$logfile = 'log/log_'.date('d-M-Y').'.log';
+		file_put_contents($logfile, $message . "\n", FILE_APPEND);
+	}
 ?>
 
 <!DOCTYPE html>
