@@ -155,14 +155,13 @@ if(!isset($_SESSION['_deliveryLogin'])){header('Location:../index.php');}
                         $(document).on('click','#statusChangeNext',function(event){
                             event.preventDefault();
                             var statusid = $(this).attr('data-id');
-                            var prodStat;
                             $.ajax({
                                 url     : '../order/statusChange.php',
                                 method  : 'POST',
                                 dataType: 'json',
                                 data    : {statusid : statusid},
                                 success : function(response)
-                                {
+							    {
                                     if(response.index == 1){
                                         swal({
                                             title: 'Status Changed',
