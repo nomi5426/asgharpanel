@@ -136,7 +136,7 @@
 
                 if($currentStatus !== "In Production"){
                     if($currentStatus == "Ready"){
-                        $delStat = $conn->query("UPDATE order_staff_production SET active_status = 0");
+                        $delStat = $conn->query("UPDATE order_staff_production SET active_status = 0 WHERE order_id=$id");
 
                         date_default_timezone_set('Asia/Dubai');
                         app_log("'".date('d-m-Y H:i:s')."' : Order '".$id."' Status is changed to 
@@ -194,7 +194,7 @@
 
                     if($currentStatus !== "In Production"){
                         if($currentStatus == "Ready"){
-                            $delStat = $conn->query("UPDATE order_staff_production SET active_status = 0");
+                            $delStat = $conn->query("UPDATE order_staff_production SET active_status = 0 WHERE order_id=$id");
 
                             date_default_timezone_set('Asia/Dubai');
                             app_log("'".date('d-m-Y H:i:s')."' : Order '".$id."' Status is changed to 
