@@ -32,8 +32,10 @@
 		$id = $_POST['id'];
 		$staffName = $_POST['e_staffname'];
 		//CHECK IF STAFF IS ASSOCIATED WITH ORDERS
-		$_staffAssociate = $conn->query("SELECT * FROM order_staff WHERE staff_id = ".$id);
-
+		//CHECK IF STAFF IS ASSOCIATED WITH ORDERS
+		$_staffAssociate = $conn->query("SELECT osp.staff_id, osd.del_staff_id 
+										FROM order_staff_production as osp, order_staff_delivery as osd 
+										WHERE osp.staff_id = $id OR osd.del_staff_id =$id");
 		//GET STAFF NAME
 		$staff_Name=mysqli_query($conn,"SELECT * FROM staff WHERE id = ".$id);
 		$_dbStaff_name='';
