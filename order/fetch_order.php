@@ -29,18 +29,17 @@
     }
 
     if(!empty($request['search']['value'])){
-        $sql.=" AND (invoiceId Like '".$request['search']['value']."%') ";
+        $sql.=" AND (invoiceId Like '%".$request['search']['value']."%') ";
         //$sql.=" OR invoiceId Like '".$request['search']['value']."%' ";
     }
     $query=mysqli_query($conn,$sql);
     $totalData=mysqli_num_rows($query);
     $totalFilter=$totalData;
-
     $sql.=" ORDER BY ".$col[$request['order'][0]['column']]."   ".$request['order'][0]['dir']."  LIMIT ".
         $request['start']."  ,".$request['length']."  ";
     $query=mysqli_query($conn,$sql);
-
     $data=array();
+    
     while($row=mysqli_fetch_array($query)){
         $subdata=array();
         //Days Given and Days Left
