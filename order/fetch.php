@@ -16,13 +16,13 @@
     //GET USER ROLE
     if(isset($_SESSION['userName'])){
         $username = $_SESSION['userName'];
-        $userDetail= "SELECT * FROM user WHERE username='".$username."'";
-        $queryInject = mysqli_query($conn, $userDetail);
-        if(mysqli_num_rows($queryInject)){
-            while($row = mysqli_fetch_assoc($queryInject)) {
-                $firstName = $row['firstname'];
-                $userrole = $row['userrole'];
-            }	
+        $userDetail= $conn->query("SELECT * FROM user WHERE username='".$username."'");
+        if(mysqli_num_rows($userDetail)){
+            while($row = mysqli_fetch_assoc($userDetail)) {
+                $_firstName = $row['firstname'];
+                $_userRole = $row['userrole'];
+                $_userDepartment = $row['department'];
+            }
         }
     }
 
@@ -30,22 +30,14 @@
     $status = $_POST['status'];
 
     $col =array(
-        0   =>  'invoiceId',
-        1   =>  'productlink',
-        2   =>  'pname',
-        3   =>  'size',
-        4   =>  'color',
-        5   =>  'quantity',
-        7   =>  'ordernote',
-        8   =>  'salesperson',
-        9   =>  'pimage',
-        10   =>  'city'
+        0   =>  'invoiceID'
     );
 
     // SEARCH
     if(!empty($status)){
         if($status == 'Ready'){
-            $sql ="SELECT
+            if(!empty($request['search']['value'])){
+                $sql ="SELECT
                         prod.id,
                         prod.insertDate,
                         prod.branchId,
@@ -82,14 +74,61 @@
                     	delstf.id = osd.del_staff_id
                     LEFT JOIN staff AS stf ON 
                         stf.id = osp.staff_id
-                    WHERE 1=1 AND 
+                    WHERE 1=1 AND
+                        osp.active_status = 1
+                    AND
+                        prod.pstatus = 'Ready'
+                    AND 
+                        (prod.invoiceId LIKE '%".$request['search']['value']."%')
+                    GROUP BY osp.order_id";
+            }else{
+                $sql ="SELECT
+                    prod.id,
+                    prod.insertDate,
+                    prod.branchId,
+                    prod.city,
+                    prod.invoiceId,
+                    prod.deliveryNote,
+                    prod.pname,
+                    prod.pimage,
+                    prod.size,
+                    prod.color,
+                    prod.quantity,
+                    prod.pstatus,
+                    prod.ordernote,
+                    prod.salesperson,
+                    prod.cat_id,
+                    prod.productlink,
+                    prod.material,
+                    prod.userComment,
+                    prod.dateAvailability,
+                    prod.createdBy,
+                    prod.editedBy,
+                    prod.statusChangedBy,
+                    prod.qrcode,
+                    GROUP_CONCAT(DISTINCT stf.id SEPARATOR ', ') AS staff_id,
+                    GROUP_CONCAT(DISTINCT stf.staff_name SEPARATOR ', ') AS production_staff_name,
+                    GROUP_CONCAT(DISTINCT delstf.id SEPARATOR ', ') AS del_staff_id,
+                    GROUP_CONCAT(DISTINCT delstf.staff_name SEPARATOR ', ') AS del_staff_name
+                    FROM order_staff_production osp 
+                    LEFT JOIN product AS prod ON 
+                        prod.id = osp.order_id 
+                    LEFT JOIN order_staff_delivery osd ON
+                        prod.id = osd.order_id
+                    LEFT JOIN staff AS delstf ON
+                        delstf.id = osd.del_staff_id
+                    LEFT JOIN staff AS stf ON 
+                        stf.id = osp.staff_id
+                    WHERE 1=1 AND
                         osp.active_status = 1
                     AND
                         prod.pstatus = 'Ready'
                     GROUP BY osp.order_id";
+            }
         }
         else if($status == 'Out for Delivery'){
-            $sql ="SELECT
+            if(!empty($request['search']['value'])){
+                $sql ="SELECT
                         prod.id,
                         prod.insertDate,
                         prod.branchId,
@@ -121,9 +160,9 @@
                     LEFT JOIN product AS prod ON 
                         prod.id = osp.order_id 
                     LEFT JOIN order_staff_delivery osd ON
-                    	prod.id = osd.order_id
+                        prod.id = osd.order_id
                     LEFT JOIN staff AS delstf ON
-                    	delstf.id = osd.del_staff_id
+                        delstf.id = osd.del_staff_id
                     LEFT JOIN staff AS stf ON 
                         stf.id = osp.staff_id
                     WHERE 1=1 AND 
@@ -132,24 +171,88 @@
                         osd.active_status = 1
                     AND
                         prod.pstatus = 'Out for Delivery'
-                    GROUP BY osp.order_id";
+                    AND 
+                        (prod.invoiceId LIKE '%".$request['search']['value']."%')
+                    GROUP BY osd.order_id";
+            }else{
+                $sql ="SELECT
+                        prod.id,
+                        prod.insertDate,
+                        prod.branchId,
+                        prod.city,
+                        prod.invoiceId,
+                        prod.deliveryNote,
+                        prod.pname,
+                        prod.pimage,
+                        prod.size,
+                        prod.color,
+                        prod.quantity,
+                        prod.pstatus,
+                        prod.ordernote,
+                        prod.salesperson,
+                        prod.cat_id,
+                        prod.productlink,
+                        prod.material,
+                        prod.userComment,
+                        prod.dateAvailability,
+                        prod.createdBy,
+                        prod.editedBy,
+                        prod.statusChangedBy,
+                        prod.qrcode,
+                        GROUP_CONCAT(DISTINCT stf.id SEPARATOR ', ') AS staff_id,
+                        GROUP_CONCAT(DISTINCT stf.staff_name SEPARATOR ', ') AS production_staff_name,
+                        GROUP_CONCAT(DISTINCT delstf.id SEPARATOR ', ') AS del_staff_id,
+                        GROUP_CONCAT(DISTINCT delstf.staff_name SEPARATOR ', ') AS del_staff_name
+                    FROM order_staff_production osp 
+                    LEFT JOIN product AS prod ON 
+                        prod.id = osp.order_id 
+                    LEFT JOIN order_staff_delivery osd ON
+                        prod.id = osd.order_id
+                    LEFT JOIN staff AS delstf ON
+                        delstf.id = osd.del_staff_id
+                    LEFT JOIN staff AS stf ON 
+                        stf.id = osp.staff_id
+                    WHERE 1=1 AND 
+                        osp.active_status = 1
+                    AND
+                        osd.active_status = 1
+                    AND
+                        prod.pstatus = 'Out for Delivery'
+                    GROUP BY osd.order_id";
+            }
         }
         else{
-            $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'";
+            if(!empty($request['search']['value'])){
+                $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."' 
+                AND
+                invoiceId LIKE '%".$request['search']['value']."%'";
+
+            }else{
+                $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'";
+            }
         }
     }else{
-        $sql ="SELECT * FROM product WHERE 1=1";
+        if(!empty($request['search']['value'])){
+            $sql ="SELECT * FROM product WHERE 1=1
+            AND 
+            invoiceId LIKE '%".$request['search']['value']."%'";
+        }else{
+            $sql ="SELECT * FROM product WHERE 1=1";
+        }
     }
 
-    if(!empty($request['search']['value'])){
-        $sql.=" AND (invoiceId Like '%".$request['search']['value']."%') ";
-        //$sql.=" OR invoiceId Like '".$request['search']['value']."%' ";
-    }
+    // if(!empty($request['search']['value'])){
+    //     $sql.=" AND (invoiceId LIKE '%".$request['search']['value']."%') ";
+    //     //$sql.=" OR invoiceId Like '".$request['search']['value']."%' ";
+    // }else{
+    //     $sql.="";
+    // }
     $query=mysqli_query($conn,$sql);
     $totalData=mysqli_num_rows($query);
     $totalFilter=$totalData;
-    $sql.=" ORDER BY ".$col[$request['order'][0]['column']]."   ".$request['order'][0]['dir']."  LIMIT ".
-        $request['start']."  ,".$request['length']."  ";
+    // $sql.=" ORDER BY ".$col[$request['order'][0]['column']]."   ".$request['order'][0]['dir']."  LIMIT ".
+    //     $request['start']."  ,".$request['length']."  ";
+    
     $query=mysqli_query($conn,$sql);
     $data=array();
     
@@ -222,7 +325,7 @@
          * 
          * USER ROLE: SUPER ADMIN
          */
-        if($userrole == "superadmin"){
+        if($_userRole == "superadmin"){
             $subdata[]=$_invoiceIdWithDN;
             $subdata[]=$_deliveryDate;
             $subdata[]=$_daysGiven;
@@ -235,8 +338,8 @@
             $subdata[]='<img src="'.$upload_dir.$_image.'" class="modal-effect" data-effect="effect-scale" id="tableImage" height="30" width="20" data-toggle="modal" data-target="#imagemodalone" data-id="'.$_id.'"/>';
             $subdata[]=$_userComment;
             if($status == "New Order"){
+                $subdata[]=$_salesperson;
                 if ($_orderMaterial !== $materialAvailable){
-                    $subdata[]=$_salesperson;
                     $subdata[]='<div class="inner"><button id="_materialLpo" type="button" title="Confirm Material" class="btn btn-primary btn-icon" data-effect="effect-scale" data-toggle="modal" data-target="#materialLpoModal" data-id="'.$_id.'"><i class="typcn typcn-tick"></i></button></div>';
                 }
             }
@@ -266,7 +369,7 @@
          * 
          * USER ROLE: ADMIN
          */
-        else if($userrole == "admin"){
+        else if($_userRole == "admin"){
             $subdata[]=$_invoiceIdWithDN;
             $subdata[]=$_deliveryDate;
             $subdata[]=$_daysGiven;
@@ -310,7 +413,7 @@
          * 
          * USER ROLE: SALES
          */
-        else if($userrole == "sales"){
+        else if($_userRole == "sales"){
             $subdata[]=$_invoiceIdWithDN;
             $subdata[]=$_deliveryDate;
             $subdata[]=$_daysGiven;
@@ -347,7 +450,7 @@
          * 
          * USER ROLE: FACTORY
          */
-        else if($userrole == "factory"){
+        else if($_userRole == "factory"){
             $subdata[]=$_invoiceIdWithDN;
             $subdata[]=$_deliveryDate;
             $subdata[]=$_daysGiven;
@@ -388,7 +491,7 @@
          * 
          * USER ROLE: FACTORY STAFFS
          */
-        else if($userrole == "staff"){
+        else if($_userRole == "staff"){
             $subdata[]=$_invoiceId;
             $subdata[]=$_deliveryDate;
             $subdata[]=$_daysGiven;
@@ -410,7 +513,7 @@
          * 
          * USER ROLE: DELIVERY
          */  
-        else if($userrole == "delivery"){
+        else if($_userRole == "delivery"){
             $subdata[]=$_invoiceIdWithDNQR;
             $subdata[]=$_deliveryDate;
             $subdata[]=$_daysGiven;
