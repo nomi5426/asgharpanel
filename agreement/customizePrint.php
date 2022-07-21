@@ -127,10 +127,6 @@
         $pdf->SetFont('Arial','',11);
         $pdf->Cell(0,28,$invoice,0,0,'R');
         $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(-32,45,'DELIVERY DATE',0,0,'R');
-        $pdf->SetFont('Arial','',11);
-        $pdf->Cell(0,45,$deliveryDate,0,0,'R');
-        $pdf->SetFont('Arial','B',10);
         $pdf->Cell(-32,62,'SALES SOURCE',0,0,'R');
         $pdf->SetFont('Arial','',11);
         $pdf->Cell(0,62,$salesName,0,0,'R');
