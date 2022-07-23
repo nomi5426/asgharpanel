@@ -73,7 +73,6 @@ if(isset($_REQUEST['id'])){
                 data: {mat_id:mat_id},
                 dataType:'html',
                 success: function(data){
-                    console.log(data);
                     if(data == ""){
                         $('#id').val(mat_id);
                     }
