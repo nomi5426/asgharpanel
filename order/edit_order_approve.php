@@ -4,6 +4,7 @@
     $image_upload_dir = '../uploads/';
     $pdf_upload_dir = '../pdfUploads/';
 	$agreement_upload_dir = '../salesAgreementUpload/';
+    $swatch_upload_dir = '../swatchUploads/';
 
     //DEFAULT RESPONSES
     $response['status'] = 0;
@@ -24,7 +25,8 @@
     isset($_POST['_editAppCat_Id']) || 
     isset($_POST['_editAppOrderNote'])||
     isset($_POST['_editAppOrderImage'])||
-    isset($_POST['_salesAgreement']))
+    isset($_POST['_salesAgreement'])||
+    isset($_POST['_editSwatchImage']))
     {
         $_eid = $_POST['dat_id'];
         $_editAppInvoiceId = $_POST['_editAppInvoiceId'];
@@ -86,6 +88,17 @@
         }
         else{
             $_saName = '';
+        }
+
+        $swatchName = '';
+        if(!empty($_FILES['_editSwatchImage']['name'])){
+            $swatchTmpName = $_FILES['_editSwatchImage']['tmp_name'];
+            $swatchName = $_FILES['_editSwatchImage']['name'];
+            $swatchName = $_editAppInvoiceId.' - '.$_editAppItemName.' - '.$swatchName;
+            $result = move_uploaded_file($swatchTmpName,$swatch_upload_dir.$swatchName);
+        }
+        else{
+            $swatchName = '';
         }
 
         if(!empty($_eid))
@@ -172,7 +185,12 @@
                     $agreementQuery = $conn->query("UPDATE sales_agreement SET del_date = '".$_editAppDeliveryDate."', sales_agreement_path = '$_saName' WHERE order_id = '$_eid'");
                     $response['status'] = 1;
                 }else{
-                    $agreementQuery = $conn->query("UPDATE sales_agreement SET del_date = '".$_editAppDeliveryDate."', sales_agreement_path = 'Not Exists' WHERE order_id = '$_eid");
+                    $agreementQuery = $conn->query("UPDATE sales_agreement SET del_date = '".$_editAppDeliveryDate."', sales_agreement_path = 'Not Exists' WHERE order_id = '$_eid'");
+                    $response['status'] = 1;
+                }
+                var_dump($swatchName);
+                if(!empty($swatchName)){
+                    $swatchQuery = $conn->query("UPDATE sales_agreement SET swatch = '$swatchName' WHERE order_id = '$_eid'");
                     $response['status'] = 1;
                 }
                 $response['message'] = 'UPDATED';

@@ -52,13 +52,12 @@ $pdf_upload_dir = '../pdfUploads/';
 	}
 	//GET THE ORDER
 	if(isset($_POST['id'])){
-		$return_arr = array();
-        $sql="SELECT * FROM product 
-                LEFT JOIN sales_agreement ON 
-                product.id = sales_agreement.order_id
-                LEFT JOIN customer on
-                product.id = customer.order_id
-                WHERE product.id = '".$_POST['id']."'";
+		$sql="SELECT * FROM product AS prod
+				LEFT JOIN sales_agreement AS sa ON 
+				prod.id = sa.order_id
+				LEFT JOIN customer AS cx on
+				prod.id = cx.order_id
+				WHERE prod.id = '".$_POST['id']."'";
                 $query=mysqli_query($conn,$sql);
                 $rows = array();
 		while($row = mysqli_fetch_array($query)){

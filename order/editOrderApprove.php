@@ -55,12 +55,12 @@
     //GET PARTICULAR STAFF FROM DB FOR TO EDIT AND FIND EXISTING VALUE OF THE STAFF
     if(isset($_REQUEST['id'])){
         $id=intval($_REQUEST['id']);
-        $sql="SELECT * FROM product 
-        LEFT JOIN sales_agreement ON 
-        product.id = sales_agreement.order_id
-        LEFT JOIN customer on
-        product.id = customer.order_id
-        WHERE product.id = '$id'";
+        $sql="SELECT * FROM product AS prod
+                LEFT JOIN sales_agreement AS sa ON 
+                prod.id = sa.order_id
+                LEFT JOIN customer AS cx on
+                prod.id = cx.order_id
+                WHERE prod.id = '$id'";
         $run_sql=mysqli_query($conn,$sql);
         while($row=mysqli_fetch_array($run_sql)){
             $id=$row['id'];
@@ -193,6 +193,18 @@
                                     <div id="preview" name="preview">
                                     </div>
                                 </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group file-browser">
+                                        <input id="_editSwatchImageLabel" type="text" class="form-control browse-file" placeholder="Select Swatch Image" readonly>
+                                        <label class="input-group-btn">
+                                            <span class="btn btn-default">
+                                                Select <input type="file" name="_editSwatchImage" id="_editSwatchImage" style="display: none;">
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div id="swpreview" name="swpreview">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -273,6 +285,11 @@
                         var sales_agreement_dir = "../salesAgreementUpload/";
                         var _salesAgreementInput = document.getElementById ("_salesAgreementLabel");
 
+                        //SWATCH IMAGE
+                        var swatchImage_DB = data[0].swatch;
+                        var swatch_dir = "../swatchUploads/";
+                        var _swatchImageInput = document.getElementById ("_editSwatchImageLabel");
+
                         //IF IMAGE COLUMN HAS A VALUE || IMAGE
                         if(image_DB !== '')
                         { 
@@ -317,9 +334,22 @@
                         else{
                             _salesAgreementInput.placeholder = "Select Sales Agreement";
                         }
+                        if(swatchImage_DB !== ''){
+                            var swatchImg = document.createElement("IMG");
+                            swatchImg.height = 90;
+                            swatchImg.weight = 90;
+                            swatchImg.src = swatch_dir+swatchImage_DB;
+                            $('#swpreview').prepend(swatchImg);
+                            _swatchImageInput.placeholder = "Swatch Image Attached";
+                        }
+                        else{
+                            $('#swpreview').empty();
+                            _swatchImageInput.placeholder = "Select Swatch Image";
+                        }
                     }
                 });
                 $('#preview').empty();
+                $('#swpreview').empty();
             }
 
             //ORDER SUBMIT FOR UPDATE
@@ -471,6 +501,10 @@
                     imagesPreview(this, 'div.preview');
                     $( 'div.preview' ).empty();
                 });
+                $('#_editSwatchImage').on('change', function() {
+                    imagesPreview(this, 'div.swpreview');
+                    $( 'div.swpreview' ).empty();
+                });
             });
 
             //ORDER FILE LABEL CHANGE
@@ -504,6 +538,18 @@
                     input.placeholder = "Select Sales Agreement";
                 }
             });
+
+            //SWATCH LABEL CHANGE
+            $('#_editSwatchImage').on("change", function(){
+                var input = document.getElementById ("_editSwatchImageLabel");
+                var _swatchImageCount = $(this)[0].files.length;
+                if(_swatchImageCount > 0){
+                    input.placeholder = "Swatch Image Attached";
+                }else{
+                    input.placeholder = "Select Swatch Image";
+                }
+            });
+
         });
     </script>
 
