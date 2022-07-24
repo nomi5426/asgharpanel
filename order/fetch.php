@@ -80,7 +80,8 @@
                         prod.pstatus = 'Ready'
                     AND 
                         (prod.invoiceId LIKE '%".$request['search']['value']."%')
-                    GROUP BY osp.order_id";
+                    GROUP BY osp.order_id
+                    ORDER BY prod.productlink";
             }else{
                 $sql ="SELECT
                     prod.id,
@@ -123,7 +124,8 @@
                         osp.active_status = 1
                     AND
                         prod.pstatus = 'Ready'
-                    GROUP BY osp.order_id";
+                    GROUP BY osp.order_id
+                    ORDER BY prod.productlink";
             }
         }
         else if($status == 'Out for Delivery'){
@@ -173,7 +175,8 @@
                         prod.pstatus = 'Out for Delivery'
                     AND 
                         (prod.invoiceId LIKE '%".$request['search']['value']."%')
-                    GROUP BY osd.order_id";
+                    GROUP BY osd.order_id
+                    ORDER BY prod.productlink";
             }else{
                 $sql ="SELECT
                         prod.id,
@@ -218,26 +221,29 @@
                         osd.active_status = 1
                     AND
                         prod.pstatus = 'Out for Delivery'
-                    GROUP BY osd.order_id";
+                    GROUP BY osd.order_id
+                    ORDER BY prod.productlink";
             }
         }
         else{
             if(!empty($request['search']['value'])){
-                $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."' 
+                $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'  
                 AND
-                invoiceId LIKE '%".$request['search']['value']."%'";
+                invoiceId LIKE '%".$request['search']['value']."%'
+                ORDER BY productlink";
 
             }else{
-                $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'";
+                $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."' ORDER BY productlink ";
             }
         }
     }else{
         if(!empty($request['search']['value'])){
             $sql ="SELECT * FROM product WHERE 1=1
             AND 
-            invoiceId LIKE '%".$request['search']['value']."%'";
+            invoiceId LIKE '%".$request['search']['value']."%'
+            ORDER BY productlink";
         }else{
-            $sql ="SELECT * FROM product WHERE 1=1";
+            $sql ="SELECT * FROM product WHERE 1=1 ORDER BY productlink";
         }
     }
 
