@@ -366,11 +366,16 @@
 						<div id="add-order-staff-content-data"></div>
 					</div>
 				</div>
-				<!--MODAL CLOSED-->
 				<!--COMMENT MODAL-->
 				<div class="modal effect-scale show" id="statusChangeModal">
 					<div class="modal-dialog" role="document">
 						<div id="status-change-content-data"></div>
+					</div>
+				</div>
+				<!-- DELIVERY DATE CHANGE MODAL -->
+				<div class="modal effect-scale show" id="dateChangeModal">
+					<div class="modal-dialog" role="document">
+						<div id="date-change-content-data"></div>
 					</div>
 				</div>
 			</div>
@@ -1087,6 +1092,27 @@
 						$('#status-change-content-data').html('<p>Error</p>');
 					});
 				});
+
+				//DATE CHANGE MODAL - WHEN THE ITEM IS ON READY	-	ONCLICKEVENT
+				//A MODAL OPEN FOR CHANGING DELIVERING DATE
+				//DATA WILL BE PASSED AND RETREIVED AS HTML
+				$(document).on('click','#_dateChange',function(event){
+					event.preventDefault();
+					var id=$(this).data('id');
+					$('#date-change-content-data').html('');
+					$.ajax({
+						type:'POST',
+						url:'../order/deliveryDateChangeModal.php',
+						data:'id='+id,
+						dataType:'html'
+					}).done(function(data){
+						$('#date-change-content-data').html('');
+						$('#date-change-content-data').html(data);
+					}).fail(function(){
+						$('#date-change-content-data').html('<p>Error</p>');
+					});
+				});
+
 
 				//SUCCESS SWAL - MATERIAL
 				//CONFIRMATION OF MATERIAL AVAILABILITY

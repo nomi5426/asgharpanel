@@ -327,7 +327,11 @@
          */
         if($_userRole == "superadmin"){
             $subdata[]=$_invoiceIdWithDN;
-            $subdata[]=$_deliveryDate;
+            if($status == "Ready"){
+                $subdata[]='<a id="_dateChange" title="Date Change" data-effect="effect-scale" data-toggle="modal" data-target="#dateChangeModal" data-id="'.$_id.'">'.$_deliveryDate.'</a>';
+            }else{
+                $subdata[]=$_deliveryDate;
+            }
             $subdata[]=$_daysGiven;
             $subdata[]=$_city;
             $subdata[]=$_roundDay;
