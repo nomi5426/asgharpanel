@@ -514,6 +514,9 @@
             $subdata[]=$_salesperson;
             $subdata[]='<img src="'.$upload_dir.$_image.'" class="modal-effect" data-effect="effect-scale" id="tableImage" height="30" width="20" data-toggle="modal" data-target="#imagemodalone" data-id="'.$_id.'"/>';
             $subdata[]=$_userComment;
+            if($status == ""){
+                $subdata[]=$_orderStatus;
+            }
         }
 
         /**

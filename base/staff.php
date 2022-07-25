@@ -70,14 +70,42 @@
 										<div class=" tab-menu-heading">
 											<div class="tabs-menu" id="tabId">
 												<ul class="nav panel-tabs main-nav-line nav-justified">
-													<li class="nav-item"><a href="#neworder" class="nav-link active" data-toggle="tab">New Order</a></li>
+													<li class="nav-item"><a href="#crm" class="nav-link active" data-toggle="tab">CRM</a></li>
+													<li class="nav-item"><a href="#neworder" class="nav-link" data-toggle="tab">New Order</a></li>
 													<li class="nav-item"><a href="#inproduction" class="nav-link" data-toggle="tab">In Production</a></li>
 													<li class="nav-item"><a href="#ready" class="nav-link" data-toggle="tab">Ready</a></li>
+													<li class="nav-item"><a href="#outfordelivery" class="nav-link" data-toggle="tab">Out for Delivery</a></li>
+													<li class="nav-item"><a href="#delivered" class="nav-link" data-toggle="tab">Delivered</a></li>
+													<li class="nav-item"><a href="#onhold" class="nav-link" data-toggle="tab">On Hold</a></li>
+													<li class="nav-item"><a href="#cancelled" class="nav-link" data-toggle="tab">Cancelled</a></li>
+													<li class="nav-item"><a href="#allproduct" class="nav-link" data-toggle="tab">All Product</a></li>
 												</ul>
 											</div>
 										</div>
 										<div class="panel-body tabs-menu-body main-content-body-right border-top-0 border">
 											<div class="tab-content">
+												<div class="tab-pane" id="crm">
+													<div class="table-responsive">
+														<table id="examplenine" class="testclass table key-buttons text-md-nowrap">
+															<thead>
+																<tr>
+																	<th class="border-bottom-0">IID</th>
+																	<th class="border-bottom-0">DEL/Date</th>
+																	<th class="border-bottom-0">D/G</th>
+																	<th class="border-bottom-0">City</th>
+																	<th class="border-bottom-0">D/L</th>
+																	<th class="border-bottom-0">Item</th>
+																	<th class="border-bottom-0">Color</th>
+																	<th class="border-bottom-0">QTY</th>
+																	<th class="border-bottom-0">Note</th>
+																	<th class="border-bottom-0">Consult</th>
+																	<th class="border-bottom-0">Image</th>
+																	<th class="border-bottom-0">Comment</th>
+																</tr>
+															</thead>
+														</table>
+													</div>
+												</div>
 												<div class="tab-pane active" id="neworder">
 													<div class="table-responsive">
 														<table id="exampleone" class="testclass table key-buttons text-md-nowrap">
@@ -139,6 +167,118 @@
 																	<th class="border-bottom-0">Consult</th>
 																	<th class="border-bottom-0">Image</th>
 																	<th class="border-bottom-0">Comment</th>
+																</tr>
+															</thead>
+														</table>
+													</div>
+												</div>
+												<div class="tab-pane" id="outfordelivery">
+													<div class="table-responsive">
+														<table id="examplefour" class="testclass table key-buttons text-md-nowrap">
+															<thead>
+																<tr>
+																	<th class="border-bottom-0">IID</th>
+																	<th class="border-bottom-0">DEL/Date</th>
+																	<th class="border-bottom-0">D/G</th>
+																	<th class="border-bottom-0">City</th>
+																	<th class="border-bottom-0">D/L</th>
+																	<th class="border-bottom-0">Item</th>
+																	<th class="border-bottom-0">Color</th>
+																	<th class="border-bottom-0">QTY</th>
+																	<th class="border-bottom-0">Note</th>
+																	<th class="border-bottom-0">Consult</th>
+																	<th class="border-bottom-0">Image</th>
+																	<th class="border-bottom-0">Comment</th>
+																</tr>
+															</thead>
+														</table>
+													</div>
+												</div>
+												<div class="tab-pane" id="delivered">
+													<div class="table-responsive">
+														<table id="examplefive" class="testclass table key-buttons text-md-nowrap">
+															<thead>
+																<tr>
+																	<th class="border-bottom-0">IID</th>
+																	<th class="border-bottom-0">DEL/Date</th>
+																	<th class="border-bottom-0">D/G</th>
+																	<th class="border-bottom-0">City</th>
+																	<th class="border-bottom-0">D/L</th>
+																	<th class="border-bottom-0">Item</th>
+																	<th class="border-bottom-0">Color</th>
+																	<th class="border-bottom-0">QTY</th>
+																	<th class="border-bottom-0">Note</th>
+																	<th class="border-bottom-0">Consult</th>
+																	<th class="border-bottom-0">Image</th>
+																	<th class="border-bottom-0">Comment</th>
+																</tr>
+															</thead>
+														</table>
+													</div>
+												</div>
+												<div class="tab-pane" id="onhold">
+													<div class="table-responsive">
+														<table id="examplesix" class="testclass table key-buttons text-md-nowrap">
+															<thead>
+																<tr>
+																	<th class="border-bottom-0">IID</th>
+																	<th class="border-bottom-0">DEL/Date</th>
+																	<th class="border-bottom-0">D/G</th>
+																	<th class="border-bottom-0">City</th>
+																	<th class="border-bottom-0">D/L</th>
+																	<th class="border-bottom-0">Item</th>
+																	<th class="border-bottom-0">Color</th>
+																	<th class="border-bottom-0">QTY</th>
+																	<th class="border-bottom-0">Note</th>
+																	<th class="border-bottom-0">Consult</th>
+																	<th class="border-bottom-0">Image</th>
+																	<th class="border-bottom-0">Comment</th>
+																</tr>
+															</thead>
+														</table>
+													</div>
+												</div>
+												<div class="tab-pane" id="cancelled">
+													<div class="table-responsive">
+														<table id="exampleseven" class="testclass table key-buttons text-md-nowrap">
+															<thead>
+																<tr>
+																	<th class="border-bottom-0">IID</th>
+																	<th class="border-bottom-0">DEL/Date</th>
+																	<th class="border-bottom-0">D/G</th>
+																	<th class="border-bottom-0">City</th>
+																	<th class="border-bottom-0">D/L</th>
+																	<th class="border-bottom-0">Item</th>
+																	<th class="border-bottom-0">Color</th>
+																	<th class="border-bottom-0">QTY</th>
+																	<th class="border-bottom-0">Note</th>
+																	<th class="border-bottom-0">Consult</th>
+																	<th class="border-bottom-0">Image</th>
+																	<th class="border-bottom-0">Comment</th>
+																</tr>
+															</thead>
+														</table>
+														
+													</div>
+												</div>
+												<div class="tab-pane" id="allproduct">
+													<div class="table-responsive">
+														<table id="exampleeight" class="testclass table key-buttons text-md-nowrap">
+															<thead>
+																<tr>
+																	<th class="border-bottom-0">IID</th>
+																	<th class="border-bottom-0">DEL/Date</th>
+																	<th class="border-bottom-0">D/G</th>
+																	<th class="border-bottom-0">City</th>
+																	<th class="border-bottom-0">D/L</th>
+																	<th class="border-bottom-0">Item</th>
+																	<th class="border-bottom-0">Color</th>
+																	<th class="border-bottom-0">QTY</th>
+																	<th class="border-bottom-0">Note</th>
+																	<th class="border-bottom-0">Consult</th>
+																	<th class="border-bottom-0">Image</th>
+																	<th class="border-bottom-0">Comment</th>
+																	<th class="border-bottom-0">Status</th>
 																</tr>
 															</thead>
 														</table>
@@ -379,12 +519,243 @@
 					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
 				} );
 
+								//INITIATING TABLE OUT FOR DELIVERY
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: OUT FOR DELIVERY TO FETCH ALL OUT FOR DELIVERY RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: DELIVERED TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
+				var tablefour = $('#examplefour').DataTable( {
+					"processing": 	true,
+					"serverSide": 	true,
+					"paging"	:	true,
+					"searching"	:	true,
+					"sDom": 'Brtip',
+					"buttons": [
+						
+					],
+					"iDisplayLength"	:	100,
+					"ajax": {
+						url  :"../order/fetch.php",
+						type : "POST",
+						data : {
+							status : 'Out for Delivery',
+							nextStatus : 'Delivered'
+						}
+					},
+					"drawCallback": function ( settings ) {
+						var api = this.api();
+						var rows = api.rows( {page:'current'} ).nodes();
+						var last=null; 
+						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
+							if ( last !== group ) {
+								$(rows).eq( i ).before(
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+								);
+								last = group;
+							}
+						} );
+					},
+					"autoWidth": false,
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
+				} );
+
+				//INITIATING TABLE DELIVERED
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: DELIVERED TO FETCH ALL DELIVERED RECORDS
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
+				var tablefive = $('#examplefive').DataTable( {
+					"processing": 	true,
+					"serverSide": 	true,
+					"paging"	:	true,
+					"searching"	:	true,
+					"sDom": 'Brtip',
+					"buttons": [
+						
+					],
+					"iDisplayLength"	:	100,
+					"ajax": {
+						url  :"../order/fetch.php",
+						type : "POST",
+						data : {
+							status : 'Delivered',
+							nextStatus : ''
+						}
+					},
+					"drawCallback": function ( settings ) {
+						var api = this.api();
+						var rows = api.rows( {page:'current'} ).nodes();
+						var last=null; 
+						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
+							if ( last !== group ) {
+								$(rows).eq( i ).before(
+									'<tr class="group"><td class="delback"colspan="12">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+								);
+								last = group;
+							}
+						} );
+					},
+					"autoWidth": false,
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "15%" },{ "sWidth": "5%" },{ "sWidth": "3%" },{ "sWidth": "15%" }]
+				} );
+
+				//INITIATING TABLE ON HOLD
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: ON HOLD TO FETCH ALL ON HOLD RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: NEW ORDER TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
+				var tablesix = $('#examplesix').DataTable( {
+					"processing": 	true,
+					"serverSide": 	true,
+					"paging"	:	true,
+					"searching"	:	true,
+					"sDom": 'Brtip',
+					"buttons": [
+						
+					],
+					"iDisplayLength"	:	100,
+					"ajax": {
+						url  :"../order/fetch.php",
+						type : "POST",
+						data : {
+							status : 'On Hold',
+							nextStatus : 'New Order'
+						}
+					},
+					"rowCallback": function( row, data, index ) {
+						if ( data[9] == "Sharaf DG" ){
+							$('td', row).css('background-color', '#fcf9c7');
+						}
+						else if ( data[9] == "NooN" ){
+							$('td', row).css('background-color', '#fcf9c7');
+						}
+					},
+					"autoWidth": false,
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
+				} );
+
+				//INITIATING TABLE CANCELLED
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- FETCH.PHP WITH STATUS: CANCELLED TO FETCH ALL CANCELLED RECORDS
+				//SENT TO FILE	- FETCH.PHP WITH NEXT STATUS: NEW ORDER TO CHANGE THE STATUSES WITH BUTTONS ON ACTION COLUMN
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
+				var tableseven = $('#exampleseven').DataTable( {
+					"processing": 	true,
+					"serverSide": 	true,
+					"paging"	:	true,
+					"searching"	:	true,
+					"sDom": 'Brtip',
+					"buttons": [
+						
+					],
+					"iDisplayLength"	:	100,
+					"ajax": {
+						url  :"../order/fetch.php",
+						type : "POST",
+						data : {
+							status : 'Cancelled',
+							nextStatus : 'New Order'
+						}
+					},
+					"drawCallback": function ( settings ) {
+						var api = this.api();
+						var rows = api.rows( {page:'current'} ).nodes();
+						var last=null; 
+						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
+							if ( last !== group ) {
+								$(rows).eq( i ).before(
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+								);
+								last = group;
+							}
+						} );
+					},
+					"autoWidth": false,
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [{ "sWidth": "5%" }, { "sWidth": "5%" },{ "sWidth": "2%" }, { "sWidth": "3%" },{ "sWidth": "2%" },{ "sWidth": "20%" },{ "sWidth": "12%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "3%" },{ "sWidth": "17%" },{ "sWidth": "6%" },{ "sWidth": "2%" }]
+				} );
+
+				//INITIATING TABLE ALL PRODUCTS
+				//IDISPLAYLENGTH - TABLE WILL DISPLAY 100 RECORDS, HAS BEEN PAGINATED
+				//SENT TO FILE	- EMPTY STATUS - ALL RECORDS WILL BE FETCHED
+				//DRAWCALLBACK	- TABLE ROWS WILL BE CATEGORIZED WITH DELIVERY DATES
+				//ROWCALLBACK	- TABLE ROWS WILL BE HIGHLIGHTED IF THE ORDER RECORD IS EDITED/FROM SHARAG DG/NOON
+				var tableeight = $('#exampleeight').DataTable( {
+					"processing": 	true,
+					"serverSide": 	true,
+					"paging"	:	true,
+					"searching"	:	true,
+					"sDom": 'Brtip',
+					"buttons": [
+						
+					],
+					"iDisplayLength"	:	100,
+					"ajax": {
+						url  :"../order/fetch.php",
+						type : "POST",
+						data : {
+							status : '',
+							nextStatus : ''
+						}
+					},
+					"rowCallback": function( row, data, index ) {
+						if ( data[9] == "Sharaf DG" ){
+							$('td', row).css('background-color', '#fcf9c7');
+						}
+						else if ( data[9] == "NooN" ){
+							$('td', row).css('background-color', '#fcf9c7');
+						}
+					},
+					"drawCallback": function ( settings ) {
+						var api = this.api();
+						var rows = api.rows( {page:'current'} ).nodes();
+						var last=null; 
+						api.column(1, {page:'current'} ).data().each( function ( group, i ) {
+							if ( last !== group ) {
+								$(rows).eq( i ).before(
+									'<tr class="group"><td class="delback"colspan="13">'+'<strong> Delivery On : '+group+'</strong></td></tr>'
+								);
+								last = group;
+							}
+						} );
+					},
+					"autoWidth": false,
+					"aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [2,4,5,6,7,8,9,10,11,12 ] } ],
+					"aoColumns": [
+						{ "sWidth": "3%" }, 
+						{ "sWidth": "5%" },
+						{ "sWidth": "2%" }, 
+						{ "sWidth": "3%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "30%" },
+						{ "sWidth": "17%" },
+						{ "sWidth": "2%" },
+						{ "sWidth": "25%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "3%" },
+						{ "sWidth": "4%" },
+						{ "sWidth": "2%" }
+					]
+				} );
+
 				//@ORDERSEARCHTEXT IS THE TEXT FIELD WHERE THE INVOICES WILL BE SEARCHED
 				//TABLES WILL BE REDRAWN AS PER THE INSERT VALUE
 				$('#orderSearchText').keyup(function(){
 					tableone.search($(this).val()).column(0).draw() ;
 					tabletwo.search($(this).val()).column(0).draw() ;
 					tablethree.search($(this).val()).column(0).draw() ;
+					tablefour.search($(this).val()).column(0).draw() ;
+					tablefive.search($(this).val()).column(0).draw() ;
+					tablesix.search($(this).val()).column(0).draw() ;
+					tableseven.search($(this).val()).column(0).draw() ;
+					tableeight.search($(this).val()).column(0).draw() ;
+					tablenine.search($(this).val()).column(0).draw() ;
 				});
 
 
@@ -408,6 +779,16 @@
 						$('#content-data').html('<p>Error</p>');
 					});
 				});
+
+				//TOGGLE TAB WILL GET THE TOGGLE ELEMENT AND WILL SAVE THE LAST ACTIVE TOGGLE TABLE BEFORE REFRESH ON LOCAL STORAGE
+				//AND SET THE SAVED TOGGLE AS ACTIVE TAB
+				$('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+                	localStorage.setItem('activeTab', $(e.target).attr('href'));
+				});
+				var activeTab = localStorage.getItem('activeTab');
+				if(activeTab){
+					$('#myTab a[href="' + activeTab + '"]').tab('show');
+				}
 
 			} );
 
