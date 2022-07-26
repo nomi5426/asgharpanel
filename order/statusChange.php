@@ -27,6 +27,7 @@
         $username = $_SESSION['userName'];
         $userDetail= $conn->query("SELECT * FROM user WHERE username='".$username."'");
         while($row = mysqli_fetch_assoc($userDetail)) {
+            $_userId = $row['id'];
 			$_userName = $row['username'];
             $_firstName = $row['firstname'];
             $_userRole = $row['userrole'];
@@ -504,8 +505,8 @@
             if($pendingStatus == "Pending"){
                 $pendingStatusQuery = $conn->query("UPDATE product SET pstatus = 'New Order' WHERE id=".$confirmOrder);
                 if($pendingStatusQuery){
-                    $newQuery = $conn->query("INSERT INTO order_approval(order_id, consultant_id, is_approved) VALUES('".$confirmOrder."','".$_userName."','".$isApproved."')");
-                    if($pendingStatusQuery){
+                    $newQuery = $conn->query("INSERT INTO order_approval(order_id, consultant_id, is_approved) VALUES('".$confirmOrder."','".$_userId."','".$isApproved."')");
+                    if($newQuery){
                         $response['index'] = 2;
                         date_default_timezone_set('Asia/Dubai');
                         app_log("'".date('d-m-Y H:i:s')."' : Order '".$confirmOrder."'
