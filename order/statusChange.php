@@ -22,14 +22,11 @@
 		file_put_contents($logfile, $message . "\n", FILE_APPEND);
 	}
 
-    $_userId=1;
     $isApproved=1;
-    $firstname='';
     if(isset($_SESSION['userName'])){
         $username = $_SESSION['userName'];
         $userDetail= $conn->query("SELECT * FROM user WHERE username='".$username."'");
         while($row = mysqli_fetch_assoc($userDetail)) {
-            $_userId = $row['username'];
 			$_userName = $row['username'];
             $_firstName = $row['firstname'];
             $_userRole = $row['userrole'];
@@ -506,9 +503,8 @@
         if($agreementPath !== 'Not Exists'){
             if($pendingStatus == "Pending"){
                 $pendingStatusQuery = $conn->query("UPDATE product SET pstatus = 'New Order' WHERE id=".$confirmOrder);
-
                 if($pendingStatusQuery){
-                    $newQuery = $conn->query("INSERT INTO order_approval(order_id, consultant_id, is_approved) VALUES('".$confirmOrder."','".$_userId."','".$isApproved."')");
+                    $newQuery = $conn->query("INSERT INTO order_approval(order_id, consultant_id, is_approved) VALUES('".$confirmOrder."','".$_userName."','".$isApproved."')");
                     if($newQuery){
                         $response['index'] = 2;
 
