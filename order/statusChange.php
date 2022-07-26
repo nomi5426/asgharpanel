@@ -505,9 +505,8 @@
                 $pendingStatusQuery = $conn->query("UPDATE product SET pstatus = 'New Order' WHERE id=".$confirmOrder);
                 if($pendingStatusQuery){
                     $newQuery = $conn->query("INSERT INTO order_approval(order_id, consultant_id, is_approved) VALUES('".$confirmOrder."','".$_userName."','".$isApproved."')");
-                    if($newQuery){
+                    if($pendingStatusQuery){
                         $response['index'] = 2;
-
                         date_default_timezone_set('Asia/Dubai');
                         app_log("'".date('d-m-Y H:i:s')."' : Order '".$confirmOrder."'
                         is Approved - SUCCESS - by User : '".$_userName."' ROOT: statusChange.php");
