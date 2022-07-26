@@ -202,7 +202,7 @@
                         event.preventDefault();
                         var confirmOrder = $(this).attr('data-id');
                         $.ajax({
-                            url     : 'statusChange.php',
+                            url     : '../order/statusChange.php',
                             method  : 'POST',
                             dataType: 'json',
                             data    : {confirmOrder : confirmOrder},
