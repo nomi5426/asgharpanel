@@ -91,7 +91,8 @@
             $pdf->SetFont('Arial','B',10);
             $pdf->Cell(28,0,'COMMENT : ',0,0,'L');
             $pdf->SetFont('Arial','',10);
-            $pdf->Cell(0,0,$rows['userComment'],0,0,'L');
+            // $pdf->Cell(200,0,$rows['userComment'],0,0,'L');
+            $pdf->MultiCell(0, 5, $rows['userComment'], 1);
             $pdf->Ln(8);
 
             //GET IMAGE
@@ -110,8 +111,8 @@
             }
             $image = $upload_dir.$image;
             
-            $pdf->Cell( 170, 40, $pdf->Image($image, $pdf->GetX(), $pdf->GetY(), 188,150), 0, 0, 'L', false );
-            $pdf->Ln(155);
+            $pdf->Cell( 170, 30, $pdf->Image($image, $pdf->GetX(), $pdf->GetY(), 188,150), 0, 0, 'L', false );
+            $pdf->Ln(145);
             $pdf->SetFont('Arial','',10);
             $pdf->Cell(25,8,'Framing ',0,0,'C');
             $pdf->Cell(10,8,'',1,0,'L');
