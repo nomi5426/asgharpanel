@@ -64,7 +64,8 @@
                         GROUP_CONCAT(DISTINCT stf.id SEPARATOR ', ') AS staff_id,
                         GROUP_CONCAT(DISTINCT stf.staff_name SEPARATOR ', ') AS production_staff_name,
                         GROUP_CONCAT(DISTINCT delstf.id SEPARATOR ', ') AS del_staff_id,
-                        GROUP_CONCAT(DISTINCT delstf.staff_name SEPARATOR ', ') AS del_staff_name
+                        GROUP_CONCAT(DISTINCT delstf.staff_name SEPARATOR ', ') AS del_staff_name,
+                        cx.customer_phone
                     FROM order_staff_production osp 
                     LEFT JOIN product AS prod ON 
                         prod.id = osp.order_id 
@@ -74,12 +75,16 @@
                     	delstf.id = osd.del_staff_id
                     LEFT JOIN staff AS stf ON 
                         stf.id = osp.staff_id
+                    LEFT JOIN customer AS cx ON 
+                        prod.id = cx.order_id
                     WHERE 1=1 AND
                         osp.active_status = 1
-                    AND
-                        prod.pstatus = 'Ready'
                     AND 
-                        (prod.invoiceId LIKE '%".$request['search']['value']."%')
+                        prod.invoiceId LIKE '%".$request['search']['value']."%'
+                    OR 
+                        cx.customer_phone LIKE '%".$request['search']['value']."%'
+                    AND
+                    prod.pstatus = 'Ready'
                     GROUP BY osp.order_id
                     ORDER BY prod.productlink";
             }else{
@@ -110,7 +115,8 @@
                     GROUP_CONCAT(DISTINCT stf.id SEPARATOR ', ') AS staff_id,
                     GROUP_CONCAT(DISTINCT stf.staff_name SEPARATOR ', ') AS production_staff_name,
                     GROUP_CONCAT(DISTINCT delstf.id SEPARATOR ', ') AS del_staff_id,
-                    GROUP_CONCAT(DISTINCT delstf.staff_name SEPARATOR ', ') AS del_staff_name
+                    GROUP_CONCAT(DISTINCT delstf.staff_name SEPARATOR ', ') AS del_staff_name,
+                    cx.customer_phone
                     FROM order_staff_production osp 
                     LEFT JOIN product AS prod ON 
                         prod.id = osp.order_id 
@@ -120,6 +126,8 @@
                         delstf.id = osd.del_staff_id
                     LEFT JOIN staff AS stf ON 
                         stf.id = osp.staff_id
+                    LEFT JOIN customer AS cx ON 
+                        prod.id = cx.order_id
                     WHERE 1=1 AND
                         osp.active_status = 1
                     AND
@@ -157,7 +165,8 @@
                         GROUP_CONCAT(DISTINCT stf.id SEPARATOR ', ') AS staff_id,
                         GROUP_CONCAT(DISTINCT stf.staff_name SEPARATOR ', ') AS production_staff_name,
                         GROUP_CONCAT(DISTINCT delstf.id SEPARATOR ', ') AS del_staff_id,
-                        GROUP_CONCAT(DISTINCT delstf.staff_name SEPARATOR ', ') AS del_staff_name
+                        GROUP_CONCAT(DISTINCT delstf.staff_name SEPARATOR ', ') AS del_staff_name,
+                        cx.customer_phone
                     FROM order_staff_production osp 
                     LEFT JOIN product AS prod ON 
                         prod.id = osp.order_id 
@@ -167,14 +176,18 @@
                         delstf.id = osd.del_staff_id
                     LEFT JOIN staff AS stf ON 
                         stf.id = osp.staff_id
+                    LEFT JOIN customer AS cx ON 
+                        prod.id = cx.order_id
                     WHERE 1=1 AND 
                         osp.active_status = 1
                     AND
                         osd.active_status = 1
-                    AND
-                        prod.pstatus = 'Out for Delivery'
                     AND 
-                        (prod.invoiceId LIKE '%".$request['search']['value']."%')
+                        prod.invoiceId LIKE '%".$request['search']['value']."%'
+                    OR
+                        cx.customer_phone LIKE '%".$request['search']['value']."%'
+                    AND
+                    prod.pstatus = 'Out for Delivery'
                     GROUP BY osd.order_id
                     ORDER BY prod.productlink";
             }else{
@@ -205,7 +218,8 @@
                         GROUP_CONCAT(DISTINCT stf.id SEPARATOR ', ') AS staff_id,
                         GROUP_CONCAT(DISTINCT stf.staff_name SEPARATOR ', ') AS production_staff_name,
                         GROUP_CONCAT(DISTINCT delstf.id SEPARATOR ', ') AS del_staff_id,
-                        GROUP_CONCAT(DISTINCT delstf.staff_name SEPARATOR ', ') AS del_staff_name
+                        GROUP_CONCAT(DISTINCT delstf.staff_name SEPARATOR ', ') AS del_staff_name,
+                        cx.customer_phone
                     FROM order_staff_production osp 
                     LEFT JOIN product AS prod ON 
                         prod.id = osp.order_id 
@@ -215,6 +229,8 @@
                         delstf.id = osd.del_staff_id
                     LEFT JOIN staff AS stf ON 
                         stf.id = osp.staff_id
+                    LEFT JOIN customer AS cx ON 
+                        prod.id = cx.order_id
                     WHERE 1=1 AND 
                         osp.active_status = 1
                     AND
@@ -227,10 +243,18 @@
         }
         else{
             if(!empty($request['search']['value'])){
-                $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."'  
-                AND
-                invoiceId LIKE '%".$request['search']['value']."%'
-                ORDER BY productlink";
+                $sql ="SELECT prod.*, 
+                        cx.customer_phone 
+                    FROM product AS prod 
+                    INNER JOIN customer as cx ON 
+                        prod.id = cx.order_id 
+                    WHERE 1=1 
+                    AND 
+                        prod.invoiceId LIKE '%".$request['search']['value']."%'
+                    OR
+                        cx.customer_phone LIKE '%".$request['search']['value']."%'
+                    AND pstatus='".$status."'
+                    ORDER BY productlink";
 
             }else{
                 $sql ="SELECT * FROM product WHERE 1=1 AND pstatus='".$status."' ORDER BY productlink ";
@@ -238,9 +262,16 @@
         }
     }else{
         if(!empty($request['search']['value'])){
-            $sql ="SELECT * FROM product WHERE 1=1
+            $sql ="SELECT prod.*, 
+                    cx.customer_phone 
+                FROM product AS prod 
+                LEFT JOIN customer as cx ON 
+                    prod.id = cx.order_id 
+                WHERE 1=1
             AND 
-            invoiceId LIKE '%".$request['search']['value']."%'
+                invoiceId LIKE '%".$request['search']['value']."%'
+            OR
+                customer_phone LIKE '%".$request['search']['value']."%'
             ORDER BY productlink";
         }else{
             $sql ="SELECT * FROM product WHERE 1=1 ORDER BY productlink";
@@ -290,6 +321,7 @@
         $_editedBy = $row[20];              //WHO EDITS THE ORDER
         $_statusChangedBy = $row[21];       //WHO CHANGE THE STATUS OF THE ORDER
         $_qrcode = $row[22];                //UNIQUE QR CODE FOR THE ORDER FOR TRACKING PURPOSES - WILL BE SAVED IN A FOLDER
+        // $_cxPhone = $row[27];               //CUSTOMER PHONE NUMBER
         
         //AS PER TABLE COLUMN
         //INVOICE ID WITH - WITHOUT DELIVERY NOTE AS PER ROLES
@@ -414,6 +446,7 @@
                 $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$_id.'"><i class="typcn typcn-arrow-right"></i></button></div>';
             }
             $subdata[]=$_editedBy;
+            $subdata[]=$_cxPhone;
         }
 
         /**
@@ -451,6 +484,7 @@
                 $subdata[]=$_orderStatus;
             }
             $subdata[]=$_editedBy;
+            $subdata[]=$_cxPhone;
         }
 
         /**
@@ -492,6 +526,7 @@
                 $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$_id.'"><i class="typcn typcn-arrow-right"></i></button></div>';
             }
             $subdata[]=$_editedBy;
+            $subdata[]=$_cxPhone;
         }
 
         /**
@@ -540,9 +575,7 @@
             $subdata[]='<img src="'.$upload_dir.$_image.'" class="modal-effect" data-effect="effect-scale" id="tableImage" height="30" width="20" data-toggle="modal" data-target="#imagemodalone" data-id="'.$_id.'"/>';
             $subdata[]=$_userComment;
             $subdata[]='<div class="inner"><button id="statusChangeNext" title="Next" class="btn btn-primary btn-icon" data-id="'.$_id.'"><i class="typcn typcn-arrow-right"></i></button></div>';
-
         }
-
         $data[]=$subdata;
     }
 
